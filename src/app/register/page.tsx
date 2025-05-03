@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { FC, Fragment, useState } from 'react';
 
-const Login: FC = () => {
+const Register: FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: { preventDefault: () => void; }) => {
@@ -28,7 +28,7 @@ const Login: FC = () => {
                     justifyContent: 'center',
                     backgroundImage: 'url(./images/bgplaceholder.jpeg)',
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center'
+                    backgroundPosition: 'center',
                 }}>
                 <div style={{
                     height: '100%',
@@ -41,10 +41,11 @@ const Login: FC = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    overflowY: 'scroll'
                 }}>
-                    <div style={{ width: '70%', textAlign: 'center' }}>
-                        <h2 style={{ marginBottom: '1.5vw' }}>Log In</h2>
-                        <h6>Welcome back! Please enter your details</h6>
+                    <div style={{ width: '70%', height: '90%', textAlign: 'center' }}>
+                        <h2 style={{ marginBottom: '1.5vw' }}>Register</h2>
+                        <h6>Welcome to Green & Quick! Get started with an account</h6>
                         <Box
                             sx={{
                                 width: 500,
@@ -54,10 +55,23 @@ const Login: FC = () => {
                         >
                             <TextField
                                 fullWidth
-                                label="Username / Email"
-                                placeholder="johndoe@gmail.com"
+                                label="Username"
+                                placeholder="john_doe"
                                 id="username"
                                 type={'text'}
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                sx={{ mb: 2.5, mt: 2.5 }}
+                            />
+                            <TextField
+                                fullWidth
+                                label="Email"
+                                placeholder="johndoe@gmail.com"
+                                id="email"
+                                type={'email'}
                                 slotProps={{
                                     inputLabel: {
                                         shrink: true,
@@ -92,9 +106,36 @@ const Login: FC = () => {
                                 }}
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
+                            <TextField
+                                fullWidth
+                                label="Confirm Password"
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="••••••••••••••••••"
+                                id="confirm-password"
+                                slotProps={{
+                                    input: {
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    },
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                sx={{ mb: 2.5, mt: 2.5 }}
+                            />
                         </Box>
-                        <Button variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Log In</Button>
-                        <p>Don&apos;t have an account yet?</p><Button href="/register">Register Now</Button>
+                        <Button variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Register</Button>
+                        <p>Already have an account?</p><Button href="/login">Log In</Button>
                     </div>
                 </div>
 
@@ -120,4 +161,4 @@ const Login: FC = () => {
     )
 }
 
-export default Login;
+export default Register;
