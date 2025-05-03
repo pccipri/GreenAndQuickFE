@@ -1,10 +1,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
+
 export default function Home() {
   return (
     <div className={styles.page}>
-      <a href="/login" style={{textDecoration: 'underline'}}>Login Page</a>
+      <p>TESTING</p>
       <main className={styles.main}>
         <Image
           className={styles.logo}
