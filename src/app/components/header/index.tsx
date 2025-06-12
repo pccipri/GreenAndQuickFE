@@ -18,15 +18,24 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { FC, useState, MouseEvent } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 
 const pages = ['Login', 'Register'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
+const settings = ['Account', 'Dashboard', 'My Shop', 'Logout'];
 
 const pageRoutes: { [key: string]: string } = {
-    Login: '/login',
-    Register: '/register',
+    'Login': '/login',
+    'Register': '/register',
 };
+
+const settingsRoutes: { [key: string]: string } = {
+    'Account': '/myAccount',
+    'Dashboard': '/dashboard',
+    'My Shop': '/myShop',
+    'Logout': '/logout',
+};
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -73,6 +82,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header: FC = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+    const router = useRouter();
 
     const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -218,10 +229,20 @@ const Header: FC = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem
+                                    key={setting}
+                                    onClick={() => {
+                                        handleCloseUserMenu();
+                                        const route = settingsRoutes[setting];
+                                        if (route) {
+                                            router.push(route);
+                                        }
+                                    }}
+                                >
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
+
                         </Menu>
                     </Box>
                 </Toolbar>
