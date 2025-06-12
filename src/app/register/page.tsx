@@ -41,7 +41,6 @@ const Register: FC = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    overflowY: 'scroll'
                 }}>
                     <div style={{ width: '70%', height: '90%', textAlign: 'center' }}>
                         <h2 style={{ marginBottom: '1.5vw' }}>Register</h2>
@@ -158,7 +157,7 @@ const Register: FC = () => {
                 </div>
             </Container>
         </>
-    )
-}
+    );
+};
 
 export default Register;

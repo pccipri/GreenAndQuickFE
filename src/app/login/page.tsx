@@ -117,7 +117,7 @@ const Login: FC = () => {
                 </div>
             </Container>
         </>
-    )
-}
+    );
+};
 
 export default Login;

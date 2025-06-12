@@ -54,7 +54,7 @@ const Footer: FC = () => {
                 </Grid>
             </Container>
         </Box>
-    )
-}
+    );
+};
 
 export default Footer;
