@@ -21,12 +21,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 
-const pages = ['Login', 'Register'];
+const pages = ['Login', 'Register', 'Sellers'];
 const settings = ['Account', 'Dashboard', 'My Shop', 'Logout'];
 
 const pageRoutes: { [key: string]: string } = {
     'Login': '/login',
     'Register': '/register',
+    'Sellers': '/sellersPage',
 };
 
 const settingsRoutes: { [key: string]: string } = {
