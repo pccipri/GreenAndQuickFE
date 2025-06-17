@@ -1,97 +1,127 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
+import Button from '@mui/material/Button';
+import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <p>TESTING</p>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      {/* Banner container */}
+      <div className="bannerContainer"
+        style={{
+          width: '100%',
+          height: '550px',
+          backgroundImage: 'url(./images/bgplaceholder.jpeg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          padding: '80px',
+        }}>
+        <h1>Fresh. Local. Honest. Closer to Nature, Closer to You.</h1>
+        <h4 style={{ marginTop: '15px', marginBottom: '40px' }}>Connecting local farmers with everyday shoppers.</h4>
+        <Button variant="contained" style={{ width: '150px' }}>Discover</Button>
+      </div>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Main content container */}
+      <div className="contentContainer"
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+
+        {/* Description about us container */}
+        <div className="descriptionContainer"
+          style={{
+            width: '100%',
+            height: 'auto',
+            padding: '80px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+
+          <div className="descriptionTextContainer"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              height: 'auto',
+              marginBottom: '70px',
+            }}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
+            <h2>Who are we?</h2>
+            <p style={{ width: '60%' }}>An easy-to-use app that bridges the gap between farmers and consumers, making local food more accessible and farmers more visible.
+              We are helping you discover and order fresh, local produce from trusted farmers near you.
+            </p>
+          </div>
+
+          <div className="descriptionImageContainer"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              height: 'auto'
+            }}
           >
-            Read our docs
-          </a>
+            <img src="./images/bgplaceholder.jpeg" alt="Farmer" style={{ width: '600px', height: '600px' }} />
+            <img src="./images/bgplaceholder.jpeg" alt="Vegetables" style={{ width: '940px', height: '600px' }} />
+          </div>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {/* Description about the sellers container */}
+        <div className="sellersContainer"
+          style={{
+            padding: '80px',
+            paddingTop: '0px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: 'auto'
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+          <div className="sellersTextContainer"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              width: '100%',
+              height: 'auto'
+            }}
+          >
+            <h2>Meet the Farmers Behind Your Food</h2>
+            <p style={{ marginTop: '20px' }}>Every tomato, carrot, and apple in your basket has a story: and it starts here.</p>
+            <p>Our local farmers work hard every day to bring you the freshest, most natural produce straight from their fields.
+              Learn who they are, how they grow their food, and why they love what they do.</p>
+          </div>
+
+          <div className="sellersImageContainer"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              height: 'auto',
+              marginTop: '70px'
+            }}
+          >
+            <img src="./images/bgplaceholder.jpeg" alt="Farmer" style={{ width: '500px', height: '350px' }} />
+            <img src="./images/bgplaceholder.jpeg" alt="Vegetables" style={{ width: '500px', height: '350px' }} />
+            <img src="./images/bgplaceholder.jpeg" alt="Vegetables" style={{ width: '500px', height: '350px' }} />
+          </div>
+
+          <Button variant="text" style={{ alignSelf: 'flex-start', marginTop: '60px' }}>Discover More <EastOutlinedIcon style={{ marginLeft: '10px' }} /></Button>
+        </div>
+      </div >
+    </>
   );
 }
