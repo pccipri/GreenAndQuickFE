@@ -12,6 +12,7 @@ export default function Home() {
           backgroundImage: 'url(./images/bgplaceholder.jpeg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          color: 'white',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',

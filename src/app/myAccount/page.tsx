@@ -45,14 +45,15 @@ const MyAccount: FC = () => {
                     width: '100%',
                     color: 'black',
                 }}>
-                    <h2 style={{ paddingTop: '30px', paddingLeft: '10px' }} >My Account</h2>
+                    <h1 style={{ padding: '50px' }}>My Account</h1>
                 </div>
                 <div className="main-container-account" style={{
                     height: '90%',
                     width: '100%',
                     display: 'flex',
                     justifyContent: 'center',
-                    color: 'black'
+                    color: 'black',
+                    padding: '50px 0'
                 }}>
                     {/* Side Menu - account information */}
                     <div className="side-menu-account" style={{

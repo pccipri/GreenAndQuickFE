@@ -41,11 +41,11 @@ const SellersPage: FC = () => {
                     flexDirection: 'column',
                     height: '20%',
                 }}>
-                <h2 style={{ margin: '30px 50px' }}>Shop now</h2>
+                <h1 style={{ padding: '50px' }}>Shop now</h1>
 
                 {/* This is the container with the spotlight cards */}
                 <div className="sellers-cards-spotlight" style={{ overflowY: 'auto', width: '100%' }}>
-                    <h3 style={{ textAlign: 'center', margin: '20px' }}>Featured Sellers</h3>
+                    <h3 style={{ textAlign: 'center', margin: '0 20px 20px'}}>Featured Sellers</h3>
                     <div className="cards-parent-container"
                         style={{
                             display: 'flex',
@@ -91,6 +91,7 @@ const SellersPage: FC = () => {
                 style={{
                     display: 'flex',
                     height: '80%',
+                    padding: '0 50px 50px 50px',
                 }}>
                 <div className="sellers-cards"
                     style={{
