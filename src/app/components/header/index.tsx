@@ -19,6 +19,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { FC, useState, MouseEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import LanguageSelector from './components/LanguageSelector';
 
 
 const pages = ['Login', 'Register', 'Sellers', 'Shop', 'Checkout'];
@@ -207,7 +208,7 @@ const Header: FC = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-
+                        <LanguageSelector />
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -9,8 +9,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { FC, Fragment, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const Register: FC = () => {
+     const t = useTranslations('Register');
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: { preventDefault: () => void; }) => {
@@ -43,7 +45,7 @@ const Register: FC = () => {
                     justifyContent: 'center',
                 }}>
                     <div style={{ width: '70%', height: '90%', textAlign: 'center' }}>
-                        <h2 style={{ marginBottom: '1.5vw' }}>Register</h2>
+                        <h2 style={{ marginBottom: '1.5vw' }}>{t("register")}</h2>
                         <h6>Welcome to Green & Quick! Get started with an account</h6>
                         <Box
                             sx={{
