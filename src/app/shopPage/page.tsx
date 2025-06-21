@@ -25,7 +25,7 @@ const ShopPage: FC = () => {
                     flexDirection: 'column',
                     height: '20%',
                 }}>
-                <h2 style={{ margin: '30px 50px' }}>Shop now</h2>
+                <h1 style={{ padding: '50px' }}>Shop now</h1>
             </div>
 
             {/* This is where the main content goes */}
@@ -33,6 +33,7 @@ const ShopPage: FC = () => {
                 style={{
                     display: 'flex',
                     height: '80%',
+                    padding: '0 50px 50px 50px',
                 }}>
                 <div className="sellers-cards"
                     style={{
