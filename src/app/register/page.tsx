@@ -12,7 +12,7 @@ import { FC, Fragment, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 const Register: FC = () => {
-     const t = useTranslations('Register');
+    const t = useTranslations('Register');
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: { preventDefault: () => void; }) => {
