@@ -1,0 +1,85 @@
+{
+    "policySections": [
+        {
+            "id": 1,
+            "title": "1. Use of the Platform",
+            "introductiveText": "You may use our platform to:",
+            "listItems": [
+                "Browse products from local sellers/farmers",
+                "Make purchases",
+                "Create an account as a user or seller"
+            ],
+            "conclusionText": "You agree to provide accurate information and to use the platform lawfully."
+        },
+        {
+            "id": 2,
+            "title": "2. Accounts and Security",
+            "introductiveText": "You are responsible for maintaining the confidentiality of your login credentials and for all activities under your account. Notify us immediately if you suspect unauthorized use."
+        },
+        {
+            "id": 3,
+            "title": "3. Seller Terms",
+            "listItems": [
+                "Provide accurate product descriptions and pricing",
+                "Fulfill orders promptly",
+                "Comply with local laws and regulations",
+                "Not sell prohibited items (e.g., illegal goods, dangerous products)"
+            ],
+            "conclusionText": "We reserve the right to remove any listings that violate our policies."
+        },
+        {
+            "id": 4,
+            "title": "4. Orders and Payments",
+            "listItems": [
+                "Users agree to pay the listed price, including any taxes or shipping.",
+                "All payments are processed securely via our third-party payment provider.",
+                "Refunds and cancellations may be handled according to the seller&apos;s return policy and local consumer laws."
+            ]
+        },
+        {
+            "id": 5,
+            "title": "5. Intellectual Property",
+            "introductiveText": "All content on the platform (e.g., logos, UI, product listings) is the property of Green & Quick or its respective owners. Users may not copy, distribute, or reverse-engineer any part of the platform without permission."
+        },
+        {
+            "id": 6,
+            "title": "6. Prohibited Conduct",
+            "introductiveText": "You may not:",
+            "listItems": [
+                "Use the platform for fraudulent or illegal activities",
+                "Harass, impersonate, or defraud others",
+                "Interfere with the platform's security or functionality"
+            ],
+            "conclusionText": "Violations may result in account suspension or legal action."
+        },
+        {
+            "id": 7,
+            "title": "7. Disclaimer and Limitation of Liability",
+            "introductiveText": "We provide the platform &quot;as is&quot; without warranties of any kind. We are not liable for:",
+            "listItems": [
+                "Transactions between buyers and sellers",
+                "Delays, errors, or interruptions in service",
+                "Damages resulting from use of the platform"
+            ]
+        },
+        {
+            "id": 8,
+            "title": "8. Termination",
+            "introductiveText": "We may suspend or terminate your access if you violate these terms. You may also delete your account at any time."
+        },
+        {
+            "id": 9,
+            "title": "9. Governing Law",
+            "introductiveText": "These Terms are governed by the laws of the European Union. Disputes will be resolved in the courts of EU General Data Protection Regulation (GDPR)."
+        },
+        {
+            "id": 10,
+            "title": "10. Changes to These Terms",
+            "introductiveText": "We may revise these terms from time to time. Continued use of the Service after changes implies acceptance of the new terms."
+        },
+        {
+            "id": 11,
+            "title": "11. Contact Us"
+        }
+    ]
+}

@@ -22,7 +22,7 @@ import { useRouter } from 'next/navigation';
 import LanguageSelector from './components/LanguageSelector';
 
 
-const pages = ['Login', 'Register', 'Sellers', 'Shop', 'Checkout', 'Contact Us'];
+const pages = ['Login', 'Register', 'Sellers', 'Shop', 'Checkout', 'Contact Us', 'Privacy Policy'];
 const settings = ['Account', 'Dashboard', 'My Shop', 'Logout'];
 
 const pageRoutes: { [key: string]: string } = {
@@ -32,6 +32,7 @@ const pageRoutes: { [key: string]: string } = {
     'Shop': '/shopPage',
     'Checkout': '/checkout',
     'Contact Us': '/contactUs',
+    'Privacy Policy': '/privacyPolicy',
 };
 
 const settingsRoutes: { [key: string]: string } = {
