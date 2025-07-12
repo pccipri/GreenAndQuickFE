@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -14,7 +14,7 @@ interface PolicyAccordionProps {
     id: number;
     title: string;
     introductiveText?: string;
-    listItems?: ReactNode[];
+    listItems?: string[];
     conclusionText?: string;
 }
 
