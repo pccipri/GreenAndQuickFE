@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import CookieConsentModal from './components/cookies';
 
 export default function Home() {
   return (
@@ -121,6 +122,8 @@ export default function Home() {
           </div>
 
           <Button variant="text" style={{ alignSelf: 'flex-start', marginTop: '60px' }}>Discover More <EastOutlinedIcon style={{ marginLeft: '10px' }} /></Button>
+
+          <CookieConsentModal />
         </div>
       </div >
     </>
