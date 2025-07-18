@@ -37,7 +37,7 @@ const CookieConsentModal: FC = () => {
                 cookieName={COOKIE_NAME}
             />
 
-            <Modal open={open} onClose={handleDecline}>
+            <Modal open={open}>
                 <Box
                     sx={{
                         position: 'absolute',
