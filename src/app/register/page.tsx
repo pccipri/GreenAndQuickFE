@@ -8,8 +8,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import { FC, Fragment, useState } from 'react';
+import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { registerUser } from '@/services/authService';
+import { useRouter } from 'next/navigation'
+import { CreateUserDTO } from '@/interfaces/User';
 
 const Register: FC = () => {
     const t = useTranslations('Register');
@@ -18,6 +21,24 @@ const Register: FC = () => {
     const handleMouseDownPassword = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
     };
+    const router = useRouter()
+    const [userData, setUserData] = useState<CreateUserDTO>({
+        username: '',
+        email: '',
+        password: '',
+    })
+    const createUser = async () => {
+        const response = await registerUser(userData)
+
+        if (response) {
+            router.push("/login")
+        }
+
+    }
+
+    const handlePropertyUpdate = (propertyName: keyof CreateUserDTO, value: string) => {
+        setUserData({ ...userData, [propertyName]: value });
+    }
 
     return (
         <>
@@ -65,6 +86,9 @@ const Register: FC = () => {
                                         shrink: true,
                                     },
                                 }}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("username", e.target.value)
+                                }}
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                             <TextField
@@ -73,6 +97,9 @@ const Register: FC = () => {
                                 placeholder="johndoe@gmail.com"
                                 id="email"
                                 type={'email'}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("email", e.target.value)
+                                }}
                                 slotProps={{
                                     inputLabel: {
                                         shrink: true,
@@ -86,6 +113,9 @@ const Register: FC = () => {
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder="••••••••••••••••••"
                                 id="password"
+                                onChange={(e) => {
+                                    handlePropertyUpdate("password", e.target.value)
+                                }}
                                 slotProps={{
                                     input: {
                                         endAdornment: (
@@ -135,7 +165,7 @@ const Register: FC = () => {
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                         </Box>
-                        <Button variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Register</Button>
+                        <Button onClick={createUser} variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Register</Button>
                         <p>Already have an account?</p><Button href="/login">Log In</Button>
                     </div>
                 </div>

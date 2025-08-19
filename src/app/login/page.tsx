@@ -8,7 +8,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import { FC, Fragment, useState } from 'react';
+import { FC, useState } from 'react';
+import { LoginRequest } from '@/interfaces/Auth';
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/hooks/useAuth';
 
 const Login: FC = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +19,24 @@ const Login: FC = () => {
     const handleMouseDownPassword = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
     };
+    const router = useRouter()
+    const [userData, setUserData] = useState<LoginRequest>({
+        usernameOrEmail: '',
+        password: '',
+    })
+    const { signIn } = useAuth()
+    const loginUser = async () => {
+        const response = await signIn(userData)
+
+        if (response) {
+            router.push("/")
+        }
+
+    }
+
+    const handlePropertyUpdate = (propertyName: keyof LoginRequest, value: string) => {
+        setUserData({ ...userData, [propertyName]: value });
+    }
 
     return (
         <>
@@ -55,9 +76,12 @@ const Login: FC = () => {
                             <TextField
                                 fullWidth
                                 label="Username / Email"
-                                placeholder="johndoe@gmail.com"
+                                placeholder="johndoe@gmail.com / johndoe"
                                 id="username"
                                 type={'text'}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("usernameOrEmail", e.target.value)
+                                }}
                                 slotProps={{
                                     inputLabel: {
                                         shrink: true,
@@ -68,6 +92,9 @@ const Login: FC = () => {
                             <TextField
                                 fullWidth
                                 label="Password"
+                                onChange={(e) => {
+                                    handlePropertyUpdate("password", e.target.value)
+                                }}
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder="••••••••••••••••••"
                                 id="password"
@@ -93,7 +120,7 @@ const Login: FC = () => {
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                         </Box>
-                        <Button variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Log In</Button>
+                        <Button variant="contained" onClick={loginUser} fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Log In</Button>
                         <p>Don&apos;t have an account yet?</p><Button href="/register">Register Now</Button>
                     </div>
                 </div>
