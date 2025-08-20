@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {NextIntlClientProvider} from 'next-intl';
-import {getLocale} from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale } from 'next-intl/server';
 
 import Header from "./components/header";
 import Footer from "./components/footer";
+import { AuthGuard } from "@/components/AuthGuard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,11 +34,11 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <NextIntlClientProvider>
-        <Header />
-        <main>
-          {children}
-        </main>
-        <Footer />
+          <Header />
+          <main>
+            <AuthGuard>{children}</AuthGuard>
+          </main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

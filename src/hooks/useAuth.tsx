@@ -11,7 +11,7 @@ export const useAuth = () => {
     const fetchUser = useCallback(async () => {
         try {
             const { data } = await marketAPI.get("/auth/getLoggedUser")
-            setUser(data.user)
+            setUser(data.user || null)
         } catch {
             setUser(null)
         } finally {
