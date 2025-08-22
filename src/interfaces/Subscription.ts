@@ -19,4 +19,9 @@ export interface Subscription {
 
 export interface AddCategoryDTO {
     name: string;
+    description: string;
+    frequency: 'daily' | 'weekly' | 'monthly';
+    nextDeliveryDate: Date;
+    isActive: boolean;
+    deliveryAddress: Address;
 }

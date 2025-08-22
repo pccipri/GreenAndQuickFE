@@ -21,4 +21,9 @@ export interface Order {
 
 export interface AddOrderDTO {
     name: string;
+    items: OrderItem[];
+    totalAmount: number;
+    paymentOption: 'cash' | 'stripe';
+    deliveryOption: 'fanCourier';
+    deliveryAddress: Address;
 }

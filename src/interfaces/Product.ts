@@ -13,4 +13,9 @@ export interface Product {
 
 export interface AddProductDTO {
     name: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    reducedPrice?: number;
+    category: string;
 }

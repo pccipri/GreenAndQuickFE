@@ -12,4 +12,7 @@ export interface ShopGroup {
 
 export interface AddShopGroupDTO {
     name: string;
+    description: string;
+    shops: string[];
+    deliveryAddress: Address;
 }

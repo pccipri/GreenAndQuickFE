@@ -18,7 +18,7 @@ export const getAllInventoryItems = async (): Promise<InventoryItem[]> => {
 export const getInventoryItemById = async (id: string): Promise<InventoryItem | undefined> => {
     try {
         const response: AxiosResponse<InventoryItem | undefined> = await marketAPI({
-            url: `/inventory/${id}`,
+            url: `/inventoryItem/${id}`,
             method: 'get',
         })
         return response.data
@@ -31,7 +31,7 @@ export const getInventoryItemById = async (id: string): Promise<InventoryItem | 
 export const getInventoryByProduct = async (productId: string): Promise<InventoryItem | undefined> => {
     try {
         const response: AxiosResponse<InventoryItem | undefined> = await marketAPI({
-            url: `/inventory/product/${productId}`,
+            url: `/inventoryItem/product/${productId}`,
             method: 'get',
         })
         return response.data
@@ -44,7 +44,7 @@ export const getInventoryByProduct = async (productId: string): Promise<Inventor
 export const getInventoryByShop = async (shopId: string): Promise<InventoryItem | undefined> => {
     try {
         const response: AxiosResponse<InventoryItem | undefined> = await marketAPI({
-            url: `/inventory/shop/${shopId}`,
+            url: `/inventoryItem/shop/${shopId}`,
             method: 'get',
         })
         return response.data

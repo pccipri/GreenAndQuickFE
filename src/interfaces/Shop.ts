@@ -11,4 +11,7 @@ export interface Shop {
 
 export interface AddShopDTO {
     name: string;
+    description: string;
+    owner: string;
+    categories: string[];
 }

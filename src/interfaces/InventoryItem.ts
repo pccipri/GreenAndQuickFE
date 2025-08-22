@@ -10,4 +10,8 @@ export interface InventoryItem {
 
 export interface AddInventoryItemDTO {
     name: string;
+    productId: string;
+    shopId: string;
+    stock: number;
+    lowStockThreshold?: number;
 }
