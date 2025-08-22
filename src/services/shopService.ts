@@ -1,11 +1,11 @@
-import { AddCategoryDTO, Category } from "@/interfaces/Category";
+import { AddShopDTO, Shop } from "@/interfaces/Shop";
 import { marketAPI } from "./api";
 import { AxiosResponse } from "axios";
 
-export const getAllCategories = async (): Promise<Category[]> => {
+export const getAllShops = async (): Promise<Shop[]> => {
     try {
-        const response: AxiosResponse<Category[]> = await marketAPI({
-            url: '/category',
+        const response: AxiosResponse<Shop[]> = await marketAPI({
+            url: '/shop',
             method: 'get',
         })
         return response.data
@@ -15,10 +15,10 @@ export const getAllCategories = async (): Promise<Category[]> => {
     }
 }
 
-export const getCategoryById = async (id: string): Promise<Category | undefined> => {
+export const getShopById = async (id: string): Promise<Shop | undefined> => {
     try {
-        const response: AxiosResponse<Category | undefined> = await marketAPI({
-            url: `/category/${id}`,
+        const response: AxiosResponse<Shop | undefined> = await marketAPI({
+            url: `/shop/${id}`,
             method: 'get',
         })
         return response.data
@@ -28,12 +28,25 @@ export const getCategoryById = async (id: string): Promise<Category | undefined>
     }
 }
 
-export const addCategory = async (
-    requestData: AddCategoryDTO
-): Promise<Category> => {
+export const getShopByOwner = async (ownerId: string): Promise<Shop | undefined> => {
     try {
-        const response: AxiosResponse<Category> = await marketAPI({
-            url: '/category',
+        const response: AxiosResponse<Shop | undefined> = await marketAPI({
+            url: `/shop/owner/${ownerId}`,
+            method: 'get',
+        })
+        return response.data
+    } catch (error) {
+        console.error('Error:', error);
+        return undefined
+    }
+}
+
+export const addShop = async (
+    requestData: AddShopDTO
+): Promise<Shop> => {
+    try {
+        const response: AxiosResponse<Shop> = await marketAPI({
+            url: '/shop',
             method: 'post',
             data: requestData,
         })
@@ -46,13 +59,13 @@ export const addCategory = async (
     }
 }
 
-export const updateCategory = async (
+export const updateShop = async (
     id: string,
-    requestData: AddCategoryDTO
-): Promise<Category | null> => {
+    requestData: AddShopDTO
+): Promise<Shop | null> => {
     try {
-        const response: AxiosResponse<Category | null> = await marketAPI({
-            url: `/category/${id}`,
+        const response: AxiosResponse<Shop | null> = await marketAPI({
+            url: `/shop/${id}`,
             method: 'put',
             data: requestData,
         })
@@ -64,12 +77,12 @@ export const updateCategory = async (
     }
 }
 
-export const deleteCategory = async (
+export const deleteShop = async (
     id: string
 ): Promise<boolean> => {
     try {
         const response: AxiosResponse<boolean> = await marketAPI({
-            url: `/category/${id}`,
+            url: `/shop/${id}`,
             method: 'delete',
         })
 

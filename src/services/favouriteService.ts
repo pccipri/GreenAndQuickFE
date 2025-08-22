@@ -1,11 +1,11 @@
-import { AddCategoryDTO, Category } from "@/interfaces/Category";
+import { AddFavouriteDTO, Favourite } from "@/interfaces/Favourite";
 import { marketAPI } from "./api";
 import { AxiosResponse } from "axios";
 
-export const getAllCategories = async (): Promise<Category[]> => {
+export const getAllFavourites = async (): Promise<Favourite[]> => {
     try {
-        const response: AxiosResponse<Category[]> = await marketAPI({
-            url: '/category',
+        const response: AxiosResponse<Favourite[]> = await marketAPI({
+            url: '/favourite',
             method: 'get',
         })
         return response.data
@@ -15,10 +15,10 @@ export const getAllCategories = async (): Promise<Category[]> => {
     }
 }
 
-export const getCategoryById = async (id: string): Promise<Category | undefined> => {
+export const getFavouriteById = async (id: string): Promise<Favourite | undefined> => {
     try {
-        const response: AxiosResponse<Category | undefined> = await marketAPI({
-            url: `/category/${id}`,
+        const response: AxiosResponse<Favourite | undefined> = await marketAPI({
+            url: `/favourite/${id}`,
             method: 'get',
         })
         return response.data
@@ -28,12 +28,12 @@ export const getCategoryById = async (id: string): Promise<Category | undefined>
     }
 }
 
-export const addCategory = async (
-    requestData: AddCategoryDTO
-): Promise<Category> => {
+export const addFavourite = async (
+    requestData: AddFavouriteDTO
+): Promise<Favourite> => {
     try {
-        const response: AxiosResponse<Category> = await marketAPI({
-            url: '/category',
+        const response: AxiosResponse<Favourite> = await marketAPI({
+            url: '/favourite',
             method: 'post',
             data: requestData,
         })
@@ -46,13 +46,13 @@ export const addCategory = async (
     }
 }
 
-export const updateCategory = async (
+export const updateFavourite = async (
     id: string,
-    requestData: AddCategoryDTO
-): Promise<Category | null> => {
+    requestData: AddFavouriteDTO
+): Promise<Favourite | null> => {
     try {
-        const response: AxiosResponse<Category | null> = await marketAPI({
-            url: `/category/${id}`,
+        const response: AxiosResponse<Favourite | null> = await marketAPI({
+            url: `/favourite/${id}`,
             method: 'put',
             data: requestData,
         })
@@ -64,12 +64,12 @@ export const updateCategory = async (
     }
 }
 
-export const deleteCategory = async (
+export const deleteFavourite = async (
     id: string
 ): Promise<boolean> => {
     try {
         const response: AxiosResponse<boolean> = await marketAPI({
-            url: `/category/${id}`,
+            url: `/favourite/${id}`,
             method: 'delete',
         })
 

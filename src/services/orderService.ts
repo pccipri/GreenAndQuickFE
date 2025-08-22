@@ -1,11 +1,11 @@
-import { AddCategoryDTO, Category } from "@/interfaces/Category";
+import { AddOrderDTO, Order } from "@/interfaces/Order";
 import { marketAPI } from "./api";
 import { AxiosResponse } from "axios";
 
-export const getAllCategories = async (): Promise<Category[]> => {
+export const getAllOrders = async (): Promise<Order[]> => {
     try {
-        const response: AxiosResponse<Category[]> = await marketAPI({
-            url: '/category',
+        const response: AxiosResponse<Order[]> = await marketAPI({
+            url: '/order',
             method: 'get',
         })
         return response.data
@@ -15,10 +15,10 @@ export const getAllCategories = async (): Promise<Category[]> => {
     }
 }
 
-export const getCategoryById = async (id: string): Promise<Category | undefined> => {
+export const getOrderById = async (id: string): Promise<Order | undefined> => {
     try {
-        const response: AxiosResponse<Category | undefined> = await marketAPI({
-            url: `/category/${id}`,
+        const response: AxiosResponse<Order | undefined> = await marketAPI({
+            url: `/order/${id}`,
             method: 'get',
         })
         return response.data
@@ -28,12 +28,25 @@ export const getCategoryById = async (id: string): Promise<Category | undefined>
     }
 }
 
-export const addCategory = async (
-    requestData: AddCategoryDTO
-): Promise<Category> => {
+export const getOrderByUser = async (userId: string): Promise<Order | undefined> => {
     try {
-        const response: AxiosResponse<Category> = await marketAPI({
-            url: '/category',
+        const response: AxiosResponse<Order | undefined> = await marketAPI({
+            url: `/order/user/${userId}`,
+            method: 'get',
+        })
+        return response.data
+    } catch (error) {
+        console.error('Error:', error);
+        return undefined
+    }
+}
+
+export const addOrder = async (
+    requestData: AddOrderDTO
+): Promise<Order> => {
+    try {
+        const response: AxiosResponse<Order> = await marketAPI({
+            url: '/order',
             method: 'post',
             data: requestData,
         })
@@ -46,13 +59,13 @@ export const addCategory = async (
     }
 }
 
-export const updateCategory = async (
+export const updateOrder = async (
     id: string,
-    requestData: AddCategoryDTO
-): Promise<Category | null> => {
+    requestData: AddOrderDTO
+): Promise<Order | null> => {
     try {
-        const response: AxiosResponse<Category | null> = await marketAPI({
-            url: `/category/${id}`,
+        const response: AxiosResponse<Order | null> = await marketAPI({
+            url: `/order/${id}`,
             method: 'put',
             data: requestData,
         })
@@ -64,12 +77,12 @@ export const updateCategory = async (
     }
 }
 
-export const deleteCategory = async (
+export const deleteOrder = async (
     id: string
 ): Promise<boolean> => {
     try {
         const response: AxiosResponse<boolean> = await marketAPI({
-            url: `/category/${id}`,
+            url: `/order/${id}`,
             method: 'delete',
         })
 
