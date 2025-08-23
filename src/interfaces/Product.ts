@@ -12,6 +12,7 @@ export interface Product {
 }
 
 export interface AddProductDTO {
+    shop: string;
     name: string;
     description: string;
     imageUrl: string;

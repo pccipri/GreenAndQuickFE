@@ -7,6 +7,6 @@ export interface Favourite {
 }
 
 export interface AddFavouriteDTO {
-    name: string;
+    user: string;
     products: string[];
 }

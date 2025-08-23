@@ -17,9 +17,9 @@ export interface Subscription {
     deliveryAddress: Address;
 }
 
-export interface AddCategoryDTO {
-    name: string;
-    description: string;
+export interface AddSubscriptionDTO {
+    userId: string;
+    products: SubscriptionProduct[];
     frequency: 'daily' | 'weekly' | 'monthly';
     nextDeliveryDate: Date;
     isActive: boolean;

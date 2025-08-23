@@ -20,10 +20,12 @@ export interface Order {
 }
 
 export interface AddOrderDTO {
-    name: string;
+    userId: string;
+    shopGroupId: string;
     items: OrderItem[];
     totalAmount: number;
     paymentOption: 'cash' | 'stripe';
     deliveryOption: 'fanCourier';
     deliveryAddress: Address;
+    status: 'pending' | 'processing' | 'delivered' | 'cancelled';
 }

@@ -8,4 +8,5 @@ export interface Category {
 
 export interface AddCategoryDTO {
     name: string;
+    isGlobal: boolean;
 }
