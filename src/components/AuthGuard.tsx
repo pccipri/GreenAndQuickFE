@@ -2,8 +2,8 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { useAuth } from '../hooks/useAuth'
-import { ADMIN_ROUTES, PROTECTED_ROUTES, UNPROTECTED_ROUTES } from '@/utils/routes'
+import { ADMIN_ROUTES, NO_ACCOUNT_ROUTES, PROTECTED_ROUTES, UNPROTECTED_ROUTES } from '@/utils/routes'
+import { useAuth } from '@/contexts/AuthProvider'
 
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     const { user, loading } = useAuth()
@@ -14,6 +14,11 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
         if (loading) return
 
         if (UNPROTECTED_ROUTES.includes(pathname)) return
+
+        if (NO_ACCOUNT_ROUTES.some(prefix => pathname.startsWith(prefix)) && user) {
+            router.push('/')
+            return
+        }
 
         if (PROTECTED_ROUTES.some(prefix => pathname.startsWith(prefix)) && !user) {
             router.push('/login')

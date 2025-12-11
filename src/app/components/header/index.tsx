@@ -16,33 +16,13 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { FC, useState, MouseEvent } from 'react';
+import { FC, useState, MouseEvent, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import LanguageSelector from './components/LanguageSelector';
-
-
-const pages = ['Login', 'Register', 'Sellers', 'Shop', 'Checkout', 'Contact Us', 'Privacy Policy', 'Not Found', 'Product'];
-const settings = ['Account', 'Dashboard', 'My Shop', 'Logout'];
-
-const pageRoutes: { [key: string]: string } = {
-    'Login': '/login',
-    'Register': '/register',
-    'Sellers': '/sellersPage',
-    'Shop': '/shopPage',
-    'Checkout': '/checkout',
-    'Contact Us': '/contactUs',
-    'Privacy Policy': '/privacyPolicy',
-    'Not Found': '/notFound',
-    'Product': '/productPage',
-};
-
-const settingsRoutes: { [key: string]: string } = {
-    'Account': '/myAccount',
-    'Dashboard': '/dashboard',
-    'My Shop': '/myShop',
-    'Logout': '/logout',
-};
+import { stringAvatar } from '@/utils/helpers';
+import { pages, Route, settings } from '@/utils/routes';
+import { useAuth } from '@/contexts/AuthProvider';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -90,8 +70,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header: FC = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const { user, logout } = useAuth()
 
     const router = useRouter();
+
+    const handleGetUserName = useCallback(() => {
+        if(user) {
+            if(user.firstName && user.lastName) {
+                return user.firstName + " " + user.lastName
+            } else if(user.firstName && !user.lastName) {
+                return user.firstName
+            } else if(!user.firstName && user.lastName) {
+                return user.lastName
+            } else {
+                return user.username
+            }
+        } else {
+            return "Guest"
+        }
+    }, [user])
 
     const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -107,6 +104,15 @@ const Header: FC = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const isLoggedIn = !!user;
+    const canUserAccessSettings = (setting: Route) => {
+        if (!setting.protected && !setting.withoutLogin) return true;
+        if( setting.withoutLogin && isLoggedIn) return false;
+        if (!isLoggedIn && setting.protected) return false;
+        if (user && setting.role && user.role !== setting.role) return false;
+        return true;
+    }
 
     return (
         <AppBar position="static">
@@ -160,10 +166,10 @@ const Header: FC = () => {
                             }}
                         >
                             {pages.map((page, index) => (
-                                <MenuItem key={page + index} onClick={handleCloseNavMenu}>
-                                    <Link href={pageRoutes[page]} passHref>
+                                <MenuItem key={page.label + index} onClick={handleCloseNavMenu}>
+                                    <Link href={page.path} passHref>
                                         <Typography textAlign="center" color="inherit">
-                                            {page}
+                                            {page.label}
                                         </Typography>
                                     </Link>
                                 </MenuItem>
@@ -192,12 +198,12 @@ const Header: FC = () => {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <Link href={pageRoutes[page]} passHref key={page}>
+                            <Link href={page.path} passHref key={page.label}>
                                 <Button
                                     onClick={handleCloseNavMenu}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
-                                    {page}
+                                    {page.label}
                                 </Button>
                             </Link>
                         ))}
@@ -216,7 +222,7 @@ const Header: FC = () => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar {...stringAvatar(handleGetUserName())} />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -237,17 +243,19 @@ const Header: FC = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem
-                                    key={setting}
+                                canUserAccessSettings(setting) && <MenuItem
+                                    key={setting.label}
                                     onClick={() => {
                                         handleCloseUserMenu();
-                                        const route = settingsRoutes[setting];
+                                        const route = setting.label !== "Logout" ? setting.path : null;
                                         if (route) {
                                             router.push(route);
+                                        } else {
+                                            logout()
                                         }
                                     }}
                                 >
-                                    <Typography textAlign="center">{setting}</Typography>
+                                    <Typography textAlign="center">{setting.label}</Typography>
                                 </MenuItem>
                             ))}
 

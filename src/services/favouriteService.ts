@@ -1,5 +1,5 @@
 import { AddFavouriteDTO, Favourite } from "@/interfaces/Favourite";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllFavourites = async (): Promise<Favourite[]> => {

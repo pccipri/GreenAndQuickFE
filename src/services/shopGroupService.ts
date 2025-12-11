@@ -1,5 +1,5 @@
 import { AddShopGroupDTO, ShopGroup } from "@/interfaces/ShopGroup";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllShopGroups = async (): Promise<ShopGroup[]> => {

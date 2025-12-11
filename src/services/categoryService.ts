@@ -1,5 +1,5 @@
 import { AddCategoryDTO, Category } from "@/interfaces/Category";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllCategories = async (): Promise<Category[]> => {

@@ -1,5 +1,5 @@
 import { AddReviewDTO, Review } from "@/interfaces/Review";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllReviews = async (): Promise<Review[]> => {

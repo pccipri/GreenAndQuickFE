@@ -1,5 +1,5 @@
 import { AddProductDTO, Product } from "@/interfaces/Product";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllProducts = async (): Promise<Product[]> => {

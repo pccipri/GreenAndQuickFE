@@ -1,5 +1,5 @@
 import { AddOrderDTO, Order } from "@/interfaces/Order";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllOrders = async (): Promise<Order[]> => {

@@ -1,5 +1,5 @@
 import { AddSubscriptionDTO, Subscription } from "@/interfaces/Subscription";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllSubscriptions = async (): Promise<Subscription[]> => {

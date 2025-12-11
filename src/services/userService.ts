@@ -1,5 +1,5 @@
 import { AddUserDTO, User } from "@/interfaces/User";
-import { marketAPI } from "./api";
+import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
 export const getAllUsers = async (): Promise<User[]> => {

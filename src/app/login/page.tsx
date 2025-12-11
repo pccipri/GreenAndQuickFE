@@ -11,7 +11,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { FC, useState } from 'react';
 import { LoginRequest } from '@/interfaces/Auth';
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@/hooks/useAuth';
+import { notify } from '@/utils/toast';
+import { useAuth } from '@/contexts/AuthProvider';
 
 const Login: FC = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,11 +25,13 @@ const Login: FC = () => {
         usernameOrEmail: '',
         password: '',
     })
-    const { signIn } = useAuth()
+    const { signIn, refresh } = useAuth()
     const loginUser = async () => {
         const response = await signIn(userData)
 
         if (response) {
+            await refresh()
+            notify("Succesfull login", "success")
             router.push("/")
         }
 

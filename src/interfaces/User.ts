@@ -18,9 +18,4 @@ export interface AddUserDTO {
   username: string;
   email: string;
   password: string;
-  role: 'user' | 'admin' | 'shopOwner';
-  firstName: string;
-  lastName: string;
-  addresses: UserAddress[];
-  phoneNumber: string;
 }

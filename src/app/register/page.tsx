@@ -12,7 +12,7 @@ import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { registerUser } from '@/services/authService';
 import { useRouter } from 'next/navigation'
-import { CreateUserDTO } from '@/interfaces/User';
+import { AddUserDTO } from '@/interfaces/User';
 
 const Register: FC = () => {
     const t = useTranslations('Register');
@@ -22,21 +22,21 @@ const Register: FC = () => {
         event.preventDefault();
     };
     const router = useRouter()
-    const [userData, setUserData] = useState<CreateUserDTO>({
+    const [userData, setUserData] = useState<AddUserDTO>({
         username: '',
         email: '',
         password: '',
     })
     const createUser = async () => {
         const response = await registerUser(userData)
-
-        if (response) {
+        
+        if (response && response.data) {
             router.push("/login")
         }
 
     }
 
-    const handlePropertyUpdate = (propertyName: keyof CreateUserDTO, value: string) => {
+    const handlePropertyUpdate = (propertyName: keyof AddUserDTO, value: string) => {
         setUserData({ ...userData, [propertyName]: value });
     }
 
