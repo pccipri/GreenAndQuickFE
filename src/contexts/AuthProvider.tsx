@@ -5,7 +5,7 @@ import { User } from "@/interfaces/User";
 import { marketAPI } from "@/lib/api";
 import { authAPI, getAccessToken, refreshAccessToken, setAccessToken } from "@/lib/tokenManager";
 import { useRouter } from "next/navigation";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
 export interface AuthContextType {
   user: User | null;
@@ -17,7 +17,7 @@ export interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();

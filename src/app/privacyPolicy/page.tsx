@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import PolicyAccordion from "../components/policyAccordion";
-
+import privacyPolicyData from "@/data/privacyPolicy.json";
 
 // Has the same type as declared in the PolicyAccordion component
 interface PolicySection {
@@ -21,10 +21,8 @@ const PrivacyPolicy = () => {
     const [policyData, setPolicyData] = useState<PrivacyPolicyData | null>(null);
 
     useEffect(() => {
-        fetch("/privacyPolicy.json")
-            .then((res) => res.json())
-            .then((data) => setPolicyData(data));
-    }, []);
+        setPolicyData(privacyPolicyData)
+    }, [privacyPolicyData]);
 
     // Display a loading message if the data isn't loaded yet
     if (!policyData) return <div>Loading...</div>;

@@ -1,11 +1,10 @@
 "use client"
 
-import { FC, ReactNode } from "react";
-
+import { FC } from "react";
 
 interface CheckoutProductProps {
     productName: string;
-    productImage?: ReactNode;
+    productImage?: string;
     productPrice: number;
 }
 
