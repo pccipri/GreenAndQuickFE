@@ -25,16 +25,15 @@ marketAPI.interceptors.response.use(
     if (original._retry) return Promise.reject(error);
     original._retry = true;
 
-    // Never try to refresh for auth endpoints (mounted under /api/auth)
     if (original.url?.includes("/api/auth/")) {
       return Promise.reject(error);
     }
 
     try {
-      const newToken = await refreshAccessToken(); // uses authAPI, no loop
+      const newToken = await refreshAccessToken();
       original.headers = original.headers ?? {};
       original.headers.Authorization = `Bearer ${newToken}`;
-      return marketAPI(original); // retry once
+      return marketAPI(original);
     } catch (e) {
       setAccessToken(null);
       return Promise.reject(e);
