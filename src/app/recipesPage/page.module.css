@@ -1,0 +1,40 @@
+.recipesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.highlightedRecipes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.recipeCardContainer {
+    display: flex;
+    padding: 30px 50px;
+    gap: 20px;
+    width: 100%;
+}
+
+.categoryCardContainer {
+    display: flex;
+    padding: 30px 50px;
+    gap: 20px;
+    width: 100%;
+}
+
+.loadMoreBtn {
+    margin-bottom: 50px;
+}
+
+.categoriesSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
