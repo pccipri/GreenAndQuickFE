@@ -11,27 +11,27 @@ import CardActions from '@mui/material/CardActions';
 
 
 interface RecipeCardProps {
-    productImage?: string;
-    productName: string;
-    productCategory: string;
+    recipeImage?: string;
+    recipeName: string;
+    recipeCategory: string;
 }
 
-const RecipeCard: FC<RecipeCardProps> = ({ productImage, productName, productCategory }) => {
+const RecipeCard: FC<RecipeCardProps> = ({ recipeImage, recipeName, recipeCategory }) => {
     return (
         <Card>
             <CardActionArea>
                 <CardMedia
                     component="img"
                     height="140"
-                    image={productImage}
-                    alt={productName}
+                    image={recipeImage}
+                    alt={recipeName}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {productName}
+                        {recipeName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {productCategory}
+                        {recipeCategory}
                     </Typography>
                 </CardContent>
             </CardActionArea>

@@ -6,20 +6,20 @@ import styles from "./categoryCard.module.css";
 
 
 interface CategoryCardProps {
-    productImage?: string;
-    productName: string;
+    categoryImage?: string;
+    categoryName: string;
 }
 
-const CategoryCard: FC<CategoryCardProps> = ({ productImage, productName }) => {
+const CategoryCard: FC<CategoryCardProps> = ({ categoryImage, categoryName }) => {
     return (
         <div className={styles.container}>
             <Box
                 className={styles.imageBox}
                 sx={{
-                    backgroundImage: `url(${productImage})`,
+                    backgroundImage: `url(${categoryImage})`,
                 }}
             />
-            <h3 className={styles.productName}>{productName}</h3>
+            <h3 className={styles.productName}>{categoryName}</h3>
         </div>
     );
 };
