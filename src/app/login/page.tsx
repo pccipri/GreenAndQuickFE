@@ -37,6 +37,16 @@ const Login: FC = () => {
 
     }
 
+    const loginWithGoogle = () => {
+        const googleAuthUrl = process.env.NEXT_PUBLIC_GOOGLE_AUTH_URL;
+
+        if(googleAuthUrl) {
+
+            
+        router.push(googleAuthUrl)
+        }
+    }
+
     const handlePropertyUpdate = (propertyName: keyof LoginRequest, value: string) => {
         setUserData({ ...userData, [propertyName]: value });
     }
@@ -123,8 +133,10 @@ const Login: FC = () => {
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                         </Box>
-                        <Button variant="contained" onClick={loginUser} fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Log In</Button>
+                        <Button variant="contained" onClick={loginUser} fullWidth style={{ marginTop: '4vw'}}>Log In</Button>
+                        <Button variant="outlined" onClick={loginWithGoogle} fullWidth style={{ marginTop: '1vw', marginBottom: '2vw' }}>Log in with Google</Button>
                         <p>Don&apos;t have an account yet?</p><Button href="/register">Register Now</Button>
+
                     </div>
                 </div>
 
