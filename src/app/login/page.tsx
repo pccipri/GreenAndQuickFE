@@ -132,6 +132,9 @@ const Login: FC = () => {
                                 }}
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
+                            <div style={{ textAlign: 'right', marginBottom: '2vw' }}>
+                                <Button href="/auth/forgotPassword" style={{ textTransform: 'none' }}>Forgot Password?</Button>
+                            </div>
                         </Box>
                         <Button variant="contained" onClick={loginUser} fullWidth style={{ marginTop: '4vw'}}>Log In</Button>
                         <Button variant="outlined" onClick={loginWithGoogle} fullWidth style={{ marginTop: '1vw', marginBottom: '2vw' }}>Log in with Google</Button>

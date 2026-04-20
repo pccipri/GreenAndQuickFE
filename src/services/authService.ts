@@ -1,7 +1,7 @@
 
 import { AddUserDTO } from "@/interfaces/User";
 import { marketAPI } from "../lib/api";
-import { EmailTokenVerificationResponse, LoginRequest, LoginResponse } from "@/interfaces/Auth";
+import { EmailTokenVerificationResponse, LoginRequest, LoginResponse, ForgotPasswordRequest, ForgotPasswordResponse, ResetPasswordRequest, ResetPasswordResponse } from "@/interfaces/Auth";
 import { AxiosResponse } from "axios";
 import { notify } from "@/utils/toast";
 
@@ -47,5 +47,35 @@ export const login = async (
   } catch (error: any) {
     console.error('Error in the login process:', error)
     throw new Error(error.response?.data?.error || 'Login failed')
+  }
+}
+
+export const requestPasswordReset = async (requestData: ForgotPasswordRequest): Promise<ForgotPasswordResponse | undefined> => {
+  try {
+    const response: AxiosResponse<ForgotPasswordResponse> = await marketAPI({
+      url: '/auth/forgot-password',
+      method: 'post',
+      data: requestData,
+    })
+    return response.data
+  } catch (error: any) {
+    console.error('Error in the forgot password process:', error);
+    notify(error.response?.data?.message || 'Request failed', "error")
+    return undefined
+  }
+}
+
+export const resetPassword = async (requestData: ResetPasswordRequest): Promise<ResetPasswordResponse | undefined> => {
+  try {
+    const response: AxiosResponse<ResetPasswordResponse> = await marketAPI({
+      url: '/auth/reset-password',
+      method: 'post',
+      data: requestData,
+    })
+    return response.data
+  } catch (error: any) {
+    console.error('Error in the reset password process:', error);
+    notify(error.response?.data?.message || 'Reset failed', "error")
+    return undefined
   }
 }

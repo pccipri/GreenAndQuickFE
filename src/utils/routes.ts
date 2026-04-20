@@ -8,7 +8,7 @@ export const API_ROUTES = {
 
 export const UNPROTECTED_ROUTES: string[] = ['/']
 
-export const NO_ACCOUNT_ROUTES: string[] = ['/login', '/register']
+export const NO_ACCOUNT_ROUTES: string[] = ['/login', '/register', '/auth/forgotPassword', '/auth/resetPassword']
 
 export const PROTECTED_ROUTES: string[] = [
     '/myAccount',

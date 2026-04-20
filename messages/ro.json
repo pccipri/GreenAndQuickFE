@@ -5,5 +5,24 @@
   "Header": {
     "english": "Engleză",
     "romanian": "Română"
+  },
+  "ForgotPassword": {
+    "title": "Am uitat parola",
+    "subtitle": "Introduceți adresa de email și vă vom trimite un link pentru resetarea parolei.",
+    "email": "Email",
+    "send": "Trimite link de resetare",
+    "sending": "Se trimite...",
+    "back": "Înapoi la autentificare",
+    "remember": "Ți-ai amintit parola?"
+  },
+  "ResetPassword": {
+    "title": "Resetează parola",
+    "subtitle": "Introduceți noua parolă mai jos.",
+    "password": "Parolă nouă",
+    "confirmPassword": "Confirmă parola",
+    "reset": "Resetează parola",
+    "resetting": "Se resetează...",
+    "invalid": "Link invalid de resetare",
+    "invalidMsg": "Link-ul de resetare este invalid sau expirat."
   }
 }

@@ -5,5 +5,24 @@
   "Header": {
     "english": "English",
     "romanian": "Romanian"
+  },
+  "ForgotPassword": {
+    "title": "Forgot Password",
+    "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+    "email": "Email",
+    "send": "Send Reset Link",
+    "sending": "Sending...",
+    "back": "Back to Login",
+    "remember": "Remember your password?"
+  },
+  "ResetPassword": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password below.",
+    "password": "New Password",
+    "confirmPassword": "Confirm Password",
+    "reset": "Reset Password",
+    "resetting": "Resetting...",
+    "invalid": "Invalid Reset Link",
+    "invalidMsg": "The reset link is invalid or expired."
   }
 }
