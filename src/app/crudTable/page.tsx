@@ -30,121 +30,110 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 
-type Product = {
-  _id: string;
-  shop: string;
-  name: string;
-  description: string;
-  imagePath: string | null;
-  price: number;
-  reducedPrice: number | null;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import { Product } from "@/interfaces/Product";
 
 
-{/* Mock data for products table */ }
+// Mock data for products table
 const initialProducts: Product[] = [
   {
     _id: "1",
     shop: "Marcel's Shop",
     name: "Product One",
     description: "This is the first product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
   {
     _id: "2",
     shop: "Marcel's Shop",
     name: "Product Two",
     description: "This is the second product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
   {
     _id: "3",
     shop: "Marcel's Shop",
     name: "Product Three",
     description: "This is the third product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
   {
     _id: "4",
     shop: "Marcel's Shop",
     name: "Product Four",
     description: "This is the fourth product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
   {
     _id: "5",
     shop: "Marcel's Shop",
     name: "Product Five",
     description: "This is the fifth product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
   {
     _id: "6",
     shop: "Marcel's Shop",
     name: "Product Six",
     description: "This is the sixth product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
   {
     _id: "7",
     shop: "Marcel's Shop",
     name: "Product Seven",
     description: "This is the seventh product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
   {
     _id: "8",
     shop: "Marcel's Shop",
     name: "Product Eight",
     description: "This is the eighth product.",
-    imagePath: null,
+    imageUrl: "",
     price: 29.99,
     reducedPrice: 19.99,
     category: "Category A",
-    createdAt: "2024-01-01",
-    updatedAt: "2024-01-02",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-02"),
   },
 ];
 
-const Products = () => {
+const ProductsTable = () => {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [productToDelete, setProductToDelete] = useState<string>("");
@@ -255,12 +244,12 @@ const Products = () => {
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.shop}</TableCell>
                   <TableCell>{product.description}</TableCell>
-                  <TableCell>{product.imagePath}</TableCell>
+                  <TableCell>{product.imageUrl}</TableCell>
                   <TableCell>{product.price}</TableCell>
                   <TableCell>{product.reducedPrice}</TableCell>
                   <TableCell>{product.category}</TableCell>
-                  <TableCell>{product.createdAt}</TableCell>
-                  <TableCell>{product.updatedAt}</TableCell>
+                  <TableCell>{product.createdAt.toLocaleDateString()}</TableCell>
+                  <TableCell>{product.updatedAt.toLocaleDateString()}</TableCell>
                   <TableCell align="right">
                     <IconButton
                       onClick={() => router.push(`/dashboard/products/${product._id}`)}
@@ -281,7 +270,7 @@ const Products = () => {
 
               {products.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={7} align="center">
+                  <TableCell colSpan={10} align="center">
                     <Typography sx={{ py: 3, color: "#666" }}>
                       No products found.
                     </Typography>
@@ -354,7 +343,7 @@ const Products = () => {
                   </Box>
                   <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                     <Typography sx={{ fontWeight: 600 }}>Image</Typography>
-                    <Typography>{product.imagePath}</Typography>
+                    <Typography>{product.imageUrl}</Typography>
                   </Box>
                   <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                     <Typography sx={{ fontWeight: 600 }}>Price</Typography>
@@ -370,11 +359,11 @@ const Products = () => {
                   </Box>
                   <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                     <Typography sx={{ fontWeight: 600 }}>Created At</Typography>
-                    <Typography>{product.createdAt}</Typography>
+                    <Typography>{product.createdAt.toLocaleDateString()}</Typography>
                   </Box>
                   <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                     <Typography sx={{ fontWeight: 600 }}>Updated At</Typography>
-                    <Typography>{product.updatedAt}</Typography>
+                    <Typography>{product.updatedAt.toLocaleDateString()}</Typography>
                   </Box>
                 </Stack>
               </CardContent>
@@ -410,4 +399,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProductsTable;
