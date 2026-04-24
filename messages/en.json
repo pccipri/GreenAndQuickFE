@@ -1,6 +1,33 @@
 {
+  "Login": {
+    "title": "Log In",
+    "subtitle": "Welcome back! Please enter your details",
+    "usernameOrEmail": "Username / Email",
+    "usernameOrEmailPlaceholder": "johndoe@gmail.com / johndoe",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••••••••••••",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Log In",
+    "signInGoogle": "Log in with Google",
+    "noAccount": "Don't have an account yet?",
+    "registerNow": "Register Now",
+    "successMessage": "Successful login",
+    "validationError": "Please fill in all required fields"
+  },
   "Register": {
-    "register": "Register"
+    "title": "Register",
+    "subtitle": "Welcome to Green & Quick! Get started with an account",
+    "register": "Register",
+    "username": "Username",
+    "usernamePlaceholder": "john_doe",
+    "email": "Email",
+    "emailPlaceholder": "johndoe@gmail.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••••••••••••",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "••••••••••••••••••",
+    "alreadyHaveAccount": "Already have an account?",
+    "logIn": "Log In"
   },
   "Header": {
     "english": "English",
@@ -24,5 +51,134 @@
     "resetting": "Resetting...",
     "invalid": "Invalid Reset Link",
     "invalidMsg": "The reset link is invalid or expired."
+  },
+  "auth": {
+    "loginFailed": "Login failed",
+    "emailNotVerified": "Email not verified",
+    "registrationFailed": "Registration failed",
+    "emailAlreadyExists": "Email already exists",
+    "invalidCredentials": "Invalid credentials",
+    "userNotFound": "User not found",
+    "invalidPassword": "Invalid password",
+    "googleNoEmail": "Google account has no email address",
+    "tokenRefreshFailed": "Token refresh failed",
+    "logoutFailed": "Logout failed",
+    "forgotPasswordFailed": "Forgot password failed",
+    "resetPasswordFailed": "Reset password failed",
+    "verifyEmailFailed": "Email verification failed",
+    "resendVerificationFailed": "Resend verification failed",
+    "verifyingEmail": "Verifying your email...",
+    "verificationFailed": "Verification failed"
+  },
+  "user": {
+    "notFound": "User not found",
+    "fetchSettingsFailed": "Failed to fetch user settings",
+    "updateSettingsFailed": "Failed to update user settings",
+    "updateProfileFailed": "Failed to update user profile",
+    "fetchProfileFailed": "Failed to fetch user profile",
+    "changePasswordFailed": "Failed to change password",
+    "deleteAccountFailed": "Failed to delete account"
+  },
+  "order": {
+    "createFailed": "Failed to create order",
+    "fetchAllFailed": "Failed to fetch all orders",
+    "notFound": "Order not found",
+    "fetchFailed": "Failed to fetch order",
+    "fetchByUserFailed": "Failed to fetch orders by user",
+    "updateFailed": "Failed to update order",
+    "deleteFailed": "Failed to delete order"
+  },
+  "subscription": {
+    "createFailed": "Failed to create subscription",
+    "fetchAllFailed": "Failed to fetch all subscriptions",
+    "notFound": "Subscription not found",
+    "fetchFailed": "Failed to fetch subscription",
+    "fetchByUserFailed": "Failed to fetch subscriptions by user",
+    "updateFailed": "Failed to update subscription",
+    "deleteFailed": "Failed to delete subscription"
+  },
+  "review": {
+    "createFailed": "Failed to create review",
+    "fetchAllFailed": "Failed to fetch all reviews",
+    "notFound": "Review not found",
+    "fetchFailed": "Failed to fetch review",
+    "fetchByUserFailed": "Failed to fetch reviews by user",
+    "fetchByProductFailed": "Failed to fetch reviews by product",
+    "fetchByShopFailed": "Failed to fetch reviews by shop",
+    "updateFailed": "Failed to update review",
+    "deleteFailed": "Failed to delete review"
+  },
+  "category": {
+    "createFailed": "Failed to create category",
+    "fetchAllFailed": "Failed to fetch all categories",
+    "notFound": "Category not found",
+    "fetchFailed": "Failed to fetch category",
+    "updateFailed": "Failed to update category",
+    "deleteFailed": "Failed to delete category"
+  },
+  "favorite": {
+    "createFailed": "Failed to create favorite",
+    "fetchAllFailed": "Failed to fetch all favorites",
+    "notFound": "Favorite not found",
+    "fetchFailed": "Failed to fetch favorite",
+    "fetchByUserFailed": "Failed to fetch favorites by user",
+    "updateFailed": "Failed to update favorite",
+    "deleteFailed": "Failed to delete favorite",
+    "missingIds": "Missing userId or productId",
+    "toggleFailed": "Failed to toggle product in favorites"
+  },
+  "inventory": {
+    "createFailed": "Failed to create inventory item",
+    "fetchAllFailed": "Failed to fetch all inventory items",
+    "fetchLowStockFailed": "Failed to fetch low stock items",
+    "notFound": "Inventory item not found",
+    "fetchFailed": "Failed to fetch inventory item",
+    "fetchByProductFailed": "Failed to fetch inventory by product",
+    "fetchByShopFailed": "Failed to fetch inventory by shop",
+    "updateFailed": "Failed to update inventory item",
+    "adjustFailed": "Failed to adjust inventory stock",
+    "deleteFailed": "Failed to delete inventory item"
+  },
+  "product": {
+    "createFailed": "Failed to create product",
+    "fetchAllFailed": "Failed to fetch all products",
+    "notFound": "Product not found",
+    "fetchFailed": "Failed to fetch product",
+    "fetchByShopFailed": "Failed to fetch products by shop",
+    "fetchByCategoryFailed": "Failed to fetch products by category",
+    "invalidQuery": "Invalid search query",
+    "searchFailed": "Failed to search products",
+    "updateFailed": "Failed to update product",
+    "deleteFailed": "Failed to delete product"
+  },
+  "recipe": {
+    "invalidId": "Invalid recipe ID",
+    "notFound": "Recipe not found"
+  },
+  "shop": {
+    "createFailed": "Failed to create shop",
+    "fetchAllFailed": "Failed to fetch all shops",
+    "notFound": "Shop not found",
+    "fetchFailed": "Failed to fetch shop",
+    "notFoundForOwner": "Shop not found for owner",
+    "fetchByOwnerFailed": "Failed to fetch shop by owner",
+    "updateFailed": "Failed to update shop",
+    "deleteFailed": "Failed to delete shop"
+  },
+  "shopGroup": {
+    "createFailed": "Failed to create shop group",
+    "fetchAllFailed": "Failed to fetch all shop groups",
+    "notFound": "Shop group not found",
+    "fetchFailed": "Failed to fetch shop group",
+    "updateFailed": "Failed to update shop group",
+    "deleteFailed": "Failed to delete shop group"
+  },
+  "stripe": {
+    "paymentIntentFailed": "Failed to create payment intent",
+    "webhookSignatureFailed": "Webhook signature verification failed"
+  },
+  "mail": {
+    "missingFields": "Missing required fields for email",
+    "sendFailed": "Failed to send email"
   }
 }

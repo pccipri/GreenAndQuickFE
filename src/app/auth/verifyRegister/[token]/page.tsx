@@ -2,17 +2,19 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { verifyRegisterToken } from '@/services/authService';
 import { notify } from '@/utils/toast';
 
 export default function VerifyRegisterPage() {
   const params = useParams();
   const router = useRouter();
+  const t = useTranslations('auth');
   const token = params?.token as string;
   const hasVerifiedToken = useRef(false);
   
   const [status, setStatus] = useState<'nothing' | 'loading' | 'error' | 'done'>('nothing');
-  const [message, setMessage] = useState('Verifying your email...');
+  const [message, setMessage] = useState(t('verifyingEmail'));
 
   useEffect(() => {
    if (!token || hasVerifiedToken.current) return;
@@ -26,15 +28,15 @@ export default function VerifyRegisterPage() {
         router.replace('/');
       } else {
         setStatus('error');
-        setMessage('Something went wrong.');
+        setMessage(t('verificationFailed'));
         router.replace('/');
       }
       setStatus('done');
     }).catch((err) => {
       setStatus('error');
-      setMessage('Verification failed.');
+      setMessage(t('verificationFailed'));
     });
-  }, [token, router]);
+  }, [token, router, t]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">

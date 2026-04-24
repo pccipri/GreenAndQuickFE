@@ -77,6 +77,24 @@ export const updateUser = async (
     }
 }
 
+export const updateUserLanguage = async (
+    userId: string,
+    language: 'en' | 'ro'
+): Promise<User | null> => {
+    try {
+        const response: AxiosResponse<User | null> = await marketAPI({
+            url: `/user/${userId}/settings`,
+            method: 'put',
+            data: { preferredLanguage: language },
+        })
+
+        return response.data
+    } catch (error: any) {
+        console.error('Error:', error)
+        throw new Error(error.response?.data?.error || 'Failed to update language')
+    }
+}
+
 export const deleteUser = async (
     id: string
 ): Promise<boolean> => {

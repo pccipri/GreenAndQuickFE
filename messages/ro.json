@@ -1,6 +1,33 @@
 {
+  "Login": {
+    "title": "Autentificare",
+    "subtitle": "Bun venit înapoi! Vă rugăm introduceți detaliile",
+    "usernameOrEmail": "Nume utilizator / Email",
+    "usernameOrEmailPlaceholder": "johndoe@gmail.com / johndoe",
+    "password": "Parolă",
+    "passwordPlaceholder": "••••••••••••••••••",
+    "forgotPassword": "Ati uitat parola?",
+    "signIn": "Autentificare",
+    "signInGoogle": "Autentificați-vă cu Google",
+    "noAccount": "Nu aveti deja un cont?",
+    "registerNow": "Înregistrați-vă acum",
+    "successMessage": "Autentificare reușită",
+    "validationError": "Vă rugăm să completați toate câmpurile obligatorii"
+  },
   "Register": {
-    "register": "Înregistrare"
+    "title": "Înregistrare",
+    "subtitle": "Bun venit la Green & Quick! Începeți cu un cont",
+    "register": "Înregistrare",
+    "username": "Nume utilizator",
+    "usernamePlaceholder": "john_doe",
+    "email": "Email",
+    "emailPlaceholder": "johndoe@gmail.com",
+    "password": "Parolă",
+    "passwordPlaceholder": "••••••••••••••••••",
+    "confirmPassword": "Confirmă parola",
+    "confirmPasswordPlaceholder": "••••••••••••••••••",
+    "alreadyHaveAccount": "Aveți deja un cont?",
+    "logIn": "Autentificare"
   },
   "Header": {
     "english": "Engleză",
@@ -24,5 +51,134 @@
     "resetting": "Se resetează...",
     "invalid": "Link invalid de resetare",
     "invalidMsg": "Link-ul de resetare este invalid sau expirat."
+  },
+  "auth": {
+    "loginFailed": "Autentificare eșuată",
+    "emailNotVerified": "Email neconfirmat",
+    "registrationFailed": "Înregistrare eșuată",
+    "emailAlreadyExists": "Email-ul există deja",
+    "invalidCredentials": "Credențiale invalide",
+    "userNotFound": "Utilizator negăsit",
+    "invalidPassword": "Parolă invalidă",
+    "googleNoEmail": "Contul Google nu are adresă de email",
+    "tokenRefreshFailed": "Reîmprospătarea token-ului a eșuat",
+    "logoutFailed": "Deconectarea a eșuat",
+    "forgotPasswordFailed": "Resetarea parolei a eșuat",
+    "resetPasswordFailed": "Resetarea parolei a eșuat",
+    "verifyEmailFailed": "Verificarea email-ului a eșuat",
+    "resendVerificationFailed": "Retrimiterea verificării a eșuat",
+    "verifyingEmail": "Se verifică email-ul...",
+    "verificationFailed": "Verificarea a eșuat"
+  },
+  "user": {
+    "notFound": "Utilizator negăsit",
+    "fetchSettingsFailed": "Preluarea setărilor utilizatorului a eșuat",
+    "updateSettingsFailed": "Actualizarea setărilor utilizatorului a eșuat",
+    "updateProfileFailed": "Actualizarea profilului a eșuat",
+    "fetchProfileFailed": "Preluarea profilului a eșuat",
+    "changePasswordFailed": "Schimbarea parolei a eșuat",
+    "deleteAccountFailed": "Ștergerea contului a eșuat"
+  },
+  "order": {
+    "createFailed": "Crearea comenzii a eșuat",
+    "fetchAllFailed": "Preluarea tuturor comenzilor a eșuat",
+    "notFound": "Comanda negăsită",
+    "fetchFailed": "Preluarea comenzii a eșuat",
+    "fetchByUserFailed": "Preluarea comenzilor după utilizator a eșuat",
+    "updateFailed": "Actualizarea comenzii a eșuat",
+    "deleteFailed": "Ștergerea comenzii a eșuat"
+  },
+  "subscription": {
+    "createFailed": "Crearea abonamentului a eșuat",
+    "fetchAllFailed": "Preluarea tuturor abonamentelor a eșuat",
+    "notFound": "Abonamentul negăsit",
+    "fetchFailed": "Preluarea abonamentului a eșuat",
+    "fetchByUserFailed": "Preluarea abonamentelor după utilizator a eșuat",
+    "updateFailed": "Actualizarea abonamentului a eșuat",
+    "deleteFailed": "Ștergerea abonamentului a eșuat"
+  },
+  "review": {
+    "createFailed": "Crearea recenziei a eșuat",
+    "fetchAllFailed": "Preluarea tuturor recenziilor a eșuat",
+    "notFound": "Recenzia negăsită",
+    "fetchFailed": "Preluarea recenziei a eșuat",
+    "fetchByUserFailed": "Preluarea recenziilor după utilizator a eșuat",
+    "fetchByProductFailed": "Preluarea recenziilor după produs a eșuat",
+    "fetchByShopFailed": "Preluarea recenziilor după magazin a eșuat",
+    "updateFailed": "Actualizarea recenziei a eșuat",
+    "deleteFailed": "Ștergerea recenziei a eșuat"
+  },
+  "category": {
+    "createFailed": "Crearea categoriei a eșuat",
+    "fetchAllFailed": "Preluarea tuturor categoriilor a eșuat",
+    "notFound": "Categoria negăsită",
+    "fetchFailed": "Preluarea categoriei a eșuat",
+    "updateFailed": "Actualizarea categoriei a eșuat",
+    "deleteFailed": "Ștergerea categoriei a eșuat"
+  },
+  "favorite": {
+    "createFailed": "Crearea favoritului a eșuat",
+    "fetchAllFailed": "Preluarea tuturor favoritelor a eșuat",
+    "notFound": "Favoritul negăsit",
+    "fetchFailed": "Preluarea favoritului a eșuat",
+    "fetchByUserFailed": "Preluarea favoritelor după utilizator a eșuat",
+    "updateFailed": "Actualizarea favoritului a eșuat",
+    "deleteFailed": "Ștergerea favoritului a eșuat",
+    "missingIds": "Lipsesc userId sau productId",
+    "toggleFailed": "Comutarea produsului în favorite a eșuat"
+  },
+  "inventory": {
+    "createFailed": "Crearea articolului de inventar a eșuat",
+    "fetchAllFailed": "Preluarea tuturor articolelor de inventar a eșuat",
+    "fetchLowStockFailed": "Preluarea articolelor cu stoc scăzut a eșuat",
+    "notFound": "Articolul de inventar negăsit",
+    "fetchFailed": "Preluarea articolului de inventar a eșuat",
+    "fetchByProductFailed": "Preluarea inventarului după produs a eșuat",
+    "fetchByShopFailed": "Preluarea inventarului după magazin a eșuat",
+    "updateFailed": "Actualizarea articolului de inventar a eșuat",
+    "adjustFailed": "Ajustarea stocului de inventar a eșuat",
+    "deleteFailed": "Ștergerea articolului de inventar a eșuat"
+  },
+  "product": {
+    "createFailed": "Crearea produsului a eșuat",
+    "fetchAllFailed": "Preluarea tuturor produselor a eșuat",
+    "notFound": "Produsul negăsit",
+    "fetchFailed": "Preluarea produsului a eșuat",
+    "fetchByShopFailed": "Preluarea produselor după magazin a eșuat",
+    "fetchByCategoryFailed": "Preluarea produselor după categorie a eșuat",
+    "invalidQuery": "Interogare de căutare invalidă",
+    "searchFailed": "Căutarea produselor a eșuat",
+    "updateFailed": "Actualizarea produsului a eșuat",
+    "deleteFailed": "Ștergerea produsului a eșuat"
+  },
+  "recipe": {
+    "invalidId": "ID rețetă invalid",
+    "notFound": "Rețeta negăsită"
+  },
+  "shop": {
+    "createFailed": "Crearea magazinului a eșuat",
+    "fetchAllFailed": "Preluarea tuturor magazinelor a eșuat",
+    "notFound": "Magazinul negăsit",
+    "fetchFailed": "Preluarea magazinului a eșuat",
+    "notFoundForOwner": "Magazinul negăsit pentru proprietar",
+    "fetchByOwnerFailed": "Preluarea magazinului după proprietar a eșuat",
+    "updateFailed": "Actualizarea magazinului a eșuat",
+    "deleteFailed": "Ștergerea magazinului a eșuat"
+  },
+  "shopGroup": {
+    "createFailed": "Crearea grupului de magazine a eșuat",
+    "fetchAllFailed": "Preluarea tuturor grupurilor de magazine a eșuat",
+    "notFound": "Grupul de magazine negăsit",
+    "fetchFailed": "Preluarea grupului de magazine a eșuat",
+    "updateFailed": "Actualizarea grupului de magazine a eșuat",
+    "deleteFailed": "Ștergerea grupului de magazine a eșuat"
+  },
+  "stripe": {
+    "paymentIntentFailed": "Crearea intenției de plată a eșuat",
+    "webhookSignatureFailed": "Verificarea semnăturii webhook a eșuat"
+  },
+  "mail": {
+    "missingFields": "Lipsesc câmpurile obligatorii pentru email",
+    "sendFailed": "Trimiterea email-ului a eșuat"
   }
 }

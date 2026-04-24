@@ -1,7 +1,7 @@
 
 import { AddUserDTO } from "@/interfaces/User";
 import { marketAPI } from "../lib/api";
-import { EmailTokenVerificationResponse, LoginRequest, LoginResponse, ForgotPasswordRequest, ForgotPasswordResponse, ResetPasswordRequest, ResetPasswordResponse } from "@/interfaces/Auth";
+import { EmailTokenVerificationResponse, LoginRequest, LoginResponse, RegisterResponse, ForgotPasswordRequest, ForgotPasswordResponse, ResetPasswordRequest, ResetPasswordResponse } from "@/interfaces/Auth";
 import { AxiosResponse } from "axios";
 import { notify } from "@/utils/toast";
 
@@ -14,22 +14,22 @@ export const verifyRegisterToken = async (token: string): Promise<EmailTokenVeri
     return response.data
   } catch (error: any) {
     console.error('Error in the token verification process:', error);
-    notify(error.response?.data?.message || 'Login failed', "error")
+    notify(error.response?.data?.error || 'Verification failed', "error")
     return undefined
   }
 }
 
-export const registerUser = async (requestData: AddUserDTO) => {
+export const registerUser = async (requestData: AddUserDTO): Promise<RegisterResponse | undefined> => {
   try {
-    const response = await marketAPI({
+    const response: AxiosResponse<RegisterResponse> = await marketAPI({
       url: '/user',
       method: 'post',
       data: requestData
     })
-    return response
-  } catch (error) {
+    return response.data
+  } catch (error: any) {
     console.error('Error in the registration process:', error);
-    return undefined
+    throw new Error(error.response?.data?.error || 'Registration failed')
   }
 }
 
@@ -60,7 +60,7 @@ export const requestPasswordReset = async (requestData: ForgotPasswordRequest): 
     return response.data
   } catch (error: any) {
     console.error('Error in the forgot password process:', error);
-    notify(error.response?.data?.message || 'Request failed', "error")
+    notify(error.response?.data?.error || 'Request failed', "error")
     return undefined
   }
 }
@@ -75,7 +75,7 @@ export const resetPassword = async (requestData: ResetPasswordRequest): Promise<
     return response.data
   } catch (error: any) {
     console.error('Error in the reset password process:', error);
-    notify(error.response?.data?.message || 'Reset failed', "error")
+    notify(error.response?.data?.error || 'Reset failed', "error")
     return undefined
   }
 }

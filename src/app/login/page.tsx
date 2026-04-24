@@ -9,12 +9,14 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { FC, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { LoginRequest } from '@/interfaces/Auth';
 import { useRouter } from 'next/navigation'
 import { notify } from '@/utils/toast';
 import { useAuth } from '@/contexts/AuthProvider';
 
 const Login: FC = () => {
+    const t = useTranslations('Login');
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: { preventDefault: () => void; }) => {
@@ -27,12 +29,22 @@ const Login: FC = () => {
     })
     const { signIn, refresh } = useAuth()
     const loginUser = async () => {
-        const response = await signIn(userData)
+        // Validate required fields
+        if (!userData.usernameOrEmail.trim() || !userData.password.trim()) {
+            notify(t("validationError"), "error")
+            return
+        }
 
-        if (response) {
-            await refresh()
-            notify("Succesfull login", "success")
-            router.push("/")
+        try {
+            const response = await signIn(userData)
+
+            if (response) {
+                await refresh()
+                notify(t("successMessage"), "success")
+                router.push("/")
+            }
+        } catch (error: any) {
+            notify(error.message || 'Login failed', "error")
         }
 
     }
@@ -77,8 +89,8 @@ const Login: FC = () => {
                     justifyContent: 'center',
                 }}>
                     <div style={{ width: '70%', textAlign: 'center' }}>
-                        <h2 style={{ marginBottom: '1.5vw' }}>Log In</h2>
-                        <h6>Welcome back! Please enter your details</h6>
+                        <h2 style={{ marginBottom: '1.5vw' }}>{t("title")}</h2>
+                        <h6>{t("subtitle")}</h6>
                         <Box
                             sx={{
                                 width: 500,
@@ -88,8 +100,8 @@ const Login: FC = () => {
                         >
                             <TextField
                                 fullWidth
-                                label="Username / Email"
-                                placeholder="johndoe@gmail.com / johndoe"
+                                label={t("usernameOrEmail")}
+                                placeholder={t("usernameOrEmailPlaceholder")}
                                 id="username"
                                 type={'text'}
                                 onChange={(e) => {
@@ -104,12 +116,12 @@ const Login: FC = () => {
                             />
                             <TextField
                                 fullWidth
-                                label="Password"
+                                label={t("password")}
                                 onChange={(e) => {
                                     handlePropertyUpdate("password", e.target.value)
                                 }}
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder="••••••••••••••••••"
+                                placeholder={t("passwordPlaceholder")}
                                 id="password"
                                 slotProps={{
                                     input: {
@@ -133,12 +145,12 @@ const Login: FC = () => {
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                             <div style={{ textAlign: 'right', marginBottom: '2vw' }}>
-                                <Button href="/auth/forgotPassword" style={{ textTransform: 'none' }}>Forgot Password?</Button>
+                                <Button href="/auth/forgotPassword" style={{ textTransform: 'none' }}>{t("forgotPassword")}</Button>
                             </div>
                         </Box>
-                        <Button variant="contained" onClick={loginUser} fullWidth style={{ marginTop: '4vw'}}>Log In</Button>
-                        <Button variant="outlined" onClick={loginWithGoogle} fullWidth style={{ marginTop: '1vw', marginBottom: '2vw' }}>Log in with Google</Button>
-                        <p>Don&apos;t have an account yet?</p><Button href="/register">Register Now</Button>
+                        <Button variant="contained" onClick={loginUser} fullWidth style={{ marginTop: '4vw'}}>{t("signIn")}</Button>
+                        <Button variant="outlined" onClick={loginWithGoogle} fullWidth style={{ marginTop: '1vw', marginBottom: '2vw' }}>{t("signInGoogle")}</Button>
+                        <p>{t("noAccount")}</p><Button href="/register">{t("registerNow")}</Button>
 
                     </div>
                 </div>
