@@ -10,12 +10,14 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { registerUser } from '@/services/authService';
 import { useRouter } from 'next/navigation'
 import { AddUserDTO } from '@/interfaces/User';
 
 const Register: FC = () => {
     const t = useTranslations('Register');
+    const locale = useLocale();
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: { preventDefault: () => void; }) => {
@@ -26,12 +28,17 @@ const Register: FC = () => {
         username: '',
         email: '',
         password: '',
+        preferredLanguage: locale as 'en' | 'ro',
     })
     const createUser = async () => {
-        const response = await registerUser(userData)
-        
-        if (response && response.data) {
-            router.push("/login")
+        try {
+            const response = await registerUser(userData)
+            
+            if (response) {
+                router.push("/login")
+            }
+        } catch (error) {
+            // Error is already handled in authService
         }
 
     }
@@ -66,8 +73,8 @@ const Register: FC = () => {
                     justifyContent: 'center',
                 }}>
                     <div style={{ width: '70%', height: '90%', textAlign: 'center' }}>
-                        <h2 style={{ marginBottom: '1.5vw' }}>{t("register")}</h2>
-                        <h6>Welcome to Green & Quick! Get started with an account</h6>
+                        <h2 style={{ marginBottom: '1.5vw' }}>{t("title")}</h2>
+                        <h6>{t("subtitle")}</h6>
                         <Box
                             sx={{
                                 width: 500,
@@ -77,8 +84,8 @@ const Register: FC = () => {
                         >
                             <TextField
                                 fullWidth
-                                label="Username"
-                                placeholder="john_doe"
+                                label={t("username")}
+                                placeholder={t("usernamePlaceholder")}
                                 id="username"
                                 type={'text'}
                                 slotProps={{
@@ -93,8 +100,8 @@ const Register: FC = () => {
                             />
                             <TextField
                                 fullWidth
-                                label="Email"
-                                placeholder="johndoe@gmail.com"
+                                label={t("email")}
+                                placeholder={t("emailPlaceholder")}
                                 id="email"
                                 type={'email'}
                                 onChange={(e) => {
@@ -109,9 +116,9 @@ const Register: FC = () => {
                             />
                             <TextField
                                 fullWidth
-                                label="Password"
+                                label={t("password")}
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder="••••••••••••••••••"
+                                placeholder={t("passwordPlaceholder")}
                                 id="password"
                                 onChange={(e) => {
                                     handlePropertyUpdate("password", e.target.value)
@@ -139,9 +146,9 @@ const Register: FC = () => {
                             />
                             <TextField
                                 fullWidth
-                                label="Confirm Password"
+                                label={t("confirmPassword")}
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder="••••••••••••••••••"
+                                placeholder={t("confirmPasswordPlaceholder")}
                                 id="confirm-password"
                                 slotProps={{
                                     input: {
@@ -165,8 +172,8 @@ const Register: FC = () => {
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                         </Box>
-                        <Button onClick={createUser} variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Register</Button>
-                        <p>Already have an account?</p><Button href="/login">Log In</Button>
+                        <Button onClick={createUser} variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>{t("register")}</Button>
+                        <p>{t("alreadyHaveAccount")}</p><Button href="/login">{t("logIn")}</Button>
                     </div>
                 </div>
 

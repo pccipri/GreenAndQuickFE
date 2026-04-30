@@ -4,6 +4,7 @@ import { LoginRequest } from "@/interfaces/Auth";
 import { User } from "@/interfaces/User";
 import { marketAPI } from "@/lib/api";
 import { authAPI, getAccessToken, refreshAccessToken, setAccessToken } from "@/lib/tokenManager";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
@@ -21,11 +22,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const t = useTranslations();
   
   // Fetch current user from your API (expects Authorization header)
   const fetchUser = useCallback(async () => {
     const { data } = await marketAPI.get("/auth/getLoggedUser"); // -> /api/auth/getLoggedUser
-
+    
     setUser(data.user ?? null);
   }, []);
 
@@ -64,11 +66,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Explicit login using the auth API
   const signIn = async (params: LoginRequest) => {
+    try {
     const { data } = await authAPI.post("/login", params); // cookie set by server
     setAccessToken(data.accessToken);                       // store the access token
     await fetchUser();
     return data.message as string | undefined;
-  };
+  } catch (error: any) {
+    throw new Error(t(error.response?.data?.error) || t("loginFailed"));
+  }};
 
   // Logout: clear server cookie (if route exists) and local state
   const logout = async () => {

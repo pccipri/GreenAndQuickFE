@@ -1,12 +1,14 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function FailedOAuthLoginPage() {
   const params = useParams();
   const router = useRouter();
+  const t = useTranslations('auth');
   const error = params?.error as string;
-  const message: string = error ? error : "An unknown error occurred during authentication."; 
+  const message: string = error ? t(error) || error : t('unknownError');
 
   const handleGoBack = () => {
     router.replace('/login');
