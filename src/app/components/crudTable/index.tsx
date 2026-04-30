@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import Link from "next/link";
 import { useState } from "react";
@@ -29,6 +29,8 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import { useTranslations } from 'next-intl';
+
 export type CrudColumn<T> = {
     key: string;
     label: string;
@@ -58,17 +60,24 @@ type CrudTableProps<T> = {
 const CrudTable = <T,>({
     title,
     addHref,
-    addButtonLabel = "Add new",
+    addButtonLabel,
     data,
     columns,
     getId,
     getTitle,
-    emptyMessage = "No items found.",
-    deleteTitle = "Delete item",
-    deleteMessage = "Are you sure you want to delete this item?",
+    emptyMessage,
+    deleteTitle,
+    deleteMessage,
     onEdit,
     onDeleteConfirm,
 }: CrudTableProps<T>) => {
+    const t = useTranslations("CrudTable");
+
+    const finalAddButtonLabel = addButtonLabel ?? t("addNew");
+    const finalEmptyMessage = emptyMessage ?? t("emptyMessage");
+    const finalDeleteTitle = deleteTitle ?? t("deleteTitle");
+    const finalDeleteMessage = deleteMessage ?? t("deleteMessage");
+
     const [itemToDelete, setItemToDelete] = useState<string>("");
 
     const handleDeleteConfirm = () => {
@@ -122,7 +131,7 @@ const CrudTable = <T,>({
                             },
                         }}
                     >
-                        {addButtonLabel}
+                        {finalAddButtonLabel}
                     </Button>
                 </Box>
 
@@ -152,7 +161,7 @@ const CrudTable = <T,>({
                                 {columns.map((column) => (
                                     <TableCell key={column.key}>{column.label}</TableCell>
                                 ))}
-                                <TableCell align="right">Actions</TableCell>
+                                <TableCell align="right">{t("actions")}</TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -200,7 +209,7 @@ const CrudTable = <T,>({
                                 <TableRow>
                                     <TableCell colSpan={columns.length + 1} align="center">
                                         <Typography sx={{ py: 3, color: "#666" }}>
-                                            {emptyMessage}
+                                            {finalEmptyMessage}
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
@@ -279,23 +288,23 @@ const CrudTable = <T,>({
 
                     {data.length === 0 && (
                         <Typography align="center" sx={{ color: "#666", py: 3 }}>
-                            {emptyMessage}
+                            {finalEmptyMessage}
                         </Typography>
                     )}
                 </Box>
             </Box>
 
             <Dialog open={Boolean(itemToDelete)} onClose={() => setItemToDelete("")}>
-                <DialogTitle>{deleteTitle}</DialogTitle>
+                <DialogTitle>{finalDeleteTitle}</DialogTitle>
 
                 <DialogContent>
-                    <DialogContentText>{deleteMessage}</DialogContentText>
+                    <DialogContentText>{finalDeleteMessage}</DialogContentText>
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={() => setItemToDelete("")}>Cancel</Button>
+                    <Button onClick={() => setItemToDelete("")}>{t("cancel")}</Button>
                     <Button color="error" variant="contained" onClick={handleDeleteConfirm}>
-                        Delete
+                        {t("delete")}
                     </Button>
                 </DialogActions>
             </Dialog>

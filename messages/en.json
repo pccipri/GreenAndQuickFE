@@ -24,5 +24,37 @@
     "resetting": "Resetting...",
     "invalid": "Invalid Reset Link",
     "invalidMsg": "The reset link is invalid or expired."
+  },
+  "CrudTable": {
+    "addNew": "Add new",
+    "emptyMessage": "No items found.",
+    "deleteTitle": "Delete item",
+    "deleteMessage": "Are you sure you want to delete this item?",
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "ProductsTable": {
+    "title": "Products",
+    "noProducts": "No products found.",
+    "deleteTitle": "Delete product",
+    "deleteMessage": "Are you sure you want to delete this product?",
+    "tableColumns": {
+      "name": "Name",
+      "shop": "Shop",
+      "price": "Price",
+      "createdAt": "Created At"
+    }
+  },
+  "CategoriesTable": {
+    "title": "Categories",
+    "noCategories": "No categories found.",
+    "deleteTitle": "Delete category",
+    "deleteMessage": "Are you sure you want to delete this category?",
+    "tableColumns": {
+      "name": "Name",
+      "isGlobal": "Is Global",
+      "createdAt": "Created At"
+    }
   }
 }

@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { useTranslations } from 'next-intl';
 import CrudTable, { CrudColumn } from "../components/crudTable";
 import { Category } from "@/interfaces/Category";
 
@@ -32,31 +32,41 @@ const initialCategories: Category[] = [
     },
 ];
 
-const categoryColumns: CrudColumn<Category>[] = [
-    { key: "name", label: "Name", render: (category) => category.name },
-    { key: "isGlobal", label: "Is Global", render: (category) => category.isGlobal.toString() },
-    {
-        key: "createdAt",
-        label: "Created At",
-        render: (category) => category.createdAt.toLocaleDateString(),
-    },
-];
 
 const CategoriesTable = () => {
     const router = useRouter();
+    const t = useTranslations('CategoriesTable');
     const [categories, setCategories] = useState<Category[]>(initialCategories);
+
+    const categoryColumns: CrudColumn<Category>[] = [
+        {
+            key: "name",
+            label: t('tableColumns.name'),
+            render: (category) => category.name,
+        },
+        {
+            key: "isGlobal",
+            label: t('tableColumns.isGlobal'),
+            render: (category) => category.isGlobal.toString()
+        },
+        {
+            key: "createdAt",
+            label: t('tableColumns.createdAt'),
+            render: (category) => category.createdAt.toLocaleDateString(),
+        },
+    ];
 
     return (
         <CrudTable
-            title="Categories"
+            title={t('title')}
             addHref="/dashboard/categories/add"
             data={categories}
             columns={categoryColumns}
             getId={(category) => category._id}
             getTitle={(category) => category.name}
-            emptyMessage="No categories found."
-            deleteTitle="Delete category"
-            deleteMessage="Are you sure you want to delete this category?"
+            emptyMessage={t('noCategories')}
+            deleteTitle={t('deleteTitle')}
+            deleteMessage={t('deleteMessage')}
             onEdit={(id) => router.push(`/dashboard/categories/${id}`)}
             onDeleteConfirm={(id) =>
                 setCategories((prev) => prev.filter((category) => category._id !== id))

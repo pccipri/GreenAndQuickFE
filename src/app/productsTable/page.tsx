@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { useTranslations } from 'next-intl';
 import CrudTable, { CrudColumn } from "../components/crudTable";
 import { Product } from "@/interfaces/Product";
 
@@ -47,39 +47,49 @@ const initialProducts: Product[] = [
   },
 ];
 
-const productColumns: CrudColumn<Product>[] = [
-  { key: "name", label: "Name", render: (product) => product.name },
-  { key: "shop", label: "Shop", render: (product) => product.shop },
-  {
-    key: "price",
-    label: "Price",
-    render: (product) => `${product.price.toFixed(2)} RON`,
-  },
-  {
-    key: "createdAt",
-    label: "Created At",
-    render: (product) => product.createdAt.toLocaleDateString(),
-  },
-];
-
 const ProductsTable = () => {
   const router = useRouter();
+  const t = useTranslations('ProductsTable');
+
   const [products, setProducts] = useState<Product[]>(initialProducts);
+
+  const productColumns: CrudColumn<Product>[] = [
+    {
+      key: "name",
+      label: t('tableColumns.name'),
+      render: (product) => product.name,
+    },
+    {
+      key: "shop",
+      label: t('tableColumns.shop'),
+      render: (product) => product.shop,
+    },
+    {
+      key: "price",
+      label: t('tableColumns.price'),
+      render: (product) => `${product.price.toFixed(2)} RON`,
+    },
+    {
+      key: "createdAt",
+      label: t('tableColumns.createdAt'),
+      render: (product) => product.createdAt.toLocaleDateString(),
+    },
+  ];
 
   return (
     <CrudTable
-      title="Products"
+      title={t('title')}
       addHref="/dashboard/products/add"
       data={products}
       columns={productColumns}
       getId={(product) => product._id}
       getTitle={(product) => product.name}
-      emptyMessage="No products found."
-      deleteTitle="Delete product"
-      deleteMessage="Are you sure you want to delete this product?"
+      emptyMessage={t('noProducts')}
+      deleteTitle={t('deleteTitle')}
+      deleteMessage={t('deleteMessage')}
       onEdit={(id) => router.push(`/dashboard/products/${id}`)}
       onDeleteConfirm={(id) =>
-        setProducts((prev) => prev.filter((product) => product._id !== id))
+        setProducts((prev) => prev.filter((p) => p._id !== id))
       }
     />
   );
