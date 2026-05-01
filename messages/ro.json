@@ -212,5 +212,20 @@
       "isGlobal": "Este Global",
       "createdAt": "Creat La"
     }
+  },
+  "AddProductForm": {
+    "title": "Adaugă Produs Nou",
+    "name": "Nume",
+    "shop": "Magazin",
+    "price": "Preț",
+    "submit": "Adaugă Produs"
+  },
+  "EditProductForm": {
+    "title": "Editează Produs",
+    "name": "Nume",
+    "shop": "Magazin",
+    "price": "Preț",
+    "addDate": "Data Adăugării",
+    "submit": "Actualizează Produs"
   }
 }

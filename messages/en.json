@@ -212,5 +212,20 @@
       "isGlobal": "Is Global",
       "createdAt": "Created At"
     }
+  },
+  "AddProductForm": {
+    "title": "Add New Product",
+    "name": "Name",
+    "shop": "Shop",
+    "price": "Price",
+    "submit": "Add Product"
+  },
+  "EditProductForm": {
+    "title": "Edit Product",
+    "name": "Name",
+    "shop": "Shop",
+    "price": "Price",
+    "addDate": "Add Date",
+    "submit": "Update Product"
   }
 }
