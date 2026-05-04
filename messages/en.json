@@ -227,5 +227,12 @@
     "price": "Price",
     "addDate": "Add Date",
     "submit": "Update Product"
+  },
+  "OrderConfirmation": {
+    "confirmationTitle": "Order confirmed!",
+    "confirmationMessage": "Thank you for your purchase. Your order has been successfully placed and is being processed.",
+    "orderNumber": "Your order number is:",
+    "orderHistory": "Order history",
+    "continueShopping": "Continue Shopping"
   }
 }
