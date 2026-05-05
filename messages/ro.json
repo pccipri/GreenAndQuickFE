@@ -227,5 +227,12 @@
     "price": "Preț",
     "addDate": "Data Adăugării",
     "submit": "Actualizează Produs"
+  },
+  "OrderConfirmation": {
+    "confirmationTitle": "Comandă confirmată!",
+    "confirmationMessage": "Vă mulțumim pentru cumpărare. Comanda dumneavoastră a fost plasată cu succes și este în curs de procesare.",
+    "orderNumber": "Numărul comenzii este:",
+    "orderHistory": "Istoric comenzi",
+    "continueShopping": "Continuați cumpărăturile"
   }
 }

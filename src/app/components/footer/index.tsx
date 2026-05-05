@@ -19,9 +19,7 @@ const Footer: FC = () => {
                 width: '100%',
                 bgcolor: 'background.paper',
                 borderTop: '1px solid #e0e0e0',
-                py: 2,
-                position: 'static',
-                bottom: 0
+                py: 2
             }}
             component="footer"
         >
