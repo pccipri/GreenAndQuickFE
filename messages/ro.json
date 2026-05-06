@@ -228,6 +228,15 @@
     "addDate": "Data Adăugării",
     "submit": "Actualizează Produs"
   },
+  "EditShopForm": {
+    "title": "Editează Magazin",
+    "name": "Nume",
+    "description": "Descriere",
+    "owner": "Proprietar",
+    "category": "Categorie",
+    "addDate": "Data Adăugării",
+    "submit": "Actualizează Magazin"
+  },
   "OrderConfirmation": {
     "confirmationTitle": "Comandă confirmată!",
     "confirmationMessage": "Vă mulțumim pentru cumpărare. Comanda dumneavoastră a fost plasată cu succes și este în curs de procesare.",

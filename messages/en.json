@@ -228,6 +228,15 @@
     "addDate": "Add Date",
     "submit": "Update Product"
   },
+  "EditShopForm": {
+    "title": "Edit Shop",
+    "name": "Name",
+    "description": "Description",
+    "owner": "Owner",
+    "category": "Category",
+    "addDate": "Add Date",
+    "submit": "Update Shop"
+  },
   "OrderConfirmation": {
     "confirmationTitle": "Order confirmed!",
     "confirmationMessage": "Thank you for your purchase. Your order has been successfully placed and is being processed.",
