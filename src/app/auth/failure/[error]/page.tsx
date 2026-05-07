@@ -2,6 +2,9 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import styles from './page.module.css';
+import KeyOffOutlinedIcon from '@mui/icons-material/KeyOffOutlined';
+import Button from "node_modules/@mui/material/esm/Button/Button";
 
 export default function FailedOAuthLoginPage() {
   const params = useParams();
@@ -15,17 +18,19 @@ export default function FailedOAuthLoginPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600">❌ Verification Failed</h1>
-          <p>{message}</p>
-          <button
-            onClick={handleGoBack}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-          >
-            Go Back to Login
-          </button>
-        </div>
+    <div className={styles.errorMessageContainer}>
+      <KeyOffOutlinedIcon className={styles.errorIcon} />
+
+      <h1 className="text-2xl font-bold text-red-600">{t('authFail')}</h1>
+
+      <p>{t('authFailMessage')}</p>
+      <p className={styles.errorMessage}>{message}</p>
+
+      <p>{t('authTryAgain')}</p>
+
+      <Button onClick={handleGoBack} className={styles.formButton} variant="contained">
+        {t('goBackBtn')}
+      </Button>
     </div>
   );
 }

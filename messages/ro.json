@@ -68,7 +68,11 @@
     "verifyEmailFailed": "Verificarea email-ului a eșuat",
     "resendVerificationFailed": "Retrimiterea verificării a eșuat",
     "verifyingEmail": "Se verifică email-ul...",
-    "verificationFailed": "Verificarea a eșuat"
+    "verificationFailed": "Verificarea a eșuat",
+    "authFail": "Autentificare eșuată",
+    "authFailMessage": "Aplicația a eșuat în autentificarea dumneavoastră din următoarea cauză:",
+    "authTryAgain": "Vă rugăm să încercați din nou sau să contactați suportul dacă problema persistă.",
+    "goBackBtn": "Înapoi la Autentificare"
   },
   "user": {
     "notFound": "Utilizator negăsit",
