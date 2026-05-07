@@ -228,13 +228,27 @@
     "addDate": "Data Adăugării",
     "submit": "Actualizează Produs"
   },
+  "AddShopForm": {
+    "title": "Adaugă Magazin Nou",
+    "message": "Hai să începem cu un magazin!",
+    "name": "Nume",
+    "description": "Descriere",
+    "descriptionPlaceholder": "Descrierea magazinului John's Grocery",
+    "logo": "Logo",
+    "coverImage": "Imagine de Copertă",
+    "location": "Locație",
+    "submit": "Creează Magazin"
+  },
   "EditShopForm": {
     "title": "Editează Magazin",
     "name": "Nume",
+    "slug": "Slug",
     "description": "Descriere",
-    "owner": "Proprietar",
-    "category": "Categorie",
-    "addDate": "Data Adăugării",
+    "logo": "Logo",
+    "coverImage": "Imagine de Copertă",
+    "ownerId": "ID Proprietar",
+    "location": "Locație",
+    "active": "Activ",
     "submit": "Actualizează Magazin"
   },
   "OrderConfirmation": {

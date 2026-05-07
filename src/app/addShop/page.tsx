@@ -12,24 +12,26 @@ import { AddShopDTO } from '@/interfaces/Shop';
 import { useAuth } from '@/contexts/AuthProvider';
 
 const AddShop: FC = () => {
-    const t = useTranslations('AddShop');
+    const t = useTranslations('AddShopForm');
     const router = useRouter()
     const [shopData, setShopData] = useState<AddShopDTO>({
         name: '',
+        owner: '',
         description: '',
-        owner: "",
-        categories: []
+        logo: '',
+        coverImage: '',
+        location: ''
     })
     const { user } = useAuth()
     const createShop = async () => {
-        if(user) {
-        const response = await addShop({...shopData, owner: user._id})
-        
-        if (response) {
-            router.push("/")
-        }
+        if (user) {
+            const response = await addShop({ ...shopData, owner: user.id })
 
-    }
+            if (response) {
+                router.push("/")
+            }
+
+        }
 
     }
 
@@ -63,19 +65,19 @@ const AddShop: FC = () => {
                     justifyContent: 'center',
                 }}>
                     <div style={{ width: '70%', height: '90%', textAlign: 'center' }}>
-                        <h2 style={{ marginBottom: '1.5vw' }}>{t("register")}</h2>
-                        <h6>Let s get you started with a shop!</h6>
+                        <h2 style={{ marginBottom: '1.5vw' }}>{t('title')}</h2>
+                        <h6>{t('message')}</h6>
                         <Box
                             sx={{
                                 width: 500,
                                 maxWidth: '100%',
-                                mt: 6
+                                mt: 4
                             }}
                         >
                             <TextField
                                 fullWidth
-                                label="name"
-                                placeholder="john_doe"
+                                label={t('name')}
+                                placeholder="John's Grocery"
                                 id="name"
                                 type={'text'}
                                 slotProps={{
@@ -86,19 +88,82 @@ const AddShop: FC = () => {
                                 onChange={(e) => {
                                     handlePropertyUpdate("name", e.target.value)
                                 }}
-                                sx={{ mb: 2.5, mt: 2.5 }}
+                                sx={{ mb: 2, mt: 2 }}
                             />
-                            <TextareaAutosize
-                            aria-label="Description"
-                            minRows={4}
-                            placeholder="Your shop description"
-                            onChange={(e) => {
-                                handlePropertyUpdate("name", e.target.value)
-                            }}
-                            style={{ marginBottom: 2.5, marginTop: 2.5 }}
+
+                            <TextField
+                                fullWidth
+                                label={t('description')}
+                                placeholder={t('descriptionPlaceholder')}
+                                id="description"
+                                type={'text'}
+                                multiline
+                                minRows={4}
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("description", e.target.value)
+                                }}
+                                sx={{ mb: 2, mt: 2 }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label={t('logo')}
+                                placeholder="https://example.com/logo.png"
+                                id="logo"
+                                type={'text'}
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("logo", e.target.value)
+                                }}
+                                sx={{ mb: 2, mt: 2 }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label={t('coverImage')}
+                                placeholder="https://example.com/cover.png"
+                                id="coverImage"
+                                type={'text'}
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("coverImage", e.target.value)
+                                }}
+                                sx={{ mb: 2, mt: 2 }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label={t('location')}
+                                placeholder="123 Main St, Anytown, USA, 40.6892, -74.0445"
+                                id="location"
+                                type={'text'}
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("location", e.target.value)
+                                }}
+                                sx={{ mb: 2, mt: 2 }}
                             />
                         </Box>
-                        <Button onClick={createShop} variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>Submit</Button>
+                        <Button onClick={createShop} variant="contained" fullWidth style={{ marginTop: '2vw', marginBottom: '2vw' }}>
+                            {t('submit')}
+                        </Button>
                     </div>
                 </div>
 

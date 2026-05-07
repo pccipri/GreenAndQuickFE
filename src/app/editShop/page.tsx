@@ -7,17 +7,16 @@ import { useTranslations } from 'next-intl';
 import TextField from '@mui/material/TextField';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
 
 const EditShop: FC = () => {
     const t = useTranslations('EditShopForm');
 
-    const [category, setCategory] = useState('');
+    const [active, setActive] = useState('Yes');
 
     const handleChange = (event: SelectChangeEvent) => {
-        setCategory(event.target.value as string);
+        setActive(event.target.value as string);
     };
 
     return (
@@ -37,53 +36,91 @@ const EditShop: FC = () => {
                             sx={{ mt: 1, mb: 2 }}
                         />
 
+                        <label htmlFor="shopSlug" className={styles.formLabel}>
+                            {t('slug')}
+                        </label>
+                        <TextField
+                            id="shopSlug"
+                            variant="outlined"
+                            defaultValue="johns-grocery"
+                            slotProps={{
+                                input: {
+                                    readOnly: true,
+                                },
+                            }}
+                            fullWidth
+                            sx={{ mt: 1, mb: 2 }}
+                        />
+
+
                         <label htmlFor="shopDescription" className={styles.formLabel}>
                             {t('description')}
                         </label>
                         <TextField
                             id="shopDescription"
                             variant="outlined"
-                            defaultValue="John's Grocery"
+                            defaultValue="A local grocery store offering fresh produce and daily essentials."
                             fullWidth
                             sx={{ mt: 1, mb: 2 }}
                         />
 
-                        <label htmlFor="shopOwner" className={styles.formLabel}>
-                            {t('owner')}
+                        <label htmlFor="shopLogo" className={styles.formLabel}>
+                            {t('logo')}
                         </label>
                         <TextField
-                            id="shopOwner"
+                            id="shopLogo"
                             variant="outlined"
-                            defaultValue="John Doe"
+                            defaultValue="https://example.com/logo.png"
                             fullWidth
                             sx={{ mt: 1, mb: 2 }}
                         />
 
-                        <label htmlFor="shopCategory" className={styles.formLabel}>
-                            {t('category')}
+                        <label htmlFor="shopCoverImg" className={styles.formLabel}>
+                            {t('coverImage')}
+                        </label>
+                        <TextField
+                            id="shopCoverImg"
+                            variant="outlined"
+                            defaultValue="https://example.com/cover.png"
+                            fullWidth
+                            sx={{ mt: 1, mb: 2 }}
+                        />
+
+                        <label htmlFor="shopOwnerId" className={styles.formLabel}>
+                            {t('ownerId')}
+                        </label>
+                        <TextField
+                            id="shopOwnerId"
+                            variant="outlined"
+                            defaultValue="1"
+                            fullWidth
+                            sx={{ mt: 1, mb: 2 }}
+                        />
+
+                        <label htmlFor="shopLocation" className={styles.formLabel}>
+                            {t('location')}
+                        </label>
+                        <TextField
+                            id="shopLocation"
+                            variant="outlined"
+                            defaultValue="123 Main St, Anytown, USA, 40.6892, -74.0445"
+                            fullWidth
+                            sx={{ mt: 1, mb: 2 }}
+                        />
+
+                        <label htmlFor="shopActive" className={styles.formLabel}>
+                            {t('active')}
                         </label>
                         <Select
-                            labelId="shopCategory"
-                            id="shopCategorySelect"
-                            value={category}
+                            labelId="shopActive-label"
+                            id="shopActive"
+                            value={active}
+                            label={t('active')}
                             onChange={handleChange}
-                            sx={{ mt: 1, mb: 2 }}
                         >
-                            <MenuItem value="Fruits">Fruits</MenuItem>
-                            <MenuItem value="Vegetables">Vegetables</MenuItem>
-                            <MenuItem value="Dairy">Dairy</MenuItem>
+                            <MenuItem value="Yes">Yes</MenuItem>
+                            <MenuItem value="No">No</MenuItem>
                         </Select>
-
-                        <label htmlFor="shopAddDate" className={styles.formLabel}>
-                            {t('addDate')}
-                        </label>
-                        <TextField
-                            id="shopAddDate"
-                            variant="outlined"
-                            defaultValue="02.05.2026"
-                            fullWidth
-                            sx={{ mt: 1, mb: 2 }}
-                        />
                     </div>
                     <Button type="submit" className={styles.formButton} variant="contained">
                         {t('submit')}

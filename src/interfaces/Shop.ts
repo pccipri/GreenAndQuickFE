@@ -11,8 +11,9 @@ export interface Shop {
 
 export interface AddShopDTO {
     name: string;
-    description: string;
-    // imageUrl: string;
     owner: string;
-    categories: string[];
+    description: string;
+    logo: string | null;
+    coverImage: string | null;
+    location: string | null;
 }

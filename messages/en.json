@@ -228,13 +228,27 @@
     "addDate": "Add Date",
     "submit": "Update Product"
   },
+  "AddShopForm": {
+    "title": "Add New Shop",
+    "message": "Let s get you started with a shop!",
+    "name": "Name",
+    "description": "Description",
+    "descriptionPlaceholder": "John's Grocery description",
+    "logo": "Logo",
+    "coverImage": "Cover Image",
+    "location": "Location",
+    "submit": "Create Shop"
+  },
   "EditShopForm": {
     "title": "Edit Shop",
     "name": "Name",
+    "slug": "Slug",
     "description": "Description",
-    "owner": "Owner",
-    "category": "Category",
-    "addDate": "Add Date",
+    "logo": "Logo",
+    "coverImage": "Cover Image",
+    "ownerId": "Owner ID",
+    "location": "Location",
+    "active": "Active",
     "submit": "Update Shop"
   },
   "OrderConfirmation": {
