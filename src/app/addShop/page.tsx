@@ -23,7 +23,7 @@ const AddShop: FC = () => {
     const { user } = useAuth()
     const createShop = async () => {
         if(user) {
-        const response = await addShop({...shopData, owner: user._id})
+        const response = await addShop({...shopData, owner: user.id})
         
         if (response) {
             router.push("/")
