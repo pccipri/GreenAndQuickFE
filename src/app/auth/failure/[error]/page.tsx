@@ -19,9 +19,7 @@ export default function FailedOAuthLoginPage() {
 
   return (
     <div className={styles.errorMessageContainer}>
-      <KeyOffOutlinedIcon className={styles.errorIcon} />
-
-      <h1 className="text-2xl font-bold text-red-600">{t('authFail')}</h1>
+      <h1 className="text-2xl font-bold text-red-600"><KeyOffOutlinedIcon className={styles.errorIcon} /> {t('authFail')}</h1>
 
       <p>{t('authFailMessage')}</p>
       <p className={styles.errorMessage}>{message}</p>
