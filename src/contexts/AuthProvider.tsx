@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   
   // Fetch current user from your API (expects Authorization header)
   const fetchUser = useCallback(async () => {
-    const { data } = await marketAPI.get("/auth/getLoggedUser"); // -> /api/auth/getLoggedUser
+    const { data } = await marketAPI.get("/auth/users/me"); // -> /api/auth/users/me
     
     setUser(data.user ?? null);
   }, []);
