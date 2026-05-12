@@ -20,7 +20,13 @@ const AddShop: FC = () => {
         description: '',
         logo: '',
         coverImage: '',
-        location: ''
+        location: {
+            street: '',
+            city: '',
+            county: '',
+            country: '',
+            zipcode: ''
+        }
     })
     const { user } = useAuth()
     const createShop = async () => {
@@ -39,12 +45,25 @@ const AddShop: FC = () => {
         setShopData({ ...shopData, [propertyName]: value });
     }
 
+    const handleLocationUpdate = (
+        propertyName: keyof AddShopDTO['location'],
+        value: string
+    ) => {
+        setShopData({
+            ...shopData,
+            location: {
+                ...shopData.location,
+                [propertyName]: value
+            }
+        });
+    };
+
     return (
         <>
             <Container
                 maxWidth={false}
                 sx={{
-                    height: '100vh',
+                    minHeight: '100vh',
                     width: '100%',
                     display: 'flex',
                     justifyContent: 'center',
@@ -64,8 +83,8 @@ const AddShop: FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
-                    <div style={{ width: '70%', height: '90%', textAlign: 'center' }}>
-                        <h2 style={{ marginBottom: '1.5vw' }}>{t('title')}</h2>
+                    <div style={{ width: '70%', height: '100%', textAlign: 'center' }}>
+                        <h2 style={{ margin: '1.5vw 0' }}>{t('title')}</h2>
                         <h6>{t('message')}</h6>
                         <Box
                             sx={{
@@ -146,19 +165,77 @@ const AddShop: FC = () => {
 
                             <TextField
                                 fullWidth
-                                label={t('location')}
-                                placeholder="123 Main St, Anytown, USA, 40.6892, -74.0445"
-                                id="location"
-                                type={'text'}
+                                label={t('street')}
+                                placeholder="123 Main St"
                                 slotProps={{
                                     inputLabel: {
                                         shrink: true,
                                     },
                                 }}
                                 onChange={(e) => {
-                                    handlePropertyUpdate("location", e.target.value)
+                                    handleLocationUpdate("street", e.target.value)
                                 }}
                                 sx={{ mb: 2, mt: 2 }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label={t('city')}
+                                placeholder="Cluj-Napoca"
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handleLocationUpdate("city", e.target.value)
+                                }}
+                                sx={{ mb: 2 }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label={t('county')}
+                                placeholder="Cluj"
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handleLocationUpdate("county", e.target.value)
+                                }}
+                                sx={{ mb: 2 }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label={t('country')}
+                                placeholder="Romania"
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handleLocationUpdate("country", e.target.value)
+                                }}
+                                sx={{ mb: 2 }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label={t('zipcode')}
+                                placeholder="430000"
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handleLocationUpdate("zipcode", e.target.value)
+                                }}
+                                sx={{ mb: 2 }}
                             />
                         </Box>
                         <Button onClick={createShop} variant="contained" fullWidth style={{ marginTop: '2vw', marginBottom: '2vw' }}>
@@ -168,7 +245,7 @@ const AddShop: FC = () => {
                 </div>
 
                 <div style={{
-                    height: '100%',
+                    minHeight: '100vh',
                     width: '40%',
                     textAlign: 'left',
                     backgroundColor: 'green',

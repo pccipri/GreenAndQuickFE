@@ -236,7 +236,11 @@
     "descriptionPlaceholder": "Descrierea magazinului John's Grocery",
     "logo": "Logo",
     "coverImage": "Imagine de Copertă",
-    "location": "Locație",
+    "street": "Stradă",
+    "city": "Oraș",
+    "county": "Județ",
+    "country": "Țară",
+    "zipcode": "Cod Poștal",
     "submit": "Creează Magazin"
   },
   "EditShopForm": {

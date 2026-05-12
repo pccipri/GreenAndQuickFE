@@ -236,7 +236,11 @@
     "descriptionPlaceholder": "John's Grocery description",
     "logo": "Logo",
     "coverImage": "Cover Image",
-    "location": "Location",
+    "street": "Street",
+    "city": "City",
+    "county": "County",
+    "country": "Country",
+    "zipcode": "Zip Code",
     "submit": "Create Shop"
   },
   "EditShopForm": {
