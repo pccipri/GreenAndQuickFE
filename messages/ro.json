@@ -234,5 +234,40 @@
     "orderNumber": "Numărul comenzii este:",
     "orderHistory": "Istoric comenzi",
     "continueShopping": "Continuați cumpărăturile"
+  },
+  "OrderDetails": {
+    "orderId": "ID Comandă",
+    "products": "Produse",
+    "quantity": "Cantitate",
+    "price": "Preț",
+    "shop": "Magazin",
+    "totalPrice": "Preț Total"
+  },
+  "OrderTabs": {
+    "orderStatus": "Status Comandă",
+    "payment": "Plată",
+    "details": "Detalii",
+    "orderPlaced": "Plasată",
+    "orderConfirmed": "Confirmată",
+    "orderShipped": "Trimisă",
+    "orderDelivered": "Livrată",
+    "creditCard": "Card de Credit",
+    "paid": "Plătit",
+    "cancelled": "Anulată",
+    "refundPending": "Rambursare în așteptare",
+    "pending": "În așteptare",
+    "refundMessage": "Rambursarea a fost inițiată. Suma va fi returnată cardului dumneavoastră.",
+    "cancelOrder": "Anulează Comanda",
+    "explanatoryText": "Sunteți sigur că doriți să anulați această comandă? Această acțiune nu poate fi anulată.",
+    "refundStatus": "Status Rambursare",
+    "transactionId": "ID Tranzacție",
+    "orderDate": "Data Comenzii",
+    "paymentMethod": "Metoda de Plată",
+    "paymentStatus": "Statusul Plății",
+    "deliveryAddress": "Adresa de Livrare"
+  },
+  "ConfirmationModal": {
+    "cancel": "Anulează",
+    "confirm": "Confirmă"
   }
 }
