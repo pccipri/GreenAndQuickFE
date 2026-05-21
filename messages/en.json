@@ -232,6 +232,33 @@
     "addDate": "Add Date",
     "submit": "Update Product"
   },
+  "AddShopForm": {
+    "title": "Add New Shop",
+    "message": "Let s get you started with a shop!",
+    "name": "Name",
+    "description": "Description",
+    "descriptionPlaceholder": "John's Grocery description",
+    "logo": "Logo",
+    "coverImage": "Cover Image",
+    "street": "Street",
+    "city": "City",
+    "county": "County",
+    "country": "Country",
+    "zipcode": "Zip Code",
+    "submit": "Create Shop"
+  },
+  "EditShopForm": {
+    "title": "Edit Shop",
+    "name": "Name",
+    "slug": "Slug",
+    "description": "Description",
+    "logo": "Logo",
+    "coverImage": "Cover Image",
+    "ownerId": "Owner ID",
+    "location": "Location",
+    "active": "Active",
+    "submit": "Update Shop"
+  },
   "OrderConfirmation": {
     "confirmationTitle": "Order confirmed!",
     "confirmationMessage": "Thank you for your purchase. Your order has been successfully placed and is being processed.",
