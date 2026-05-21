@@ -2,6 +2,7 @@
 
 import { FC } from "react";
 import { useTranslations } from 'next-intl';
+import styles from "./index.module.css";
 
 interface StatusListProps {
     status: string;
@@ -12,9 +13,9 @@ const StatusList: FC<StatusListProps> = ({ status, date }) => {
     const t = useTranslations('OrderTabs');
 
     return (
-        <li style={{ marginBottom: "30px" }}>
+        <li className={styles.listSpacing}>
             <h4>{t('orderStatus')}: {status}</h4>
-            <p style={{ margin: "10px 0" }}>{date}</p>
+            <p className={styles.paragraphSpacing}>{date}</p>
         </li>
     );
 };

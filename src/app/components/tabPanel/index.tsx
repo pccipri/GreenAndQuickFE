@@ -10,6 +10,8 @@ import PaymentDetailsList from "@/app/components/paymentDetailsList";
 import { useState } from 'react';
 import ConfirmationModal from '../confirmationModal';
 import { useTranslations } from 'next-intl';
+import { a11yProps } from "@/utils/helpers";
+
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -33,12 +35,7 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
+
 
 export default function BasicTabs() {
     const t = useTranslations('OrderTabs');

@@ -2,6 +2,7 @@
 
 import { FC } from "react";
 import { useTranslations } from 'next-intl';
+import styles from './index.module.css';
 
 interface PaymentDetailsListProps {
     id: string;
@@ -18,15 +19,15 @@ const PaymentDetailsList: FC<PaymentDetailsListProps> = ({
 }) => {
     const t = useTranslations('OrderTabs');
     return (
-        <li style={{ marginBottom: '30px' }}>
+        <li className={styles.listSpacing}>
             <h4>{t('transactionId')}: {id}</h4>
-            <p style={{ margin: '10px 0' }}>
+            <p className={styles.paragraphSpacing}>
                 <strong>{t('orderDate')}:</strong> {date}
             </p>
-            <p style={{ margin: '10px 0' }}>
+            <p className={styles.paragraphSpacing}>
                 <strong>{t('paymentMethod')}:</strong> {paymentMethod}
             </p>
-            <p style={{ margin: '10px 0' }}>
+            <p className={styles.paragraphSpacing}>
                 <strong>{t('paymentStatus')}:</strong> {paymentStatus}
             </p>
         </li>
