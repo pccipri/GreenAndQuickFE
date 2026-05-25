@@ -9,11 +9,15 @@ import TextField from '@mui/material/TextField';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import ShoppingCartCheckoutOutlinedIcon from '@mui/icons-material/ShoppingCartCheckoutOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+
 import Button from '@mui/material/Button';
 
 import CategoriesList from "../components/categoriesList";
+import { useRouter } from 'next/navigation';
 
 const MyAccount: FC = () => {
+    const router = useRouter();
     const [avatarSrc, setAvatarSrc] = React.useState<string | undefined>(undefined);
 
     const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,9 +83,12 @@ const MyAccount: FC = () => {
                                 categoryName="Network"
                                 icon={<GroupsOutlinedIcon />}
                             />
-                            <CategoriesList
-                                categoryName="Test"
-                            />
+                            <div onClick={() => router.push('/paymentMethods')} style={{ cursor: 'pointer' }}>
+                                <CategoriesList
+                                    categoryName="Payment Methods"
+                                    icon={<CreditCardIcon />}
+                                />
+                            </div>
                         </List>
                     </div>
 

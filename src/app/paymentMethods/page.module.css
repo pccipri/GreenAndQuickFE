@@ -1,0 +1,19 @@
+.title {
+    margin: 20px 0;
+}
+
+.paymentMethodsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.cardContainer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0
+}
