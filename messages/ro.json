@@ -265,5 +265,23 @@
     "orderNumber": "Numărul comenzii este:",
     "orderHistory": "Istoric comenzi",
     "continueShopping": "Continuați cumpărăturile"
+  },
+  "OrderHistory": {
+    "title": "Istoric Comenzi",
+    "sort": "Sortează După Status",
+    "rows": "Rânduri pe pagină:",
+    "status": {
+      "all": "Toate",
+      "active": "Active",
+      "delivered": "Livrate",
+      "cancelled": "Anulate"
+    },
+    "tableColumns": {
+      "id": "ID",
+      "date": "Dată",
+      "shop": "Magazin",
+      "total": "Total",
+      "status": "Status"
+    }
   }
 }
