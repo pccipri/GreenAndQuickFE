@@ -283,5 +283,40 @@
       "total": "Total",
       "status": "Status"
     }
+  },
+  "OrderDetails": {
+    "orderId": "Order ID",
+    "products": "Products",
+    "quantity": "Quantity",
+    "price": "Price",
+    "shop": "Shop",
+    "totalPrice": "Total Price"
+  },
+  "OrderTabs": {
+    "orderStatus": "Order Status",
+    "payment": "Payment",
+    "details": "Details",
+    "orderPlaced": "Placed",
+    "orderConfirmed": "Confirmed",
+    "orderShipped": "Shipped",
+    "orderDelivered": "Delivered",
+    "creditCard": "Credit Card",
+    "paid": "Paid",
+    "cancelled": "Cancelled",
+    "refundPending": "Refund pending",
+    "pending": "Pending",
+    "refundMessage": "Your refund has been initiated. The amount will be returned to your card.",
+    "cancelOrder": "Cancel Order",
+    "explanatoryText": "Are you sure you want to cancel this order? This action cannot be undone.",
+    "refundStatus": "Refund Status",
+    "transactionId": "Transaction ID",
+    "orderDate": "Order Date",
+    "paymentMethod": "Payment Method",
+    "paymentStatus": "Payment Status",
+    "deliveryAddress": "Delivery Address"
+  },
+  "ConfirmationModal": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 }
