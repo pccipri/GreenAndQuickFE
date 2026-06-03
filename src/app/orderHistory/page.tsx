@@ -17,17 +17,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
+import { Column, Data } from "@/interfaces/UI";
+
 import styles from './page.module.css';
 import { useTranslations } from 'next-intl';
 
-
-interface Column {
-    id: 'id' | 'date' | 'shop' | 'total' | 'status';
-    label: string;
-    minWidth?: number;
-    align?: 'right';
-    format?: (value: number) => string;
-}
 
 const columns: readonly Column[] = [
     { id: 'id', label: 'tableColumns.id', minWidth: 50 },
@@ -37,14 +31,8 @@ const columns: readonly Column[] = [
     { id: 'status', label: 'tableColumns.status', minWidth: 100 }
 ];
 
-interface Data {
-    id: number;
-    date: string;
-    shop: string;
-    total: number;
-    status: string;
-}
 
+// Populate the table rows displaying each value in a TableCell
 function createData(
     id: number,
     date: string,
@@ -55,6 +43,8 @@ function createData(
     return { id, date, shop, total, status };
 }
 
+
+// Sample data for the table rows
 const rows = [
     createData(1, "30.05.2026", "Marcel's Shop", 250, "Active"),
     createData(2, "30.05.2026", "Marcel's Shop", 250, "Delivered"),
