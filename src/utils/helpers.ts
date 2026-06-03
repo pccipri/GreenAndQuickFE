@@ -24,6 +24,13 @@ export function stringAvatar(name: string) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: name.split(' ').length > 1 ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` :  `${name[0][0]}`,
+    children: name.split(' ').length > 1 ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : `${name[0][0]}`,
+  };
+}
+
+export function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   };
 }
