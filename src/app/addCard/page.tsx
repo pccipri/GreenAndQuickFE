@@ -22,16 +22,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import PersonIcon from '@mui/icons-material/Person';
 
 import CreditCard from "../components/card";
-
-type CardType = "Visa" | "MasterCard" | "PayPal";
-
-type CreditCardState = {
-    type: CardType;
-    number: string;
-    name: string;
-    expiry: string;
-    cvc: string;
-};
+import { CreditCardState } from "../../interfaces/CreditCardState";
 
 const AddCard: FC = () => {
     const t = useTranslations('AddCard');
