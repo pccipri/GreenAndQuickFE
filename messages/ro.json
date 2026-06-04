@@ -284,6 +284,24 @@
       "status": "Status"
     }
   },
+  "PaymentMethods": {
+    "activeMethods": "Metode de Plată Active",
+    "addNewMethod": "Adaugă o Nouă Metodă de Plată",
+    "addCard": "Adaugă Card"
+  },
+  "CreditCard": {
+    "cardHolder": "Titularul Cardului",
+    "fullName": "NUME COMPLET",
+    "expiration": "Expiră La"
+  },
+  "AddCard": {
+    "paymentDetails": "Detalii Plată",
+    "cardType": "Tip Card",
+    "cardNumber": "Număr Card",
+    "cardHolder": "Titular Card",
+    "expiration": "Dată Expirare",
+    "saveCard": "Salvează Card"
+  },
   "OrderDetails": {
     "orderId": "ID Comandă",
     "products": "Produse",

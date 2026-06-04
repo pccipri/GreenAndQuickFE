@@ -284,6 +284,24 @@
       "status": "Status"
     }
   },
+  "PaymentMethods": {
+    "activeMethods": "Active Payment Methods",
+    "addNewMethod": "Add A New Payment Method",
+    "addCard": "Add Card"
+  },
+  "CreditCard": {
+    "cardHolder": "Card Holder",
+    "fullName": "FULL NAME",
+    "expiration": "Expires"
+  },
+  "AddCard": {
+    "paymentDetails": "Payment Details",
+    "cardType": "Card Type",
+    "cardNumber": "Card Number",
+    "cardHolder": "Card Holder",
+    "expiration": "Expiration Date",
+    "saveCard": "Save Card"
+  },
   "OrderDetails": {
     "orderId": "Order ID",
     "products": "Products",
