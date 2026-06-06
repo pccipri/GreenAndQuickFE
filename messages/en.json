@@ -266,6 +266,24 @@
     "orderHistory": "Order history",
     "continueShopping": "Continue Shopping"
   },
+  "OrderHistory": {
+    "title": "Order History",
+    "sort": "Sort By Status",
+    "rows": "Rows per page:",
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "tableColumns": {
+      "id": "ID",
+      "date": "Date",
+      "shop": "Shop",
+      "total": "Total",
+      "status": "Status"
+    }
+  },
   "PaymentMethods": {
     "activeMethods": "Active Payment Methods",
     "addNewMethod": "Add A New Payment Method",

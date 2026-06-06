@@ -266,6 +266,24 @@
     "orderHistory": "Istoric comenzi",
     "continueShopping": "Continuați cumpărăturile"
   },
+  "OrderHistory": {
+    "title": "Istoric Comenzi",
+    "sort": "Sortează După Status",
+    "rows": "Rânduri pe pagină:",
+    "status": {
+      "all": "Toate",
+      "active": "Active",
+      "delivered": "Livrate",
+      "cancelled": "Anulate"
+    },
+    "tableColumns": {
+      "id": "ID",
+      "date": "Dată",
+      "shop": "Magazin",
+      "total": "Total",
+      "status": "Status"
+    }
+  },
   "PaymentMethods": {
     "activeMethods": "Metode de Plată Active",
     "addNewMethod": "Adaugă o Nouă Metodă de Plată",
