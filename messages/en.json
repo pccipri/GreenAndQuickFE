@@ -336,5 +336,25 @@
   "ConfirmationModal": {
     "cancel": "Cancel",
     "confirm": "Confirm"
+  },
+  "FavoritesTab": {
+    "shops": "Shops",
+    "products": "Products",
+    "recipes": "Recipes"
+  },
+  "RecipeCard": {
+    "tryOutBtn": "Try Out",
+    "removedMsg": "was removed from your favorites.",
+    "undoBtn": "Undo"
+  },
+  "SellerCard": {
+    "shopBtn": "Shop",
+    "removedMsg": "was removed from your favorites.",
+    "undoBtn": "Undo"
+  },
+  "ShopCard": {
+    "shopBtn": "Add To Cart",
+    "removedMsg": "was removed from your favorites.",
+    "undoBtn": "Undo"
   }
 }
