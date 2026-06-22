@@ -336,5 +336,25 @@
   "ConfirmationModal": {
     "cancel": "Anulează",
     "confirm": "Confirmă"
+  },
+  "FavoritesTab": {
+    "shops": "Magazine",
+    "products": "Produse",
+    "recipes": "Rețete"
+  },
+  "RecipeCard": {
+    "tryOutBtn": "Încearcă",
+    "removedMsg": "a fost eliminată din favoritele tale.",
+    "undoBtn": "Anulează"
+  },
+  "SellerCard": {
+    "shopBtn": "Cumpără",
+    "removedMsg": "a fost eliminat din favoritele tale.",
+    "undoBtn": "Anulează"
+  },
+  "ShopCard": {
+    "shopBtn": "Adaugă în Coș",
+    "removedMsg": "a fost eliminat din favoritele tale.",
+    "undoBtn": "Anulează"
   }
 }

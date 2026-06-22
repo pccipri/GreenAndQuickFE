@@ -12,14 +12,14 @@ const SellersPage: FC = () => {
     const [showAllCards, setShowAllCards] = useState(false);
 
     const sellers = [
-        { sellerName: "Marcel", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 4.5 },
-        { sellerName: "Anna", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 4.0 },
-        { sellerName: "Jon", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 3.5 },
-        { sellerName: "Ella", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 4.8 },
-        { sellerName: "Lars", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 4.2 },
-        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 4.6 },
-        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 4.6 },
-        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg", sellerRating: 4.6 },
+        { sellerName: "Marcel", sellerImage: "/images/bgplaceholder.jpeg" },
+        { sellerName: "Anna", sellerImage: "/images/bgplaceholder.jpeg" },
+        { sellerName: "Jon", sellerImage: "/images/bgplaceholder.jpeg" },
+        { sellerName: "Ella", sellerImage: "/images/bgplaceholder.jpeg" },
+        { sellerName: "Lars", sellerImage: "/images/bgplaceholder.jpeg" },
+        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg"},
+        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg" },
+        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg" },
     ];
 
 
@@ -68,7 +68,6 @@ const SellersPage: FC = () => {
                                     key={index}
                                     sellerName={seller.sellerName}
                                     sellerImage={seller.sellerImage}
-                                    sellerRating={seller.sellerRating}
                                 />
                             ))}
                         </div>

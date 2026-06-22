@@ -1,40 +1,51 @@
 "use client"
 
-import { FC } from "react";
+import { FC, useState } from "react";
+import styles from './index.module.css';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
-import Rating from '@mui/material/Rating';
+
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import IconButton from '@mui/material/IconButton';
 
 interface FeaturedSellerCardProps {
     sellerImage?: string;
     sellerName: string;
-    sellerRating: number;
 }
 
-const FeaturedSellerCard: FC<FeaturedSellerCardProps> = ({ sellerImage, sellerName, sellerRating }) => {
+const FeaturedSellerCard: FC<FeaturedSellerCardProps> = ({ sellerImage, sellerName }) => {
+    const [favorite, setFavorite] = useState(false);
+
     return (
         <Card sx={{ maxWidth: 345, margin: '20px' }}>
-            <CardActionArea>
-                {sellerImage && (
-                    <CardMedia
-                        component="img"
-                        height="180"
-                        image={sellerImage}
-                        alt={sellerName}
-                    />
-                )}
-                <CardContent>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="h5" component="div">
-                            {sellerName}
-                        </Typography>
-                        <Rating name="half-rating-read" precision={0.5} value={sellerRating} size="small" readOnly />
-                    </div>
-                </CardContent>
-            </CardActionArea>
+            {sellerImage && (
+                <CardMedia
+                    component="img"
+                    height="180"
+                    image={sellerImage}
+                    alt={sellerName}
+                />
+            )}
+
+            <CardContent>
+                <div className={styles.cardContent}>
+                    <Typography variant="h5" component="div">
+                        {sellerName}
+                    </Typography>
+
+                    <IconButton onClick={() => setFavorite(!favorite)}>
+                        {favorite ? (
+                            <FavoriteIcon color="error" />
+                        ) : (
+                            <FavoriteBorderIcon />
+                        )}
+                    </IconButton>
+                </div>
+            </CardContent>
         </Card>
     );
 };

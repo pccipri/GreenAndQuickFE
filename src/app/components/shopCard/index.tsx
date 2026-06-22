@@ -1,6 +1,9 @@
 "use client"
 
-import { FC } from "react";
+import { FC, useState } from "react";
+import styles from './index.module.css';
+import { useTranslations } from 'next-intl';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -8,50 +11,120 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
-import Rating from '@mui/material/Rating';
+import Snackbar from '@mui/material/Snackbar';
 
-interface ShopCardProps {
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import IconButton from '@mui/material/IconButton';
+
+interface ShopCardCardProps {
     productImage?: string;
     productName: string;
     productDescription: string;
-    productRating: number;
     productPrice: number;
 }
 
-const ShopCard: FC<ShopCardProps> = ({ productImage, productName, productDescription, productRating, productPrice }) => {
+const ShopCardCard: FC<ShopCardCardProps> = ({ productImage, productName, productDescription, productPrice }) => {
+    const t = useTranslations('ShopCard');
+    
+    const [favorite, setFavorite] = useState(false);
+
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+
+        if (favorite) {
+            setFavorite(false);
+            setOpenSnackbar(true);
+        } else {
+            setFavorite(true);
+        }
+    };
+
+    const handleUndo = () => {
+        setFavorite(true);
+        setOpenSnackbar(false);
+    };
+
     return (
-        <Card sx={{ maxWidth: 345, margin: '20px' }}>
-            <CardActionArea>
-                {productImage && (
-                    <CardMedia
-                        component="img"
-                        height="210"
-                        image={productImage}
-                        alt={productName}
-                    />
-                )}
-                <CardContent>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <>
+            <Card
+                sx={{
+                    maxWidth: 345,
+                    margin: '20px',
+                    position: 'relative',
+                }}
+            >
+                <IconButton
+                    onClick={handleFavoriteClick}
+                    sx={{
+                        position: 'absolute',
+                        top: 15,
+                        right: 15,
+                        zIndex: 2,
+                        bgcolor: 'background.paper',
+                    }}
+                >
+                    {favorite ? (
+                        <FavoriteIcon color="error" />
+                    ) : (
+                        <FavoriteBorderIcon />
+                    )}
+                </IconButton>
+
+                <CardActionArea>
+                    {productImage && (
+                        <CardMedia
+                            component="img"
+                            height="210"
+                            image={productImage}
+                            alt={productName}
+                        />
+                    )}
+
+                    <CardContent>
                         <Typography variant="h5" component="div">
                             {productName}
                         </Typography>
-                        <Rating name="half-rating-read" precision={0.5} value={productRating} size="small" readOnly />
+
+                        <Typography
+                            variant="body2"
+                            sx={{ color: 'text.secondary', marginTop: '20px' }}
+                        >
+                            {productDescription}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+
+                <CardActions>
+                    <div className={styles.cardActions}>
+                        <Button size="small" color="primary">
+                            {t('shopBtn')}
+                        </Button>
+
+                        <h3>{productPrice} RON</h3>
                     </div>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', marginTop: '20px' }}>
-                        {productDescription}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '0 2%' }}>
-                    <Button size="small" color="primary">
-                        Add To Cart
+                </CardActions>
+            </Card>
+
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={() => setOpenSnackbar(false)}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                message={`${productName} ${t('removedMsg')}`}
+                action={
+                    <Button color="secondary" size="small" onClick={handleUndo}>
+                        {t('undoBtn')}
                     </Button>
-                    <h3>{productPrice} RON</h3>
-                </div>
-            </CardActions>
-        </Card>
+                }
+            />
+        </>
     );
 };
 
-export default ShopCard;
+export default ShopCardCard;
