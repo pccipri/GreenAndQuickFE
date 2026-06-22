@@ -22,7 +22,7 @@ export const verifyRegisterToken = async (token: string): Promise<EmailTokenVeri
 export const registerUser = async (requestData: AddUserDTO): Promise<RegisterResponse | undefined> => {
   try {
     const response: AxiosResponse<RegisterResponse> = await marketAPI({
-      url: '/user',
+      url: '/auth/register',
       method: 'post',
       data: requestData
     })
