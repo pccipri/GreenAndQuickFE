@@ -356,5 +356,20 @@
     "shopBtn": "Adaugă în Coș",
     "removedMsg": "a fost eliminat din favoritele tale.",
     "undoBtn": "Anulează"
+  },
+  "Cart": {
+    "title": "Coș de Cumpărături",
+    "emptyCart": "Coșul tău este gol.",
+    "browseProducts": "Caută produse",
+    "prodDetails": "Detalii",
+    "prodQuantity": "Cantitate",
+    "prodPrice": "Preț",
+    "removeBtn": "Elimină",
+    "shopBtn": "Continuă Cumpărăturile",
+    "summary": "Rezumat",
+    "checkoutBtn": "Finalizează Comanda",
+    "items": "produse",
+    "shippingFee": "Taxă de livrare",
+    "totalCost": "Cost total"
   }
 }

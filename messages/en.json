@@ -356,5 +356,20 @@
     "shopBtn": "Add To Cart",
     "removedMsg": "was removed from your favorites.",
     "undoBtn": "Undo"
+  },
+  "Cart": {
+    "title": "Shopping Cart",
+    "emptyCart": "Your cart is empty.",
+    "browseProducts": "Browse products",
+    "prodDetails": "Details",
+    "prodQuantity": "Quantity",
+    "prodPrice": "Price",
+    "removeBtn": "Remove",
+    "shopBtn": "Continue Shopping",
+    "summary": "Summary",
+    "checkoutBtn": "Checkout",
+    "items": "items",
+    "shippingFee": "Shipping fee",
+    "totalCost": "Total cost"
   }
 }
