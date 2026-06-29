@@ -28,7 +28,7 @@ type Step = {
     image?: File | null;
 };
 
-const AddRecipe: FC = () => {
+const EditRecipe: FC = () => {
     const t = useTranslations('RecipeForm');
 
     const [coverImage, setCoverImage] = useState<File | null>(null);
@@ -325,4 +325,4 @@ const AddRecipe: FC = () => {
     );
 };
 
-export default AddRecipe;
+export default EditRecipe;
