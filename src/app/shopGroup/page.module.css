@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 50px;
+}
+
+.sellersCards {
+    overflow-y: auto;
+    width: 80%;
+}
+
+.cardsParentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardsChildContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
