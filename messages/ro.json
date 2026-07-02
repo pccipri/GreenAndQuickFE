@@ -296,7 +296,9 @@
     "fiber": "Fibre (g)",
     "sugar": "Zahăr (g)",
     "submit": "Creează Rețetă",
-    "edit": "Actualizează Rețetă"
+    "edit": "Actualizează Rețetă",
+    "dietaryTags": "Etichete Dietetice",
+    "selectDietaryTags": "Selectează etichete dietetice"
   },
   "OrderConfirmation": {
     "confirmationTitle": "Comandă confirmată!",

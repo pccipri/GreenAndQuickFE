@@ -4,11 +4,13 @@ import { FC, useState } from "react";
 import styles from './page.module.css';
 import { useTranslations } from 'next-intl';
 
+import { Theme, useTheme } from '@mui/material/styles';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import {
     TextField,
     Button,
     MenuItem,
-    Select,
     FormControl,
     Box,
 } from "@mui/material";
@@ -27,6 +29,38 @@ type Step = {
     text: string;
     image?: File | null;
 };
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    slotProps: {
+        paper: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    },
+};
+
+const tags = [
+    'Vegetarian',
+    'Vegan',
+    'Gluten-Free',
+    'Dairy-Free',
+    'Nut-Free',
+    'No Sugar',
+    'High Protein',
+    'Low Carb'
+];
+
+function getStyles(name: string, dietaryTag: string[], theme: Theme) {
+    return {
+        fontWeight: dietaryTag.includes(name)
+            ? theme.typography.fontWeightMedium
+            : theme.typography.fontWeightRegular,
+    };
+}
 
 const EditRecipe: FC = () => {
     const t = useTranslations('RecipeForm');
@@ -77,6 +111,18 @@ const EditRecipe: FC = () => {
 
     const removeStep = (index: number) => {
         setSteps(steps.filter((_, i) => i !== index));
+    };
+
+    const theme = useTheme();
+    const [dietaryTag, setdietaryTag] = useState<string[]>([]);
+
+    const handleChange = (event: SelectChangeEvent<typeof dietaryTag>) => {
+        const {
+            target: { value },
+        } = event;
+        setdietaryTag(
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
 
@@ -137,6 +183,39 @@ const EditRecipe: FC = () => {
                             <MenuItem value="lunch">Lunch</MenuItem>
                             <MenuItem value="dinner">Dinner</MenuItem>
                             <MenuItem value="dessert">Dessert</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <label htmlFor="dietary-tags" className={styles.formLabel}>
+                        {t('dietaryTags')}
+                    </label>
+                    <FormControl fullWidth>
+                        <Select
+                            id="dietary-tags"
+                            multiple
+                            value={dietaryTag}
+                            onChange={handleChange}
+                            MenuProps={MenuProps}
+                            displayEmpty
+                            renderValue={(selected) =>
+                                Array.isArray(selected) && selected.length
+                                    ? selected.join(', ')
+                                    : t('selectDietaryTags')
+                            }
+                            sx={{ mt: 1, mb: 2 }}
+                        >
+                            <MenuItem value="" disabled>
+                                {t('selectDietaryTags')}
+                            </MenuItem>
+                            {tags.map((name) => (
+                                <MenuItem
+                                    key={name}
+                                    value={name}
+                                    style={getStyles(name, dietaryTag, theme)}
+                                >
+                                    {name}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
 

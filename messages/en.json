@@ -296,7 +296,9 @@
     "fiber": "Fiber (g)",
     "sugar": "Sugar (g)",
     "submit": "Create Recipe",
-    "edit": "Edit Recipe"
+    "edit": "Edit Recipe",
+    "dietaryTags": "Dietary Tags",
+    "selectDietaryTags": "Select dietary tags"
   },
   "OrderConfirmation": {
     "confirmationTitle": "Order confirmed!",
