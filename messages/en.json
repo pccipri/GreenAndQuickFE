@@ -374,5 +374,23 @@
   },
   "ShopGroup": {
     "Members in this group:": "Members in this group:"
+  },
+  "UserPreferences": {
+    "title": "Preferences",
+    "language": "Language",
+    "english": "English",
+    "romanian": "Romanian",
+    "notifications": "Notifications",
+    "orderStatus": "Order status updates",
+    "orderStatusHelper": "Receive updates when your order is processed or delivered",
+    "contentUpdates": "Reviews on your content",
+    "contentUpdatesHelper": "Be notified when someone reviews your products",
+    "restock": "Restocked favorite products",
+    "restockHelper": "We'll let you know when a favorite item is back",
+    "newRecipe": "New recipe from followed author",
+    "newRecipeHelper": "Stay updated with new recipes from creators you follow",
+    "lowStock": "Low stock alerts",
+    "lowStockHelper": "Get notified when items you sell are running low on inventory",
+    "saveChanges": "Save"
   }
 }

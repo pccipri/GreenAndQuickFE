@@ -374,5 +374,23 @@
   },
   "ShopGroup": {
     "Members in this group:": "Membri în acest grup:"
+  },
+  "UserPreferences": {
+    "title": "Preferințe",
+    "language": "Limbă",
+    "english": "Engleză",
+    "romanian": "Română",
+    "notifications": "Notificări",
+    "orderStatus": "Actualizări status comandă",
+    "orderStatusHelper": "Primește actualizări când comanda ta este procesată sau livrată",
+    "contentUpdates": "Recenzii asupra conținutului tău",
+    "contentUpdatesHelper": "Fii notificat când cineva recenziază produsele tale",
+    "restock": "Produse favorite înapoi în stoc",
+    "restockHelper": "Te vom notifica când un articol favorit este din nou disponibil",
+    "newRecipe": "Rețete noi de la creatori urmăriți",
+    "newRecipeHelper": "Rămâi la curent cu rețetele noi de la creatorii pe care îi urmărești",
+    "lowStock": "Alerte stoc scăzut",
+    "lowStockHelper": "Fii notificat când articolele pe care le vinzi sunt aproape de a fi epuizate",
+    "saveChanges": "Salvează"
   }
 }

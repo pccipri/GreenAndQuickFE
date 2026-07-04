@@ -1,0 +1,35 @@
+.parentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: white;
+    color: black;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.label {
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.helper {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.languageField {
+    width: 220px;
+    max-width: 100%;
+}
+
+.saveBtn {
+    margin-top: 30px;
+}
