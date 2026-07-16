@@ -2,8 +2,8 @@
 
 import { Container, List } from "@mui/material";
 import { FC } from "react";
-import CategoriesList from "../components/categoriesList";
-import ShopCard from "../components/shopCard";
+import CategoriesList from "../../components/categoriesList";
+import ShopCard from "../../components/shopCard";
 
 
 const ShopPage: FC = () => {

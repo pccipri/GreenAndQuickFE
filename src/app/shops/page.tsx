@@ -8,7 +8,7 @@ import SellerCard from "../components/sellerCard";
 import FeaturedSellerCard from "../components/featuredSellerCard";
 
 
-const SellersPage: FC = () => {
+const ShopsPage: FC = () => {
     const [showAllCards, setShowAllCards] = useState(false);
 
     const sellers = [
@@ -186,4 +186,4 @@ const SellersPage: FC = () => {
     )
 }
 
-export default SellersPage;
+export default ShopsPage;

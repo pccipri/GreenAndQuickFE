@@ -6,16 +6,46 @@ export const API_ROUTES = {
     "USER": "/user",
 }
 
-export const UNPROTECTED_ROUTES: string[] = ['/']
+export const UNPROTECTED_ROUTES: string[] = ['/', '/verify-email', '/recipes', '/recipes/[id]', '/shops', 'shops/[slug]', 'shop-groups/[slug]', 'products/[id]', 'privacy-policy' ]
 
-export const NO_ACCOUNT_ROUTES: string[] = ['/login', '/register', '/auth/forgotPassword', '/auth/resetPassword']
+export const NO_ACCOUNT_ROUTES: string[] = ['/login', '/register', '/auth/forgot-password', '/auth/reset-password']
 
 export const PROTECTED_ROUTES: string[] = [
-    '/myAccount',
-    '/addShop'
+    '/profile',
+    '/profile/settings',
+    '/profile/payment-methods',
+    'cart',
+    'checkout',
+    'order-confirmation',
+    'orders',
+    'orders/[id]',
+    'recipes/create',
+    'recipes/[id]/edit',
+    'favorites',
 ]
 
-export const ADMIN_ROUTES: string[] = []
+export const SHOP_OWNER_ROUTES: string[] = [
+  'dashboard/shop/create',
+  'dashboard/shop/edit',
+  'dashboard/products',
+  'dashboard/products/create',
+  'dashboard/products/[id]/edit',
+  'dashboard/inventory',
+  'dashboard/orders',
+  'dashboard/orders/[id]',
+  'dashboard/groups',
+  'dashboard/groups/create',
+  'dashboard/groups/[id]'
+]
+
+export const ADMIN_ROUTES: string[] = [
+  '/admin/orders',
+  '/admin/recipes',
+  '/admin/shops',
+  '/admin/categories',
+  '/admin/dietary-tags',
+  '/admin/shop-groups',
+]
 
 // ---- types ----
 export type Route = {
@@ -38,7 +68,7 @@ export const pages: Route[] = [
 ];
 
 export const settings: Route[] = [
-  { label: "Account", path: "/myAccount", protected: true },
+  { label: "Account", path: "/profile", protected: true },
   { label: "Dashboard", path: "/dashboard", protected: true, role: "admin" },
   { label: "My Shop", path: "/myShop", protected: true, role: "seller" },
   { label: "Logout", path: "/", protected: true  },

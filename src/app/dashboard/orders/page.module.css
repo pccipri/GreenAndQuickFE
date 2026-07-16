@@ -1,0 +1,10 @@
+.orderHistoryContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.title {
+    margin: 40px 0;
+}

@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
 
-import SellerCard from "../components/sellerCard";
+import SellerCard from "../../components/sellerCard";
 
 const ShopGroup: FC = () => {
     const t = useTranslations('ShopGroup');
