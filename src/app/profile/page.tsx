@@ -3,20 +3,18 @@
 import { Container, List } from "@mui/material";
 import { FC } from "react";
 import React from "react";
-import Avatar from '@mui/material/Avatar';
-import ButtonBase from '@mui/material/ButtonBase';
-import TextField from '@mui/material/TextField';
-import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
-import ShoppingCartCheckoutOutlinedIcon from '@mui/icons-material/ShoppingCartCheckoutOutlined';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import Avatar from "@mui/material/Avatar";
+import ButtonBase from "@mui/material/ButtonBase";
+import TextField from "@mui/material/TextField";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-
-import Button from '@mui/material/Button';
-
+import Button from "@mui/material/Button";
 import CategoriesList from "../components/categoriesList";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
-const MyAccount: FC = () => {
+const ProfilePage: FC = () => {
     const router = useRouter();
     const [avatarSrc, setAvatarSrc] = React.useState<string | undefined>(undefined);
 
@@ -264,4 +262,4 @@ const MyAccount: FC = () => {
     );
 };
 
-export default MyAccount;
+export default ProfilePage;

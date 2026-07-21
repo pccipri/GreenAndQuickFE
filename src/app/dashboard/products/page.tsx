@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from 'next-intl';
-import CrudTable, { CrudColumn } from "../components/crudTable";
+import CrudTable, { CrudColumn } from "../../components/crudTable";
 import { Product } from "@/interfaces/Product";
 
 
