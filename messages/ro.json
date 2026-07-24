@@ -433,5 +433,29 @@
     "lowStock": "Alerte stoc scăzut",
     "lowStockHelper": "Fii notificat când articolele pe care le vinzi sunt aproape de a fi epuizate",
     "saveChanges": "Salvează"
+  },
+  "MyGroups": {
+    "tableColumns": {
+      "name": "Nume",
+      "description": "Descriere",
+      "shops": "Magazine",
+      "deliveryAddress": "Adresa de ridicare",
+      "createdAt": "Creat la",
+      "role": "Rol",
+      "shopCount": "Magazine: {count}"
+    },
+    "roles": {
+      "owner": "Proprietar",
+      "member": "Membru"
+    },
+    "title": "Grupurile mele",
+    "noShopGroups": "Nu au fost găsite grupuri de magazine.",
+    "deleteTitle": "Șterge grupul de magazine",
+    "deleteMessage": "Sigur dorești să ștergi acest grup de magazine?",
+    "createGroup": "Creează grup",
+    "pendingInvitations": "Invitații în așteptare",
+    "invitedBy": "Invitat de {shop}",
+    "accept": "Acceptă",
+    "decline": "Refuză"
   }
 }

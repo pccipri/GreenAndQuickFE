@@ -433,5 +433,29 @@
     "lowStock": "Low stock alerts",
     "lowStockHelper": "Get notified when items you sell are running low on inventory",
     "saveChanges": "Save"
+  },
+  "MyGroups": {
+    "tableColumns": {
+      "name": "Name",
+      "description": "Description",
+      "shops": "Shops",
+      "deliveryAddress": "Pickup Address",
+      "createdAt": "Created At",
+      "role": "Role",
+      "shopCount": "Shops: {count}"
+    },
+    "roles": {
+      "owner": "Owner",
+      "member": "Member"
+    },
+    "title": "My Groups",
+    "noShopGroups": "No shop groups found.",
+    "deleteTitle": "Delete shop group",
+    "deleteMessage": "Are you sure you want to delete this shop group?",
+    "createGroup": "Create Group",
+    "pendingInvitations": "Pending Invitations",
+    "invitedBy": "Invited by {shop}",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }
