@@ -71,7 +71,7 @@ const initialShopGroups: ShopGroup[] = [
     },
 ];
 
-const ShopGroupsTable = () => {
+const MyGroups = () => {
     const router = useRouter();
     const t = useTranslations("MyGroups");
 
@@ -258,4 +258,4 @@ const ShopGroupsTable = () => {
     );
 };
 
-export default ShopGroupsTable;
+export default MyGroups;
