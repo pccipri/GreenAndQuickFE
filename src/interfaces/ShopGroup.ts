@@ -5,6 +5,7 @@ export interface ShopGroup {
     name: string;
     description: string;
     shops: string[];
+    role: "owner" | "member";
     deliveryAddress: Address;
     createdAt: Date;
     updatedAt: Date;

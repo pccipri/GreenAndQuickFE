@@ -55,6 +55,8 @@ type CrudTableProps<T> = {
 
     onEdit: (id: string) => void;
     onDeleteConfirm: (id: string) => void;
+
+    renderActions?: (item: T) => React.ReactNode;
 };
 
 const CrudTable = <T,>({
@@ -70,6 +72,7 @@ const CrudTable = <T,>({
     deleteMessage,
     onEdit,
     onDeleteConfirm,
+    renderActions,
 }: CrudTableProps<T>) => {
     const t = useTranslations("CrudTable");
 
@@ -187,19 +190,25 @@ const CrudTable = <T,>({
                                         ))}
 
                                         <TableCell align="right">
-                                            <IconButton
-                                                onClick={() => onEdit(id)}
-                                                aria-label={`Edit ${getTitle(item)}`}
-                                            >
-                                                <EditIcon />
-                                            </IconButton>
+                                            {renderActions ? (
+                                                renderActions(item)
+                                            ) : (
+                                                <>
+                                                    <IconButton
+                                                        onClick={() => onEdit(id)}
+                                                        aria-label={`Edit ${getTitle(item)}`}
+                                                    >
+                                                        <EditIcon />
+                                                    </IconButton>
 
-                                            <IconButton
-                                                onClick={() => setItemToDelete(id)}
-                                                aria-label={`Delete ${getTitle(item)}`}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
+                                                    <IconButton
+                                                        onClick={() => setItemToDelete(id)}
+                                                        aria-label={`Delete ${getTitle(item)}`}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </>
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -252,19 +261,25 @@ const CrudTable = <T,>({
                                         </Typography>
 
                                         <Box>
-                                            <IconButton
-                                                onClick={() => onEdit(id)}
-                                                aria-label={`Edit ${getTitle(item)}`}
-                                            >
-                                                <EditIcon />
-                                            </IconButton>
+                                            {renderActions ? (
+                                                renderActions(item)
+                                            ) : (
+                                                <>
+                                                    <IconButton
+                                                        onClick={() => onEdit(id)}
+                                                        aria-label={`Edit ${getTitle(item)}`}
+                                                    >
+                                                        <EditIcon />
+                                                    </IconButton>
 
-                                            <IconButton
-                                                onClick={() => setItemToDelete(id)}
-                                                aria-label={`Delete ${getTitle(item)}`}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
+                                                    <IconButton
+                                                        onClick={() => setItemToDelete(id)}
+                                                        aria-label={`Delete ${getTitle(item)}`}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </>
+                                            )}
                                         </Box>
                                     </Box>
 
@@ -277,7 +292,9 @@ const CrudTable = <T,>({
                                                 <Typography sx={{ fontWeight: 600 }}>
                                                     {column.label}:
                                                 </Typography>
-                                                <Typography>{column.render(item)}</Typography>
+                                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                                    {column.render(item)}
+                                                </Box>
                                             </Box>
                                         ))}
                                     </Stack>
