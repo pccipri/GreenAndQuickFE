@@ -1,0 +1,37 @@
+.addGroupContainer {
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding: 60px;
+}
+
+.addGroupForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.addGroupTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.formSubtitle {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.formButton {
+    margin-top: 120px;
+}

@@ -433,5 +433,20 @@
     "lowStock": "Alerte stoc scăzut",
     "lowStockHelper": "Fii notificat când articolele pe care le vinzi sunt aproape de a fi epuizate",
     "saveChanges": "Salvează"
+  },
+  "ManageGroupForm": {
+    "createGroup": "Creează Grup",
+    "groupName": "Nume Grup",
+    "groupDescription": "Descriere Grup",
+    "groupAddress": "Adresă Grup",
+    "groupStreet": "Stradă",
+    "groupCity": "Oraș",
+    "selectCity": "Selectează un oraș",
+    "groupCounty": "Județ / Regiune",
+    "selectCounty": "Selectează un județ / regiune",
+    "groupCountry": "Țară",
+    "selectCountry": "Selectează o țară",
+    "groupZipCode": "ZIP / Cod Poștal",
+    "createBtn": "Creează Grup"
   }
 }
