@@ -457,5 +457,20 @@
     "invitedBy": "Invited by {shop}",
     "accept": "Accept",
     "decline": "Decline"
+  },
+  "ManageGroupForm": {
+    "createGroup": "Create Group",
+    "groupName": "Group Name",
+    "groupDescription": "Group Description",
+    "groupAddress": "Group Address",
+    "groupStreet": "Street",
+    "groupCity": "City",
+    "selectCity": "Select a city",
+    "groupCounty": "County / Region",
+    "selectCounty": "Select a county / region",
+    "groupCountry": "Country",
+    "selectCountry": "Select a country",
+    "groupZipCode": "ZIP / Postal Code",
+    "createBtn": "Create Group"
   }
 }

@@ -457,5 +457,20 @@
     "invitedBy": "Invitat de {shop}",
     "accept": "Acceptă",
     "decline": "Refuză"
+  },
+  "ManageGroupForm": {
+    "createGroup": "Creează Grup",
+    "groupName": "Nume Grup",
+    "groupDescription": "Descriere Grup",
+    "groupAddress": "Adresă Grup",
+    "groupStreet": "Stradă",
+    "groupCity": "Oraș",
+    "selectCity": "Selectează un oraș",
+    "groupCounty": "Județ / Regiune",
+    "selectCounty": "Selectează un județ / regiune",
+    "groupCountry": "Țară",
+    "selectCountry": "Selectează o țară",
+    "groupZipCode": "ZIP / Cod Poștal",
+    "createBtn": "Creează Grup"
   }
 }
