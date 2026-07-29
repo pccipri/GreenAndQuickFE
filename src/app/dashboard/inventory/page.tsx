@@ -36,6 +36,7 @@ type AvailabilityFilter = "All" | AvailabilityStatus;
 
 type StockSortOrder = "High" | "Low";
 
+// placeholder value - replace with value from backend/settings
 const LOW_STOCK_THRESHOLD = 10;
 
 const columns: readonly InventoryItemCol[] = [
