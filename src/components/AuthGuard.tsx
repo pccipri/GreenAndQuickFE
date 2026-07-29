@@ -2,40 +2,67 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { ADMIN_ROUTES, NO_ACCOUNT_ROUTES, PROTECTED_ROUTES, UNPROTECTED_ROUTES } from '@/utils/routes'
+import { ADMIN_ROUTES, NO_ACCOUNT_ROUTES, PROTECTED_ROUTES, SHOP_OWNER_ROUTES, UNPROTECTED_ROUTES } from '@/utils/routes'
 import { useAuth } from '@/contexts/AuthProvider'
 
+const matchesRoutePattern = (pathname: string, pattern: string) => {
+    if (pattern === '/') {
+        return pathname === '/'
+    }
+
+    if (pattern.includes('/[')) {
+        const basePattern = pattern.split('/[')[0]
+        return pathname === basePattern || pathname.startsWith(`${basePattern}/`)
+    }
+
+    return pathname === pattern || pathname.startsWith(`${pattern}/`)
+}
+
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
-    const { user, loading } = useAuth()
+    const { user, loading, isAuthenticated } = useAuth()
     const router = useRouter()
     const pathname = usePathname()
 
     useEffect(() => {
         if (loading) return
 
-        if (UNPROTECTED_ROUTES.includes(pathname)) return
+        if (UNPROTECTED_ROUTES.some((pattern) => matchesRoutePattern(pathname, pattern))) return
 
-        if (NO_ACCOUNT_ROUTES.some(prefix => pathname.startsWith(prefix)) && user) {
+        const isNoAccountRoute = NO_ACCOUNT_ROUTES.some((pattern) => matchesRoutePattern(pathname, pattern))
+        const isProtectedRoute = PROTECTED_ROUTES.some((pattern) => matchesRoutePattern(pathname, pattern))
+        const isShopOwnerRoute = SHOP_OWNER_ROUTES.some((pattern) => matchesRoutePattern(pathname, pattern))
+        const isAdminRoute = ADMIN_ROUTES.some((pattern) => matchesRoutePattern(pathname, pattern))
+
+        const redirectToLogin = () => {
+            const returnTo = encodeURIComponent(pathname)
+            router.push(`/login?returnTo=${returnTo}`)
+        }
+
+        if (isNoAccountRoute && isAuthenticated) {
             router.push('/')
             return
         }
 
-        if (PROTECTED_ROUTES.some(prefix => pathname.startsWith(prefix)) && !user) {
-            router.push('/login')
+        if ((isProtectedRoute || isShopOwnerRoute || isAdminRoute) && !isAuthenticated) {
+            redirectToLogin()
             return
         }
 
-        if (ADMIN_ROUTES.some(prefix => pathname.startsWith(prefix))) {
-            if (!user) {
-                router.push('/login')
-                return
-            }
-            if (user.role !== 'admin') {
-                router.push('/unauthorized')
-                return
-            }
+        if (user?.isActive === false && (isProtectedRoute || isShopOwnerRoute || isAdminRoute)) {
+            router.push('/verify-email')
+            return
         }
-    }, [user, loading, pathname, router])
+
+        if (isShopOwnerRoute && user && user.role !== 'shopOwner' && user.role !== 'admin') {
+            router.push('/unauthorized')
+            return
+        }
+
+        if (isAdminRoute && user && user.role !== 'admin') {
+            router.push('/unauthorized')
+            return
+        }
+    }, [isAuthenticated, loading, pathname, router, user])
 
     if (loading) return <div>Loading...</div>
 

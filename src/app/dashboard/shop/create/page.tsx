@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { addShop } from '@/services/shopService';
 import { AddShopDTO } from '@/interfaces/Shop';
 import { useAuth } from '@/contexts/AuthProvider';
+import { notify } from '@/utils/toast';
 
 const AddShop: FC = () => {
     const t = useTranslations('AddShopForm');
@@ -28,12 +29,18 @@ const AddShop: FC = () => {
             zipcode: ''
         }
     })
-    const { user } = useAuth()
+    const { user, refresh } = useAuth()
     const createShop = async () => {
         if (user) {
             const response = await addShop({ ...shopData, owner: user.id })
 
             if (response) {
+                try {
+                    await refresh();
+                } catch {
+                    // The user can still continue after shop creation even if refresh fails.
+                }
+                notify('Shop created successfully', 'success')
                 router.push("/")
             }
 

@@ -2,7 +2,6 @@
 
 import { LoginRequest } from "@/interfaces/Auth";
 import { User } from "@/interfaces/User";
-import { marketAPI } from "@/lib/api";
 import { authAPI, getAccessToken, refreshAccessToken, setAccessToken } from "@/lib/tokenManager";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -11,6 +10,7 @@ import { createContext, ReactNode, useCallback, useContext, useEffect, useState 
 export interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isAuthenticated: boolean;
   signIn: (params: LoginRequest) => Promise<string | undefined>
   logout: () => Promise<void>
   refresh: () => Promise<void>;
@@ -23,13 +23,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const t = useTranslations();
-  
-  // Fetch current user from your API (expects Authorization header)
-  const fetchUser = useCallback(async () => {
-    const { data } = await marketAPI.get("/auth/users/me"); // -> /api/auth/users/me
-    
-    setUser(data.user ?? null);
+
+  const clearAuthState = useCallback(() => {
+    setAccessToken(null);
+    setUser(null);
   }, []);
+  
+  // Resolve current user using the RESTful profile endpoint.
+  const fetchUser = useCallback(async () => {
+    const { data } = await authAPI.get("/users/me");
+    const resolvedUser = data?.user ?? data ?? null;
+    setUser(resolvedUser);
+  }, []);
+
+  const refresh = useCallback(async () => {
+    try {
+      await fetchUser();
+    } catch {
+      clearAuthState();
+      throw new Error(t("sessionExpired"));
+    }
+  }, [clearAuthState, fetchUser, t]);
 
   // On mount: try silent refresh if no access token, then fetch user.
   useEffect(() => {
@@ -43,14 +57,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const newToken = await refreshAccessToken(); // uses authAPI (withCredentials)
             setAccessToken(newToken);                    // store in-memory
           } catch {
-            setUser(null);
+            clearAuthState();
             // refresh failed (no/invalid cookie) — user remains unauthenticated
           }
         }
 
         // If we have a token now, resolve the user
         if (getAccessToken()) {
-          await fetchUser();
+          try {
+            await fetchUser();
+          } catch {
+            clearAuthState();
+          }
         } else {
           setUser(null);
         }
@@ -62,18 +80,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => {
       active = false;
     };
-  }, [fetchUser]);
+  }, [clearAuthState, fetchUser]);
 
   // Explicit login using the auth API
   const signIn = async (params: LoginRequest) => {
     try {
-    const { data } = await authAPI.post("/login", params); // cookie set by server
-    setAccessToken(data.accessToken);                       // store the access token
-    await fetchUser();
-    return data.message as string | undefined;
-  } catch (error: any) {
-    throw new Error(t(error.response?.data?.error) || t("loginFailed"));
-  }};
+      const { data } = await authAPI.post("/login", params); // cookie set by server
+      setAccessToken(data.accessToken);                        // store the access token
+      await fetchUser();
+      return data.message as string | undefined;
+    } catch (error: any) {
+      clearAuthState();
+      throw new Error(t(error.response?.data?.error) || t("loginFailed"));
+    }
+  };
 
   // Logout: clear server cookie (if route exists) and local state
   const logout = async () => {
@@ -82,14 +102,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch {
       // ignore network/logout route failures; we'll still clear client state
     } finally {
-      setAccessToken(null);
-      setUser(null);
+      clearAuthState();
       router.push('/login')
     }
   };
   
+  const isAuthenticated = !!user;
+  
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, logout, refresh: fetchUser }}>
+    <AuthContext.Provider value={{ user, loading, isAuthenticated, signIn, logout, refresh }}>
       {children}
     </AuthContext.Provider>
   );

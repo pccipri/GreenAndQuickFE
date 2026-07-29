@@ -11,7 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { LoginRequest } from '@/interfaces/Auth';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { notify } from '@/utils/toast';
 import { useAuth } from '@/contexts/AuthProvider';
 
@@ -23,28 +23,37 @@ const Login: FC = () => {
         event.preventDefault();
     };
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [userData, setUserData] = useState<LoginRequest>({
         usernameOrEmail: '',
         password: '',
     })
-    const { signIn, refresh } = useAuth()
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const { signIn } = useAuth()
     const loginUser = async () => {
+        if (isSubmitting) return
+
         // Validate required fields
         if (!userData.usernameOrEmail.trim() || !userData.password.trim()) {
             notify(t("validationError"), "error")
             return
         }
 
+        setIsSubmitting(true)
+
         try {
             const response = await signIn(userData)
 
             if (response) {
-                await refresh()
                 notify(t("successMessage"), "success")
-                router.push("/")
+                const returnTo = searchParams.get('returnTo')
+                const targetPath = returnTo && returnTo.startsWith('/') ? returnTo : "/"
+                router.replace(targetPath)
             }
         } catch (error: any) {
             notify(error.message || 'Login failed', "error")
+        } finally {
+            setIsSubmitting(false)
         }
 
     }
@@ -145,11 +154,11 @@ const Login: FC = () => {
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                             <div style={{ textAlign: 'right', marginBottom: '2vw' }}>
-                                <Button href="/auth/forgotPassword" style={{ textTransform: 'none' }}>{t("forgotPassword")}</Button>
+                                <Button href="/auth/forgot-password" style={{ textTransform: 'none' }}>{t("forgotPassword")}</Button>
                             </div>
                         </Box>
-                        <Button variant="contained" onClick={loginUser} fullWidth style={{ marginTop: '4vw'}}>{t("signIn")}</Button>
-                        <Button variant="outlined" onClick={loginWithGoogle} fullWidth style={{ marginTop: '1vw', marginBottom: '2vw' }}>{t("signInGoogle")}</Button>
+                        <Button variant="contained" onClick={loginUser} disabled={isSubmitting} fullWidth style={{ marginTop: '4vw'}}>{isSubmitting ? t("signIn") : t("signIn")}</Button>
+                        <Button variant="outlined" onClick={loginWithGoogle} disabled={isSubmitting} fullWidth style={{ marginTop: '1vw', marginBottom: '2vw' }}>{t("signInGoogle")}</Button>
                         <p>{t("noAccount")}</p><Button href="/register">{t("registerNow")}</Button>
 
                     </div>

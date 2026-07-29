@@ -13,14 +13,13 @@ export default function VerifyRegisterPage() {
   const token = params?.token as string;
   const hasVerifiedToken = useRef(false);
   
-  const [status, setStatus] = useState<'nothing' | 'loading' | 'error' | 'done'>('nothing');
+  const [status, setStatus] = useState<'loading' | 'error' | 'done'>('loading');
   const [message, setMessage] = useState(t('verifyingEmail'));
 
   useEffect(() => {
-   if (!token || hasVerifiedToken.current) return;
+  if (!token || hasVerifiedToken.current) return;
 
     hasVerifiedToken.current = true;
-    setStatus('loading');
 
     verifyRegisterToken(token).then((res) => {
       if (res) {
@@ -37,6 +36,15 @@ export default function VerifyRegisterPage() {
       setMessage(t('verificationFailed'));
     });
   }, [token, router, t]);
+
+  if (!token) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <h1 className="text-2xl font-bold text-red-600">❌ Verification Failed</h1>
+        <p>{t('verificationFailed')}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">

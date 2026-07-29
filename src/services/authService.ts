@@ -79,3 +79,18 @@ export const resetPassword = async (requestData: ResetPasswordRequest): Promise<
     return undefined
   }
 }
+
+export const resendVerificationEmail = async (email: string): Promise<{ message: string } | undefined> => {
+  try {
+    const response: AxiosResponse<{ message: string }> = await marketAPI({
+      url: '/auth/resend-verification',
+      method: 'post',
+      data: { email },
+    })
+    return response.data
+  } catch (error: any) {
+    console.error('Error in the resend verification process:', error);
+    notify(error.response?.data?.error || 'Resend verification failed', "error")
+    return undefined
+  }
+}

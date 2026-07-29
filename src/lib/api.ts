@@ -3,6 +3,7 @@ import { getAccessToken, refreshAccessToken, setAccessToken } from "./tokenManag
 
 export const marketAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_RESOURCES_URL ?? "testing",
+  withCredentials: true,
 });
 
 marketAPI.interceptors.request.use((config) => {
