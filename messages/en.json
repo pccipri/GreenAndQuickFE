@@ -485,5 +485,29 @@
     "selectCountry": "Select a country",
     "groupZipCode": "ZIP / Postal Code",
     "createBtn": "Create Group"
+  },
+  "InventoryDashboard": {
+    "title": "Inventory",
+    "filterByAvailability": "Filter by availability",
+    "tableAriaLabel": "Inventory table",
+    "rows": "Rows per page",
+    "tableColumns": {
+      "id": "ID",
+      "name": "Name",
+      "image": "Image",
+      "category": "Category",
+      "stock": "Stock",
+      "available": "Availability"
+    },
+    "available": {
+      "all": "All",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "outOfStock": "Out of Stock"
+    },
+    "lowStock": "⚠️ Low Stock",
+    "editStock": "Edit stock",
+    "saveStock": "Save stock",
+    "cancelEdit": "Cancel editing"
   }
 }

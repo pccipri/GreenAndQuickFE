@@ -485,5 +485,29 @@
     "selectCountry": "Selectează o țară",
     "groupZipCode": "ZIP / Cod Poștal",
     "createBtn": "Creează Grup"
+  },
+  "InventoryDashboard": {
+    "title": "Inventar",
+    "filterByAvailability": "Filtrează după disponibilitate",
+    "tableAriaLabel": "Tabel Inventar",
+    "rows": "Rânduri pe pagină",
+    "tableColumns": {
+      "id": "ID",
+      "name": "Nume",
+      "image": "Imagine",
+      "category": "Categorie",
+      "stock": "Stoc",
+      "available": "Disponibilitate"
+    },
+    "available": {
+      "all": "Toate",
+      "available": "Disponibile",
+      "unavailable": "Indisponibile",
+      "outOfStock": "Fără Stoc"
+    },
+    "lowStock": "⚠️ Stoc Scăzut",
+    "editStock": "Editează Stoc",
+    "saveStock": "Salvează Stoc",
+    "cancelEdit": "Anulează Editarea"
   }
 }
