@@ -5,9 +5,13 @@ export interface User {
   username: string;
   email: string;
   role: 'customer' | 'admin' | 'shopOwner';
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   avatarUrl: string | null;
+  avatarPath?: string | null;
+  phoneNumber?: string | null;
+  isActive?: boolean;
+  preferences?: Record<string, unknown> | null;
   userSettings?: UserSettingsDto;
 }
 

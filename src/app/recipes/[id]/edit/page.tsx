@@ -169,11 +169,11 @@ const EditRecipe: FC = () => {
                     <FormControl fullWidth>
                         <Select
                             id="mealType"
-                            placeholder="Breakfast"
                             displayEmpty
-                            renderValue={(selected) =>
-                                selected ? selected : t('selectMealType')
-                            }
+                            renderValue={(selected) => {
+                                const value = typeof selected === 'string' ? selected : '';
+                                return value.length > 0 ? value : t('selectMealType');
+                            }}
                             sx={{ mt: 1, mb: 2 }}
                         >
                             <MenuItem value="" disabled>
