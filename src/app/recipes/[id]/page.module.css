@@ -1,3 +1,135 @@
+.pageShell {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    padding: 40px 48px 56px;
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.heroCard,
+.sectionCard {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+}
+
+.heroCard {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+.imageWrap {
+    min-height: 100%;
+}
+
+.coverImage {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.coverPlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 420px;
+    background: linear-gradient(135deg, rgba(233, 239, 231, 1), rgba(219, 228, 213, 1));
+    color: rgba(15, 23, 42, 0.35);
+}
+
+.heroCopy {
+    display: flex;
+    align-items: center;
+    padding: 32px;
+}
+
+.kicker {
+    letter-spacing: 0.2em;
+}
+
+.metaRow {
+    color: rgba(15, 23, 42, 0.75);
+}
+
+.metaItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.sectionCard {
+    padding: 28px;
+}
+
+.sectionTitle {
+    margin-bottom: 16px;
+}
+
+.list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.nutritionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.nutritionItem {
+    padding: 16px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    background: rgba(248, 250, 247, 1);
+}
+
+.stateBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 420px;
+    padding: 32px;
+    text-align: center;
+}
+
+@media (max-width: 960px) {
+    .pageShell {
+        padding: 24px 16px 40px;
+    }
+
+    .topBar,
+    .heroCard,
+    .contentGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .topBar {
+        display: grid;
+        justify-items: start;
+    }
+
+    .heroCopy,
+    .sectionCard {
+        padding: 20px;
+    }
+}
 .navigationContainer {
     display: flex;
     background-color: white;

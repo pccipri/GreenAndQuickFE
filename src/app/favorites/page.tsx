@@ -198,34 +198,106 @@ const FavoritesTab: FC = () => {
                     <div className={styles.highlightedRecipes}>
                         <div className={styles.recipeCardContainer}>
                             <RecipeCard
-                                recipeImage="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                recipeName="Easter Egg Salad"
-                                recipeCategory="Spring"
+                                recipe={{
+                                    _id: 'sample-1',
+                                    title: 'Easter Egg Salad',
+                                    slug: 'easter-egg-salad',
+                                    shortDescription: 'Spring favorite',
+                                    imagePath: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+                                    mealType: 'LUNCH',
+                                    difficulty: 'EASY',
+                                    duration: 20,
+                                    durationType: 'MINUTES',
+                                    rating: 4.7,
+                                    reviewCount: 18,
+                                    dietaryTags: [],
+                                    createdAt: new Date().toISOString(),
+                                }}
                             />
                             <RecipeCard
-                                recipeImage="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                recipeName="Easter Egg Salad"
-                                recipeCategory="Spring"
+                                recipe={{
+                                    _id: 'sample-2',
+                                    title: 'Easter Egg Salad',
+                                    slug: 'easter-egg-salad-2',
+                                    shortDescription: 'Spring favorite',
+                                    imagePath: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+                                    mealType: 'LUNCH',
+                                    difficulty: 'EASY',
+                                    duration: 20,
+                                    durationType: 'MINUTES',
+                                    rating: 4.7,
+                                    reviewCount: 18,
+                                    dietaryTags: [],
+                                    createdAt: new Date().toISOString(),
+                                }}
                             />
                             <RecipeCard
-                                recipeImage="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                recipeName="Easter Egg Salad"
-                                recipeCategory="Spring"
+                                recipe={{
+                                    _id: 'sample-3',
+                                    title: 'Easter Egg Salad',
+                                    slug: 'easter-egg-salad-3',
+                                    shortDescription: 'Spring favorite',
+                                    imagePath: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+                                    mealType: 'LUNCH',
+                                    difficulty: 'EASY',
+                                    duration: 20,
+                                    durationType: 'MINUTES',
+                                    rating: 4.7,
+                                    reviewCount: 18,
+                                    dietaryTags: [],
+                                    createdAt: new Date().toISOString(),
+                                }}
                             />
                             <RecipeCard
-                                recipeImage="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                recipeName="Easter Egg Salad"
-                                recipeCategory="Spring"
+                                recipe={{
+                                    _id: 'sample-4',
+                                    title: 'Easter Egg Salad',
+                                    slug: 'easter-egg-salad-4',
+                                    shortDescription: 'Spring favorite',
+                                    imagePath: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+                                    mealType: 'LUNCH',
+                                    difficulty: 'EASY',
+                                    duration: 20,
+                                    durationType: 'MINUTES',
+                                    rating: 4.7,
+                                    reviewCount: 18,
+                                    dietaryTags: [],
+                                    createdAt: new Date().toISOString(),
+                                }}
                             />
                             <RecipeCard
-                                recipeImage="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                recipeName="Easter Egg Salad"
-                                recipeCategory="Spring"
+                                recipe={{
+                                    _id: 'sample-5',
+                                    title: 'Easter Egg Salad',
+                                    slug: 'easter-egg-salad-5',
+                                    shortDescription: 'Spring favorite',
+                                    imagePath: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+                                    mealType: 'LUNCH',
+                                    difficulty: 'EASY',
+                                    duration: 20,
+                                    durationType: 'MINUTES',
+                                    rating: 4.7,
+                                    reviewCount: 18,
+                                    dietaryTags: [],
+                                    createdAt: new Date().toISOString(),
+                                }}
                             />
                             <RecipeCard
-                                recipeImage="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                recipeName="Easter Egg Salad"
-                                recipeCategory="Spring"
+                                recipe={{
+                                    _id: 'sample-6',
+                                    title: 'Easter Egg Salad',
+                                    slug: 'easter-egg-salad-6',
+                                    shortDescription: 'Spring favorite',
+                                    imagePath: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+                                    mealType: 'LUNCH',
+                                    difficulty: 'EASY',
+                                    duration: 20,
+                                    durationType: 'MINUTES',
+                                    rating: 4.7,
+                                    reviewCount: 18,
+                                    dietaryTags: [],
+                                    createdAt: new Date().toISOString(),
+                                }}
                             />
                         </div>
 
