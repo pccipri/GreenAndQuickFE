@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import { useTranslations } from 'next-intl';
 
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';;
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Autocomplete from '@mui/material/Autocomplete';

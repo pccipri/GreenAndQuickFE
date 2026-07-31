@@ -471,6 +471,21 @@
     "groupCountry": "Country",
     "selectCountry": "Select a country",
     "groupZipCode": "ZIP / Postal Code",
-    "createBtn": "Create Group"
+    "createBtn": "Create Group",
+    "groupManagement": "Group Management",
+    "groupDetails": "Group Details",
+    "groupDetailsDescription": "Manage the details of your shop group, including its name, description, and delivery address.",
+    "saveChanges": "Save Changes",
+    "inviteShop": "Invite Shop",
+    "inviteShopDescription": "Invite a shop to join your group by entering their email address. The shop will receive an invitation to join.",
+    "searchShop": "Search for a shop by name or email",
+    "searchShopPlaceholder": "John's Grocery / jane.doe@example.com",
+    "sendInvitation": "Send Invitation",
+    "groupMembers": "Group Members",
+    "memberCount": "Members: {count}",
+    "removeMember": "Remove Member",
+    "invitations": "Invitations",
+    "invitationsDescription": "View and manage pending invitations to your shop group. You can accept or decline invitations from other shops.",
+    "invitedOn": "Invited on {date}"
   }
 }
