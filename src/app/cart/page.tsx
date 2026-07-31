@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useTranslations } from 'next-intl';
 
 import {
@@ -15,29 +15,38 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const initialCartItems = [
-    {
-        id: 1,
-        name: "Apples",
-        category: "Marcel's Farm",
-        price: 45,
-        quantity: 2,
-        image: "./images/bgplaceholder.jpeg",
-    },
-    {
-        id: 2,
-        name: "Salad",
-        category: "John's Farm",
-        price: 25,
-        quantity: 1,
-        image: "./images/bgplaceholder.jpeg",
-    },
-];
+type CartItem = {
+    id: number | string;
+    name: string;
+    category: string;
+    price: number;
+    quantity: number;
+    image: string;
+};
+
+const getInitialCartItems = (): CartItem[] => {
+    if (typeof window === 'undefined') {
+        return [];
+    }
+
+    try {
+        const stored = window.localStorage.getItem('green_quick_cart');
+        return stored ? JSON.parse(stored) as CartItem[] : [];
+    } catch {
+        return [];
+    }
+};
 
 const Cart: FC = () => {
     const t = useTranslations('Cart');
 
-    const [cartItems, setCartItems] = useState(initialCartItems);
+    const [cartItems, setCartItems] = useState<CartItem[]>(getInitialCartItems);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            window.localStorage.setItem('green_quick_cart', JSON.stringify(cartItems));
+        }
+    }, [cartItems]);
 
     const shippingFee = 20;
 
@@ -51,7 +60,7 @@ const Cart: FC = () => {
         0
     );
 
-    const handleIncreaseQuantity = (id: number) => {
+    const handleIncreaseQuantity = (id: number | string) => {
         setCartItems((prevItems) =>
             prevItems.map((item) =>
                 item.id === id
@@ -61,7 +70,7 @@ const Cart: FC = () => {
         );
     };
 
-    const handleDecreaseQuantity = (id: number) => {
+    const handleDecreaseQuantity = (id: number | string) => {
         setCartItems((prevItems) =>
             prevItems.map((item) =>
                 item.id === id && item.quantity > 1
@@ -71,7 +80,7 @@ const Cart: FC = () => {
         );
     };
 
-    const handleRemoveItem = (id: number) => {
+    const handleRemoveItem = (id: number | string) => {
         setCartItems((prevItems) =>
             prevItems.filter((item) => item.id !== id)
         );
