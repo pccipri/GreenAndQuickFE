@@ -1,0 +1,43 @@
+.managementPage {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.editGroupTitle {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sectionCard {
+    height: 100%;
+    padding: 24px;
+    border-radius: 12px;
+}
+
+.editGroupForm {
+    width: 100%;
+}
+
+.formLabel {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.listRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 72px;
+    padding: 12px 0;
+}

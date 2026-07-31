@@ -581,7 +581,22 @@
     "groupCountry": "Țară",
     "selectCountry": "Selectează o țară",
     "groupZipCode": "ZIP / Cod Poștal",
-    "createBtn": "Creează Grup"
+    "createBtn": "Creează Grup",
+    "groupManagement": "Gestionare Grup",
+    "groupDetails": "Detalii Grup",
+    "groupDetailsDescription": "Gestionează detaliile grupului tău de magazine, inclusiv numele, descrierea și adresa de livrare.",
+    "saveChanges": "Salvează Modificările",
+    "inviteShop": "Invită Magazin",
+    "inviteShopDescription": "Invită un magazin să se alăture grupului tău prin introducerea adresei de email. Magazinul va primi o invitație pentru a se alătura.",
+    "searchShop": "Caută un magazin după nume sau email",
+    "searchShopPlaceholder": "John's Grocery / jane.doe@example.com",
+    "sendInvitation": "Trimite Invitație",
+    "groupMembers": "Membri Grup",
+    "memberCount": "Membri: {count}",
+    "removeMember": "Elimină Membru",
+    "invitations": "Invitații",
+    "invitationsDescription": "Vizualizează și gestionează invitațiile în așteptare pentru grupul tău de magazine. Poți accepta sau refuza invitații de la alte magazine.",
+    "invitedOn": "Invitat la {date}"
   },
   "InventoryDashboard": {
     "title": "Inventar",
