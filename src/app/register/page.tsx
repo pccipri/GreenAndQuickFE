@@ -14,6 +14,7 @@ import { useLocale } from 'next-intl';
 import { registerUser } from '@/services/authService';
 import { useRouter } from 'next/navigation'
 import { AddUserDTO } from '@/interfaces/User';
+import { notify } from '@/utils/toast';
 
 const Register: FC = () => {
     const t = useTranslations('Register');
@@ -24,21 +25,49 @@ const Register: FC = () => {
         event.preventDefault();
     };
     const router = useRouter()
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [userData, setUserData] = useState<AddUserDTO>({
         username: '',
         email: '',
         password: '',
         preferredLanguage: locale as 'en' | 'ro',
     })
+
+    const loginWithGoogle = () => {
+        const googleAuthUrl = process.env.NEXT_PUBLIC_GOOGLE_AUTH_URL;
+        if (googleAuthUrl) {
+            router.push(googleAuthUrl)
+        }
+    }
+
     const createUser = async () => {
+        if (isSubmitting) return;
+
+        if (!userData.username.trim() || !userData.email.trim() || !userData.password.trim()) {
+            notify(t("validationError"), "error")
+            return
+        }
+
+        if (userData.password !== confirmPassword) {
+            notify(t("passwordMismatch"), "error")
+            return
+        }
+
+        setIsSubmitting(true)
+
         try {
             const response = await registerUser(userData)
             
             if (response) {
-                router.push("/login")
+                notify(t("successMessage"), "success")
+                const encodedEmail = encodeURIComponent(userData.email)
+                router.replace(`/verify-email?email=${encodedEmail}`)
             }
-        } catch (error) {
-            // Error is already handled in authService
+        } catch (error: any) {
+            notify(error.message || t("registrationFailed"), "error")
+        } finally {
+            setIsSubmitting(false)
         }
 
     }
@@ -147,9 +176,13 @@ const Register: FC = () => {
                             <TextField
                                 fullWidth
                                 label={t("confirmPassword")}
+                                value={confirmPassword}
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder={t("confirmPasswordPlaceholder")}
                                 id="confirm-password"
+                                onChange={(e) => {
+                                    setConfirmPassword(e.target.value)
+                                }}
                                 slotProps={{
                                     input: {
                                         endAdornment: (
@@ -172,7 +205,8 @@ const Register: FC = () => {
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                         </Box>
-                        <Button onClick={createUser} variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>{t("register")}</Button>
+                        <Button onClick={createUser} disabled={isSubmitting} variant="contained" fullWidth style={{ marginTop: '4vw', marginBottom: '2vw' }}>{isSubmitting ? t("register") : t("register")}</Button>
+                        <Button variant="outlined" onClick={loginWithGoogle} disabled={isSubmitting} fullWidth style={{ marginBottom: '2vw' }}>{t("continueWithGoogle")}</Button>
                         <p>{t("alreadyHaveAccount")}</p><Button href="/login">{t("logIn")}</Button>
                     </div>
                 </div>

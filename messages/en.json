@@ -27,7 +27,12 @@
     "confirmPassword": "Confirm Password",
     "confirmPasswordPlaceholder": "••••••••••••••••••",
     "alreadyHaveAccount": "Already have an account?",
-    "logIn": "Log In"
+    "logIn": "Log In",
+    "continueWithGoogle": "Continue with Google",
+    "validationError": "Please fill in all required fields",
+    "passwordMismatch": "Passwords do not match",
+    "successMessage": "Registration successful. Please check your email.",
+    "registrationFailed": "Registration failed"
   },
   "Header": {
     "english": "English",
@@ -67,8 +72,16 @@
     "resetPasswordFailed": "Reset password failed",
     "verifyEmailFailed": "Email verification failed",
     "resendVerificationFailed": "Resend verification failed",
+    "resendVerificationSent": "Verification email sent.",
+    "resendingVerification": "Resending...",
+    "resendVerification": "Resend verification email",
+    "checkInboxTitle": "Check your inbox",
+    "checkInboxDescription": "We sent a verification link to",
     "verifyingEmail": "Verifying your email...",
     "verificationFailed": "Verification failed",
+    "oauthLoginInProgress": "Signing you in...",
+    "oauthLoginSuccess": "Successfully logged in",
+    "oauthLoginFailed": "Failed to restore your session after login",
     "authFail": "Authentication failed",
     "authFailMessage": "The application failed to authenticate you for the following reason:",
     "authTryAgain": "Please try again or contact support if the issue persists.",
@@ -487,5 +500,29 @@
     "invitations": "Invitations",
     "invitationsDescription": "View and manage pending invitations to your shop group. You can accept or decline invitations from other shops.",
     "invitedOn": "Invited on {date}"
+  },
+  "InventoryDashboard": {
+    "title": "Inventory",
+    "filterByAvailability": "Filter by availability",
+    "tableAriaLabel": "Inventory table",
+    "rows": "Rows per page",
+    "tableColumns": {
+      "id": "ID",
+      "name": "Name",
+      "image": "Image",
+      "category": "Category",
+      "stock": "Stock",
+      "available": "Availability"
+    },
+    "available": {
+      "all": "All",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "outOfStock": "Out of Stock"
+    },
+    "lowStock": "⚠️ Low Stock",
+    "editStock": "Edit stock",
+    "saveStock": "Save stock",
+    "cancelEdit": "Cancel editing"
   }
 }

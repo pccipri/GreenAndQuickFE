@@ -21,6 +21,7 @@ interface ShopCardCardProps {
     productImage?: string;
     productName: string;
     productDescription: string;
+    productRating?: number;
     productPrice: number;
 }
 
