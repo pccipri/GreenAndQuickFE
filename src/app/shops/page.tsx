@@ -1,189 +1,188 @@
 "use client";
 
-import { Button, Container, List } from "@mui/material";
-import { FC, useState } from "react";
+import { Alert, Box, Button, CircularProgress, Container, Grid, MenuItem, Pagination, Paper, Stack, TextField, Typography } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
-import CategoriesList from "../components/categoriesList";
-import SellerCard from "../components/sellerCard";
-import FeaturedSellerCard from "../components/featuredSellerCard";
-
+import ShopCard from "../components/shopCard";
+import { getShops } from "@/services/shopService";
+import { Shop } from "@/interfaces/Shop";
+import { getCategories } from "@/services/categoryService";
+import { Category } from "@/interfaces/Category";
 
 const ShopsPage: FC = () => {
-    const [showAllCards, setShowAllCards] = useState(false);
+    const t = useTranslations("ShopsBrowse");
+    const [shops, setShops] = useState<Shop[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [sort, setSort] = useState("newest");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const sellers = [
-        { sellerName: "Marcel", sellerImage: "/images/bgplaceholder.jpeg" },
-        { sellerName: "Anna", sellerImage: "/images/bgplaceholder.jpeg" },
-        { sellerName: "Jon", sellerImage: "/images/bgplaceholder.jpeg" },
-        { sellerName: "Ella", sellerImage: "/images/bgplaceholder.jpeg" },
-        { sellerName: "Lars", sellerImage: "/images/bgplaceholder.jpeg" },
-        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg"},
-        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg" },
-        { sellerName: "Maja", sellerImage: "/images/bgplaceholder.jpeg" },
-    ];
+    useEffect(() => {
+        let active = true;
 
+        const loadCategories = async () => {
+            const data = await getCategories();
+            if (active) {
+                setCategories(data);
+            }
+        };
+
+        void loadCategories();
+
+        return () => {
+            active = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        let active = true;
+
+        const loadShops = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const result = await getShops({
+                    search: searchTerm || undefined,
+                    category: selectedCategory || undefined,
+                    sort,
+                    limit: 12,
+                    page,
+                });
+                if (active) {
+                    setShops(result.items);
+                    setTotalPages(result.pages || 1);
+                }
+            } catch (err: any) {
+                if (active) {
+                    setError(err.message || t("error"));
+                }
+            } finally {
+                if (active) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        void loadShops();
+
+        return () => {
+            active = false;
+        };
+    }, [searchTerm, selectedCategory, sort, page]);
 
     return (
-        <Container maxWidth={false}
-            sx={{
-                height: '100%',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                backgroundColor: 'white',
-                color: 'black',
-            }}>
-            {/* This is where the header introductory component goes */}
-            <div className="header-section-sellers"
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '20%',
-                }}>
-                <h1 style={{ padding: '50px' }}>Shop now</h1>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Stack spacing={3}>
+                <Box>
+                    <Typography variant="h4" fontWeight={700}>{t("title")}</Typography>
+                    <Typography variant="body1" color="text.secondary">
+                        {t("subtitle")}
+                    </Typography>
+                    {shops.length > 0 && !loading ? (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            {t("resultsCount", { count: shops.length })}
+                        </Typography>
+                    ) : null}
+                </Box>
 
-                {/* This is the container with the spotlight cards */}
-                <div className="sellers-cards-spotlight" style={{ overflowY: 'auto', width: '100%' }}>
-                    <h3 style={{ textAlign: 'center', margin: '0 20px 20px'}}>Featured Sellers</h3>
-                    <div className="cards-parent-container"
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                <Paper sx={{ p: 2 }}>
+                    <Grid container spacing={2}>
+                        <Grid size={{ xs: 12, md: 4 }}>
+                            <TextField
+                                fullWidth
+                                label={t("search")}
+                                value={searchTerm}
+                                onChange={(event) => {
+                                    setPage(1);
+                                    setSearchTerm(event.target.value);
+                                }}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 4 }}>
+                            <TextField
+                                fullWidth
+                                select
+                                label={t("category")}
+                                value={selectedCategory}
+                                onChange={(event) => {
+                                    setPage(1);
+                                    setSelectedCategory(event.target.value);
+                                }}
+                            >
+                                <MenuItem value="">{t("allCategories")}</MenuItem>
+                                {categories.map((category) => (
+                                    <MenuItem key={category._id} value={category.name}>
+                                        {category.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 4 }}>
+                            <TextField
+                                fullWidth
+                                select
+                                label={t("sort")}
+                                value={sort}
+                                onChange={(event) => {
+                                    setPage(1);
+                                    setSort(event.target.value);
+                                }}
+                            >
+                                <MenuItem value="newest">{t("sortOptions.newest")}</MenuItem>
+                                <MenuItem value="popular">{t("sortOptions.popular")}</MenuItem>
+                                <MenuItem value="rating">{t("sortOptions.rating")}</MenuItem>
+                            </TextField>
+                        </Grid>
+                    </Grid>
+                </Paper>
+
+                {loading ? (
+                    <Box display="flex" justifyContent="center" py={6}>
+                        <CircularProgress />
+                    </Box>
+                ) : error ? (
+                    <Alert severity="error">{error}</Alert>
+                ) : shops.length === 0 ? (
+                    <Paper sx={{ p: 6, textAlign: 'center' }}>
+                        <Typography variant="h6" gutterBottom>{t("emptyTitle")}</Typography>
+                        <Typography color="text.secondary" sx={{ mb: 2 }}>{t("emptyMessage")}</Typography>
+                        <Button variant="outlined" onClick={() => {
+                            setPage(1);
+                            setSearchTerm("");
+                            setSelectedCategory("");
+                            setSort("newest");
                         }}>
-                        <div className="cards-child-container"
-                            style={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100%',
-                                gap: '20px',
-                            }}
-                        >
-                            {(showAllCards ? sellers : sellers.slice(0, 4)).map((seller, index) => (
-                                <FeaturedSellerCard
-                                    key={index}
-                                    sellerName={seller.sellerName}
-                                    sellerImage={seller.sellerImage}
-                                />
+                            {t("clearFilters")}
+                        </Button>
+                    </Paper>
+                ) : (
+                    <>
+                        <Grid container spacing={2}>
+                            {shops.map((shop) => (
+                                <Grid key={shop._id || shop.id || shop.name} size={{ xs: 12, sm: 6, md: 4 }}>
+                                    <ShopCard shop={shop} />
+                                </Grid>
                             ))}
-                        </div>
-                    </div>
-                    <Button
-                        variant="text"
-                        onClick={() => setShowAllCards(prev => !prev)}
-                        style={{
-                            margin: '20px auto',
-                            display: 'block',
-                        }}
-                    >
-                        {showAllCards ? "See less" : "See more"}
-                    </Button>
-                </div>
-            </div>
-
-            {/* This is where the main content goes */}
-            <div className="main-section-sellers"
-                style={{
-                    display: 'flex',
-                    height: '80%',
-                    padding: '0 50px 50px 50px',
-                }}>
-                <div className="sellers-cards"
-                    style={{
-                        width: '20%',
-                        height: '100%',
-                        overflowY: 'auto',
-                    }}>
-                    <h3 style={{ textAlign: 'center', marginTop: '20px' }}>Categories</h3>
-                    <List
-                        sx={{
-                            width: '100%',
-                            marginTop: '20px',
-                            border: '1px solid black',
-                            borderRadius: '20px',
-                        }}
-                        component="nav"
-                        aria-labelledby="nested-list-subheader"
-                    >
-                        <CategoriesList categoryName="Vegetables" />
-                        <CategoriesList categoryName="Fruits" />
-                        <CategoriesList categoryName="Meat" />
-                        <CategoriesList categoryName="Fish" />
-                        <CategoriesList categoryName="Eggs" />
-                        <CategoriesList categoryName="Flour" />
-                        <CategoriesList categoryName="Vegetables" />
-                        <CategoriesList categoryName="Fruits" />
-                        <CategoriesList categoryName="Meat" />
-                        <CategoriesList categoryName="Fish" />
-                        <CategoriesList categoryName="Eggs" />
-                        <CategoriesList categoryName="Flour" />
-                        <CategoriesList categoryName="Vegetables" />
-                        <CategoriesList categoryName="Fruits" />
-                        <CategoriesList categoryName="Meat" />
-                        <CategoriesList categoryName="Fish" />
-                        <CategoriesList categoryName="Eggs" />
-                        <CategoriesList categoryName="Flour" />
-                        <CategoriesList categoryName="Vegetables" />
-                        <CategoriesList categoryName="Fruits" />
-                        <CategoriesList categoryName="Meat" />
-                        <CategoriesList categoryName="Fish" />
-                        <CategoriesList categoryName="Eggs" />
-                        <CategoriesList categoryName="Flour" />
-                    </List>
-                </div>
-
-                <div className="sellers-cards" style={{ overflowY: 'auto', width: '80%' }}>
-                    <div className="cards-parent-container"
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-                        <div className="cards-child-container"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100%',
-                            }}>
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={2.5} />
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={4} />
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={4} />
-                        </div>
-
-                        <div className="cards-child-container"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100%',
-                            }}>
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={4} />
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={4} />
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={4} />
-                        </div>
-
-                        <div className="cards-child-container"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100%',
-                            }}>
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={4} />
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={4} />
-                            <SellerCard sellerImage="/images/bgplaceholder.jpeg" sellerName="Lizard" sellerDescription="Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica" sellerRating={3} />
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </Grid>
+                        <Box display="flex" justifyContent="center" pt={1}>
+                            <Pagination
+                                count={Math.max(totalPages, 1)}
+                                page={page}
+                                onChange={(_, nextPage) => setPage(nextPage)}
+                                color="primary"
+                            />
+                        </Box>
+                    </>
+                )}
+            </Stack>
         </Container>
-    )
-}
+    );
+};
 
 export default ShopsPage;

@@ -2,17 +2,21 @@ import { AddCategoryDTO, Category } from "@/interfaces/Category";
 import { marketAPI } from "../lib/api";
 import { AxiosResponse } from "axios";
 
-export const getAllCategories = async (): Promise<Category[]> => {
+export const getCategories = async (): Promise<Category[]> => {
     try {
         const response: AxiosResponse<Category[]> = await marketAPI({
             url: '/category',
             method: 'get',
-        })
-        return response.data
+        });
+        return response.data;
     } catch (error) {
         console.error('Error:', error);
-        return []
+        return [];
     }
+};
+
+export const getAllCategories = async (): Promise<Category[]> => {
+    return getCategories();
 }
 
 export const getCategoryById = async (id: string): Promise<Category | undefined> => {

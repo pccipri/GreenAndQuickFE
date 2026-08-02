@@ -215,7 +215,7 @@ const Header: FC = () => {
                         </SearchIconWrapper>
                         <StyledInputBase
                             placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
+                            slotProps={{ input: { 'aria-label': 'search' } }}
                         />
                     </Search>
                         <LanguageSelector />

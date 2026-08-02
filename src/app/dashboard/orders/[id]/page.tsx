@@ -31,7 +31,7 @@ const OrderDetails: FC = () => {
                     <CardMedia
                         sx={{ height: 200, width: 200, margin: 2 }}
                         image="./images/bgplaceholder.jpeg"
-                        title="green iguana"
+                        title={t('imageTitle')}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -43,7 +43,7 @@ const OrderDetails: FC = () => {
                                     {t('products')}
                                 </Typography>
                                 <Typography variant="body2" sx={secondaryTextStyles}>
-                                    Apples - 1kg
+                                    {t('sampleProduct')}
                                 </Typography>
 
                                 <Typography variant="body2" sx={primaryTextStyles}>
@@ -65,7 +65,7 @@ const OrderDetails: FC = () => {
                                     {t('shop')}
                                 </Typography>
                                 <Typography variant="body2" sx={secondaryTextStyles}>
-                                    Marcel's Green Market
+                                    {t('sampleShop')}
                                 </Typography>
                             </div>
                         </div>

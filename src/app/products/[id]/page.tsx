@@ -1,324 +1,284 @@
 "use client";
 
-import { FC } from "react";
-
-import Button from "@mui/material/Button";
-
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Rating from '@mui/material/Rating';
-
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import { TextField } from "@mui/material";
+import { FC, useEffect, useMemo, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import {
+    Alert,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardMedia,
+    Chip,
+    CircularProgress,
+    Container,
+    Divider,
+    Grid,
+    Paper,
+    Stack,
+    Typography,
+} from "@mui/material";
+import { useTranslations } from "next-intl";
+import { getProductById, getProductsByShop } from "@/services/productService";
+import { Product } from "@/interfaces/Product";
+import { notify } from "@/utils/toast";
 
 const ProductPage: FC = () => {
-    function createData(
-        name: string,
-        calories: string,
-        riValue: string,
-    ) {
-        return { name, calories, riValue };
-    }
+    const t = useTranslations("ProductDetail");
+    const router = useRouter();
+    const params = useParams<{ id?: string | string[] }>();
+    const productId = useMemo(() => {
+        if (Array.isArray(params?.id)) {
+            return params.id[0];
+        }
 
-    const rows = [
-        createData('Energy', '362kJ / 85kcal', 'Less than 1%'),
-        createData('Fat', '<0.5g', 'Less than 1%'),
-        createData('Saturates', '<0.1g', 'Less than 1%'),
-        createData('Carbohydrate', '<0.5g', 'Less than 1%'),
-        createData('Sugars', '18.1g', '3%'),
-        createData('Fibre', '1.4g', '2%'),
-        createData('Protein', '<0.5g', 'Less than 1%'),
-        createData('Salt', '<0.01g', 'Less than 1%'),
-    ];
+        return params?.id;
+    }, [params?.id]);
+
+    const [product, setProduct] = useState<Product | null>(null);
+    const [selectedImage, setSelectedImage] = useState(0);
+    const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadProduct = async () => {
+            if (!productId) {
+                if (isMounted) {
+                    setError(t("missingId"));
+                    setLoading(false);
+                }
+                return;
+            }
+
+            try {
+                const result = await getProductById(productId);
+                if (isMounted) {
+                    if (result) {
+                        setProduct(result);
+                        const shopId = result.shopId;
+                        if (shopId) {
+                            try {
+                                const related = await getProductsByShop(shopId);
+                                setRelatedProducts(
+                                    related.items.filter(
+                                        (item) => (item._id ?? item.id) !== (result._id ?? result.id)
+                                    ).slice(0, 6)
+                                );
+                            } catch {
+                                setRelatedProducts([]);
+                            }
+                        } else {
+                            setRelatedProducts([]);
+                        }
+                    } else {
+                        setError(t("notFound"));
+                    }
+                }
+            } catch (err: any) {
+                if (isMounted) {
+                    setError(err.message || t("error"));
+                }
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        void loadProduct();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [productId]);
+
+    const productImages = product
+        ? (product.imageUrls && product.imageUrls.length > 0
+            ? product.imageUrls
+            : product.imageUrl
+                ? [product.imageUrl]
+                : ["/images/bgplaceholder.jpeg"])
+        : ["/images/bgplaceholder.jpeg"];
+
+    const handleAddToCart = () => {
+        if (!product) {
+            return;
+        }
+
+        if (typeof window === 'undefined') {
+            return;
+        }
+
+        const storedCart = window.localStorage.getItem('green_quick_cart');
+        const currentCart = storedCart ? JSON.parse(storedCart) as Array<{ id: string; name: string; category: string; price: number; quantity: number; image: string }> : [];
+        const nextCart = [...currentCart];
+        const existingItemIndex = nextCart.findIndex((item) => item.id === (product.id || product._id));
+
+        if (existingItemIndex >= 0) {
+            nextCart[existingItemIndex] = {
+                ...nextCart[existingItemIndex],
+                quantity: nextCart[existingItemIndex].quantity + 1,
+            };
+        } else {
+            nextCart.push({
+                id: product.id || product._id || product.name,
+                name: product.name,
+                category: product.category || 'Products',
+                price: Number(product.reducedPrice ?? product.price),
+                quantity: 1,
+                image: product.imageUrls?.[0] || product.imageUrl || '/images/bgplaceholder.jpeg',
+            });
+        }
+
+        window.localStorage.setItem('green_quick_cart', JSON.stringify(nextCart));
+        notify(t('addToCartSuccess'), 'success');
+    };
 
     return (
-        <>
-            <div className="parent-container-product"
-                style={{
-                    height: '100%',
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    backgroundColor: 'white',
-                    color: 'black'
-                }}
-            >
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Button variant="text" onClick={() => router.push("/products")} sx={{ mb: 3 }}>
+                {t("backToProducts")}
+            </Button>
 
-                {/* Wraps the product image and information */}
-                <div className="product-container"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        backgroundColor: 'white'
-                    }}
-                >
-                    {/* Container for the product image */}
-                    <div className="product-image"
-                        style={{
-                            height: '100%',
-                            width: '45%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: '50px'
-                        }}
-                    >
-                        <img src="/images/bgplaceholder.jpeg" alt="Product" height="530px" width="530px" />
-                    </div>
+            {loading ? (
+                <Box display="flex" justifyContent="center" py={6}>
+                    <CircularProgress />
+                </Box>
+            ) : error ? (
+                <Alert severity="error">{error}</Alert>
+            ) : product ? (
+                <Stack spacing={4}>
+                    <Paper sx={{ p: { xs: 2, md: 4 } }}>
+                        <Grid container spacing={4} alignItems="center">
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <Box
+                                    component="img"
+                                    src={productImages[Math.min(selectedImage, productImages.length - 1)]}
+                                    alt={product.name}
+                                    sx={{ width: "100%", maxHeight: 430, objectFit: "cover", borderRadius: 2 }}
+                                />
+                                {productImages.length > 1 ? (
+                                    <Stack direction="row" spacing={1} sx={{ mt: 2, overflowX: "auto", pb: 0.5 }}>
+                                        {productImages.map((image, index) => (
+                                            <Box
+                                                key={`${image}-${index}`}
+                                                component="button"
+                                                type="button"
+                                                onClick={() => setSelectedImage(index)}
+                                                sx={{
+                                                    p: 0,
+                                                    border: "none",
+                                                    bgcolor: "transparent",
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                <Box
+                                                    component="img"
+                                                    src={image}
+                                                    alt={`${product.name} ${index + 1}`}
+                                                    sx={{
+                                                        width: 72,
+                                                        height: 72,
+                                                        objectFit: "cover",
+                                                        borderRadius: 1,
+                                                        border: "2px solid",
+                                                        borderColor: index === selectedImage ? "primary.main" : "divider",
+                                                    }}
+                                                />
+                                            </Box>
+                                        ))}
+                                    </Stack>
+                                ) : null}
+                            </Grid>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <Stack spacing={2}>
+                                    <Typography variant="overline" color="primary">{t("kicker")}</Typography>
+                                    <Typography variant="h4" fontWeight={700}>{product.name}</Typography>
+                                    <Typography variant="body1" color="text.secondary">{product.description}</Typography>
+                                    <Stack direction="row" spacing={1} flexWrap="wrap">
+                                        {product.category ? <Chip label={product.category} /> : null}
+                                        {product.shop ? <Chip label={product.shop} variant="outlined" /> : null}
+                                        {product.isAvailable === false ? <Chip label={t("outOfStock")} color="warning" /> : <Chip label={t("inStock")} color="success" />}
+                                    </Stack>
+                                    <Typography variant="h4" fontWeight={700}>
+                                        {product.reducedPrice && product.reducedPrice < product.price ? `${product.reducedPrice} RON` : `${product.price} RON`}
+                                    </Typography>
+                                    {product.reducedPrice && product.reducedPrice < product.price ? (
+                                        <Typography variant="body2" color="text.secondary">
+                                            {t("regularPrice")}: {product.price} RON
+                                        </Typography>
+                                    ) : null}
+                                    <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+                                        <Button variant="contained" size="large" onClick={handleAddToCart}>{t("addToCart")}</Button>
+                                        <Button variant="outlined" size="large" onClick={() => router.push("/shops")}>{t("browseShops")}</Button>
+                                    </Stack>
+                                </Stack>
+                            </Grid>
+                        </Grid>
+                    </Paper>
 
-                    {/* Container for the product information */}
-                    <div className="product-information"
-                        style={{
-                            height: '100%',
-                            width: '55%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'flex-start',
-                            padding: '50px'
-                        }}
-                    >
-                        <div className="product-rating"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                width: '100%',
-                            }}
-                        >
-                            <h1 style={{ marginTop: '10px' }}>Product Name</h1>
-                            <Rating name="half-rating-read" precision={0.5} value={4.5} size="medium" readOnly />
-                        </div>
-                        <h4 style={{ marginTop: '10px' }}>Producer Name</h4>
+                    <Paper sx={{ p: { xs: 2, md: 4 } }}>
+                        <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
+                            {t("detailsTitle")}
+                        </Typography>
+                        <Divider sx={{ mb: 2 }} />
+                        <Stack spacing={1.5}>
+                            <Typography variant="body1"><strong>{t("shop")}:</strong> {product.shop || t("unknownShop")}</Typography>
+                            <Typography variant="body1"><strong>{t("category")}:</strong> {product.category || t("uncategorized")}</Typography>
+                            <Typography variant="body1"><strong>{t("price")}:</strong> {product.price} RON</Typography>
+                            {product.reducedPrice ? <Typography variant="body1"><strong>{t("reducedPrice")}:</strong> {product.reducedPrice} RON</Typography> : null}
+                            <Typography variant="body1"><strong>{t("stock")}:</strong> {product.stock ?? t("notSpecified")}</Typography>
+                            <Typography variant="body1"><strong>{t("availability")}:</strong> {product.isAvailable === false ? t("unavailable") : t("available")}</Typography>
+                        </Stack>
+                    </Paper>
 
-                        <h2 style={{ margin: '20px 0' }}>$7.50</h2>
+                    <Paper sx={{ p: { xs: 2, md: 4 } }}>
+                        <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
+                            {t("moreFromShop")}
+                        </Typography>
 
-                        <p style={{ margin: '20px 0' }}>Product description. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s</p>
-
-                        <Button variant="contained" style={{ margin: '40px 0' }}>Add to cart</Button>
-
-                        {/* Accordion for product details */}
-                        <Accordion style={{ width: '100%' }}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls='1-content'
-                                id='1-header'
-                            >
-                                <Typography component="span"><h4>Nutrition</h4></Typography>
-                            </AccordionSummary>
-                            <AccordionDetails style={{ padding: '20px' }}>
-                                <p style={{ marginBottom: '20px' }}>Table of Nutritional Information</p>
-
-                                <TableContainer component={Paper}>
-                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell><b>Typical values</b></TableCell>
-                                                <TableCell align="right"><b>per 100g</b></TableCell>
-                                                <TableCell align="right"><b>% based on RI for Average Adult</b></TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {rows.map((row) => (
-                                                <TableRow
-                                                    key={row.name}
-                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        {relatedProducts.length === 0 ? (
+                            <Typography color="text.secondary">{t("noMoreFromShop")}</Typography>
+                        ) : (
+                            <Grid container spacing={2}>
+                                {relatedProducts.map((relatedProduct) => (
+                                    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={relatedProduct._id || relatedProduct.id || relatedProduct.name}>
+                                        <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                                            <CardMedia
+                                                component="img"
+                                                height="180"
+                                                image={relatedProduct.imageUrls?.[0] || relatedProduct.imageUrl || "/images/bgplaceholder.jpeg"}
+                                                alt={relatedProduct.name}
+                                            />
+                                            <CardContent sx={{ flexGrow: 1 }}>
+                                                <Typography variant="h6" gutterBottom>{relatedProduct.name}</Typography>
+                                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                                    {relatedProduct.description}
+                                                </Typography>
+                                                <Typography variant="subtitle1" fontWeight={700}>
+                                                    {relatedProduct.price} RON
+                                                </Typography>
+                                                <Button
+                                                    sx={{ mt: 2 }}
+                                                    fullWidth
+                                                    variant="outlined"
+                                                    onClick={() => router.push(`/products/${relatedProduct.id || relatedProduct._id}`)}
                                                 >
-                                                    <TableCell component="th" scope="row">
-                                                        <b>{row.name}</b>
-                                                    </TableCell>
-                                                    <TableCell align="right">{row.calories}</TableCell>
-                                                    <TableCell align="right">{row.riValue}</TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-
-                                <p style={{ marginTop: '40px', marginBottom: '10px' }}>RI = Reference intake of an average adult (8400 kJ / 2000 kcal)</p>
-                                <p>This pack contains 2 servings.</p>
-                            </AccordionDetails>
-                        </Accordion>
-
-                        <Accordion style={{ width: '100%' }}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls='2-content'
-                                id='2-header'
-                            >
-                                <Typography component="span"><h4>Origin</h4></Typography>
-                            </AccordionSummary>
-                            <AccordionDetails style={{ padding: '20px' }}>
-                                <p>Grown in Cameroon, Colombia, Dominican Republic, Ghana, Panama</p>
-                            </AccordionDetails>
-                        </Accordion>
-
-                        <Accordion style={{ width: '100%' }}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls='3-content'
-                                id='3-header'
-                            >
-                                <Typography component="span"><h4>Storage</h4></Typography>
-                            </AccordionSummary>
-                            <AccordionDetails style={{ padding: '20px' }}>
-                                <p>Store in a cool, dry place away from strong light. Do not refrigerate.</p>
-                            </AccordionDetails>
-                        </Accordion>
-                    </div>
-                </div>
-
-                {/* Wraps the comments section */}
-                <div className="comments-container"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        padding: '50px',
-                        backgroundColor: 'white'
-                    }}
-                >
-                    <h2 style={{ marginBottom: '20px' }}>Comments</h2>
-
-
-                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={
-                                    <>
-                                        <TextField
-                                            id="outlined-multiline-flexible"
-                                            label="Write your comment here"
-                                            multiline
-                                            maxRows={4}
-                                            style={{ width: '100%' }}
-                                        />
-                                        <Button variant="contained" style={{ margin: '20px 0' }}>Submit</Button>
-                                    </>
-                                }
-                            />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={
-                                    <div className="comment-header"
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '20px'
-                                        }}
-                                    >
-                                        <p>Ali Conors</p>
-                                        <Rating name="half-rating-read" precision={0.5} value={5} size="small" readOnly />
-                                    </div>
-                                }
-                                secondary={
-                                    <>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            sx={{ color: 'text.primary', display: 'inline' }}
-                                        >
-                                            Very nice product!
-                                        </Typography>
-                                        {" — I really enjoyed this product. It has a great taste and quality."}
-                                    </>
-                                }
-                            />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={
-                                    <div className="comment-header"
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '20px'
-                                        }}
-                                    >
-                                        <p>Ali Conors</p>
-                                        <Rating name="half-rating-read" precision={0.5} value={5} size="small" readOnly />
-                                    </div>
-                                }
-                                secondary={
-                                    <>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            sx={{ color: 'text.primary', display: 'inline' }}
-                                        >
-                                            Very nice product!
-                                        </Typography>
-                                        {" — I really enjoyed this product. It has a great taste and quality."}
-                                    </>
-                                }
-                            />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={
-                                    <div className="comment-header"
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '20px'
-                                        }}
-                                    >
-                                        <p>Ali Conors</p>
-                                        <Rating name="half-rating-read" precision={0.5} value={5} size="small" readOnly />
-                                    </div>
-                                }
-                                secondary={
-                                    <>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            sx={{ color: 'text.primary', display: 'inline' }}
-                                        >
-                                            Very nice product!
-                                        </Typography>
-                                        {" — I really enjoyed this product. It has a great taste and quality."}
-                                    </>
-                                }
-                            />
-                        </ListItem>
-                    </List>
-                </div>
-            </div>
-        </>
+                                                    {t("viewProduct")}
+                                                </Button>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        )}
+                    </Paper>
+                </Stack>
+            ) : null}
+        </Container>
     );
 };
 

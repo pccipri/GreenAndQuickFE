@@ -53,7 +53,7 @@ const CreateGroup: FC = () => {
                         <TextField
                             id="groupName"
                             variant="outlined"
-                            placeholder="e.g. Mihai's Group"
+                            placeholder={t("groupNamePlaceholder")}
                             fullWidth
                             sx={{ mt: 1, mb: 2 }}
                         />
@@ -63,7 +63,7 @@ const CreateGroup: FC = () => {
                         <TextField
                             id="groupDescription"
                             variant="outlined"
-                            placeholder="e.g. We share groceries and household items"
+                            placeholder={t("groupDescriptionPlaceholder")}
                             fullWidth
                             sx={{ mt: 1, mb: 2 }}
                         />
@@ -78,7 +78,7 @@ const CreateGroup: FC = () => {
                                     <TextField
                                         id="groupStreet"
                                         variant="outlined"
-                                        placeholder="e.g. St. 2 NY"
+                                        placeholder={t("groupStreetPlaceholder")}
                                         fullWidth
                                         sx={{ mt: 1 }}
                                     />
@@ -154,8 +154,8 @@ const CreateGroup: FC = () => {
                                     <TextField
                                         id="groupZipCode"
                                         variant="outlined"
-                                        placeholder="e.g. 10001"
-                                        inputProps={{ maxLength: 10 }}
+                                        placeholder={t("groupZipCodePlaceholder")}
+                                        slotProps={{ htmlInput: { maxLength: 10 } }}
                                         fullWidth
                                         sx={{ mt: 1 }}
                                     />

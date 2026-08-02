@@ -15,11 +15,13 @@ export const UNPROTECTED_ROUTES: string[] = [
   '/shops',
   '/shops/[slug]',
   '/shop-groups/[slug]',
+  '/products',
   '/products/[id]',
   '/privacy-policy',
   '/unauthorized',
   '/auth/success',
   '/auth/failure',
+  '/contact-us',
 ]
 
 export const NO_ACCOUNT_ROUTES: string[] = ['/login', '/register', '/auth/forgot-password', '/auth/reset-password']
@@ -39,6 +41,7 @@ export const PROTECTED_ROUTES: string[] = [
 ]
 
 export const SHOP_OWNER_ROUTES: string[] = [
+  '/dashboard',
   '/dashboard/shop/create',
   '/dashboard/shop/edit',
   '/dashboard/products',
@@ -59,6 +62,7 @@ export const ADMIN_ROUTES: string[] = [
   '/admin/categories',
   '/admin/dietary-tags',
   '/admin/shop-groups',
+  '/admin/dashboard',
 ]
 
 // ---- types ----
@@ -83,7 +87,8 @@ export const pages: Route[] = [
 
 export const settings: Route[] = [
   { label: "Account", path: "/profile", protected: true },
-  { label: "Dashboard", path: "/dashboard", protected: true, role: "admin" },
+  { label: "Dashboard", path: "/dashboard", protected: true, role: "shopOwner" },
+  { label: "Admin Dashboard", path: "/admin/dashboard", protected: true, role: "admin" },
   { label: "My Shop", path: "/myShop", protected: true, role: "shopOwner" },
   { label: "Logout", path: "/", protected: true  },
   { label: "Login", path: "/login", withoutLogin: true },

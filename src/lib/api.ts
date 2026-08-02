@@ -1,8 +1,9 @@
 import axios from "axios";
 import { getAccessToken, refreshAccessToken, setAccessToken } from "./tokenManager";
+import { resolveApiBaseUrl } from "./apiConfig";
 
 export const marketAPI = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_RESOURCES_URL ?? "testing",
+  baseURL: resolveApiBaseUrl(process.env.NEXT_PUBLIC_RESOURCES_URL),
   withCredentials: true,
 });
 
