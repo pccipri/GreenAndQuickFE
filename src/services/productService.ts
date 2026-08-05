@@ -1,94 +1,109 @@
-import { AddProductDTO, Product } from "@/interfaces/Product";
+import { AddProductDTO, Product, ProductListResponse } from "@/interfaces/Product";
 import { marketAPI } from "../lib/api";
+import { extractApiErrorMessage } from "@/lib/apiError";
+import { normalizeListResponse } from "@/lib/normalizeListResponse";
 import { AxiosResponse } from "axios";
 
-export const getAllProducts = async (): Promise<Product[]> => {
+const normalizeProductListResponse = (responseData: unknown): ProductListResponse => {
+    return normalizeListResponse<Product>(responseData) as ProductListResponse;
+};
+
+export const getProducts = async (
+    params?: Record<string, string | number | boolean | undefined>
+): Promise<ProductListResponse> => {
     try {
-        const response: AxiosResponse<Product[]> = await marketAPI({
+        const response: AxiosResponse<any> = await marketAPI({
             url: '/product',
             method: 'get',
-        })
-        return response.data
+            params,
+        });
+        return normalizeProductListResponse(response.data);
     } catch (error) {
         console.error('Error:', error);
-        return []
+        return { items: [], page: 1, limit: 10, total: 0, pages: 1 };
     }
-}
+};
+
+export const getAllProducts = async (): Promise<Product[]> => {
+    const response = await getProducts({ limit: 50, page: 1 });
+    return response.items;
+};
 
 export const getProductById = async (id: string): Promise<Product | undefined> => {
     try {
         const response: AxiosResponse<Product | undefined> = await marketAPI({
             url: `/product/${id}`,
             method: 'get',
-        })
-        return response.data
+        });
+        return response.data;
     } catch (error) {
         console.error('Error:', error);
-        return undefined
+        return undefined;
     }
-}
+};
 
-export const getProductsByShop = async (shopId: string): Promise<Product | undefined> => {
+export const getProductsByShop = async (shopId: string): Promise<ProductListResponse> => {
     try {
-        const response: AxiosResponse<Product | undefined> = await marketAPI({
-            url: `/product/shop/${shopId}`,
+        const response: AxiosResponse<any> = await marketAPI({
+            url: `/shop/${shopId}/products`,
             method: 'get',
-        })
-        return response.data
+        });
+        return normalizeProductListResponse(response.data);
     } catch (error) {
         console.error('Error:', error);
-        return undefined
+        return { items: [], page: 1, limit: 10, total: 0, pages: 1 };
     }
-}
+};
 
-export const getProductsByCategory = async (categoryId: string): Promise<Product | undefined> => {
+export const getProductsByCategory = async (categoryId: string): Promise<ProductListResponse> => {
     try {
-        const response: AxiosResponse<Product | undefined> = await marketAPI({
-            url: `/product/category/${categoryId}`,
+        const response: AxiosResponse<any> = await marketAPI({
+            url: `/product`,
             method: 'get',
-        })
-        return response.data
+            params: { category: categoryId },
+        });
+        return normalizeProductListResponse(response.data);
     } catch (error) {
         console.error('Error:', error);
-        return undefined
+        return { items: [], page: 1, limit: 10, total: 0, pages: 1 };
     }
-}
+};
 
 export const addProduct = async (
-    requestData: AddProductDTO
+    shopId: string,
+    requestData: AddProductDTO | FormData
 ): Promise<Product> => {
     try {
         const response: AxiosResponse<Product> = await marketAPI({
-            url: '/product',
+            url: `/shop/${shopId}/products`,
             method: 'post',
             data: requestData,
-        })
+        });
 
-        return response.data
-
+        return response.data;
     } catch (error: any) {
-        console.error('Error:', error)
-        throw new Error(error.response?.data?.error || 'Something went wrong')
+        console.error('Error:', error);
+        throw new Error(extractApiErrorMessage(error, 'Unable to create product'));
     }
-}
+};
 
 export const updateProduct = async (
     id: string,
-    requestData: AddProductDTO
+    requestData: AddProductDTO | FormData
 ): Promise<Product | null> => {
     try {
         const response: AxiosResponse<Product | null> = await marketAPI({
             url: `/product/${id}`,
-            method: 'put',
+            method: 'patch',
             data: requestData,
-        })
+        });
 
-        return response.data
+        return response.data;
     } catch (error: any) {
-        console.error('Error:', error)
-        throw new Error(error.response?.data?.error || 'Something went wrong')
+        console.error('Error:', error);
+        throw new Error(extractApiErrorMessage(error, 'Unable to update product'));
     }
-}
+};
 
 export const deleteProduct = async (
     id: string
@@ -97,11 +112,11 @@ export const deleteProduct = async (
         const response: AxiosResponse<boolean> = await marketAPI({
             url: `/product/${id}`,
             method: 'delete',
-        })
+        });
 
-        return response.data
+        return response.data;
     } catch (error: any) {
-        console.error('Error:', error)
-        throw new Error(error.response?.data?.error || 'Something went wrong')
+        console.error('Error:', error);
+        throw new Error(extractApiErrorMessage(error, 'Unable to delete product'));
     }
-}
+};

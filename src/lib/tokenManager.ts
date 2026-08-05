@@ -1,11 +1,12 @@
 import axios from "axios";
+import { resolveAuthBaseUrl } from "./apiConfig";
 
 let accessToken: string | null = null;
 let refreshInFlight: Promise<string> | null = null;
 
 // Auth instance points to /api/auth and sends the httpOnly cookie
 export const authAPI = axios.create({
-  baseURL: (process.env.NEXT_PUBLIC_RESOURCES_URL ?? "TESTING") + "/auth",
+  baseURL: resolveAuthBaseUrl(process.env.NEXT_PUBLIC_RESOURCES_URL),
   withCredentials: true,
 });
 

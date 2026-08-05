@@ -231,7 +231,7 @@ const MyGroups = () => {
                                 onClick={() =>
                                     router.push(`/dashboard/groups/${group._id}`)
                                 }
-                                aria-label={`Manage ${group.name}`}
+                                aria-label={t("manageGroupAria", { name: group.name })}
                             >
                                 <EditIcon />
                             </IconButton>
@@ -246,7 +246,7 @@ const MyGroups = () => {
                                         )
                                     )
                                 }
-                                aria-label={`Leave ${group.name}`}
+                                aria-label={t("leaveGroupAria", { name: group.name })}
                             >
                                 <GroupRemove />
                             </IconButton>

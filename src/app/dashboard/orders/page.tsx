@@ -81,15 +81,24 @@ const OrderHistory: FC = () => {
         : rows.filter((row) => row.status === statusFilter);
 
     const getStatusChip = (status: string) => {
+        const statusLabel =
+            status === 'Active'
+                ? t('status.active')
+                : status === 'Delivered'
+                    ? t('status.delivered')
+                    : status === 'Cancelled'
+                        ? t('status.cancelled')
+                        : status;
+
         switch (status) {
             case 'Active':
-                return <Chip label={status} color="primary" size="small" />;
+                return <Chip label={statusLabel} color="primary" size="small" />;
             case 'Delivered':
-                return <Chip label={status} color="success" size="small" />;
+                return <Chip label={statusLabel} color="success" size="small" />;
             case 'Cancelled':
-                return <Chip label={status} color="error" size="small" />;
+                return <Chip label={statusLabel} color="error" size="small" />;
             default:
-                return <Chip label={status} size="small" />;
+                return <Chip label={statusLabel} size="small" />;
         }
     };
 
@@ -115,7 +124,7 @@ const OrderHistory: FC = () => {
                         </FormControl>
                     </Box>
                     <TableContainer sx={{ maxHeight: 440 }}>
-                        <Table stickyHeader aria-label="sticky table">
+                        <Table stickyHeader aria-label={t('tableAriaLabel')}>
                             <TableHead>
                                 <TableRow>
                                     {columns.map((column) => (

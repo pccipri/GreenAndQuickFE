@@ -1,22 +1,43 @@
 export interface Product {
-    _id: string;
-    shop: string;
+    _id?: string;
+    id?: string;
+    shopId?: string;
+    shop?: string;
+    categoryId?: string;
+    category?: string;
     name: string;
     description: string;
-    imageUrl: string;
+    imageUrl?: string | null;
+    imageUrls?: string[];
     price: number;
-    reducedPrice?: number;
-    category: string;
-    createdAt: Date;
-    updatedAt: Date;
+    reducedPrice?: number | null;
+    stock?: number;
+    isAvailable?: boolean;
+    lowStockThreshold?: number;
+    slug?: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 }
 
 export interface AddProductDTO {
-    shop: string;
+    shopId?: string;
+    shop?: string;
     name: string;
     description: string;
-    imageUrl: string;
     price: number;
-    reducedPrice?: number;
-    category: string;
+    reducedPrice?: number | null;
+    categoryId?: string;
+    category?: string;
+    stock?: number;
+    isAvailable?: boolean;
+    lowStockThreshold?: number;
+    images?: Array<File | string> | File | string | null;
+}
+
+export interface ProductListResponse {
+    items: Product[];
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
 }

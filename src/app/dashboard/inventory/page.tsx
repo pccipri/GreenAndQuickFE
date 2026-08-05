@@ -409,7 +409,7 @@ const InventoryDashboard: FC = () => {
                                                                 <Box
                                                                     component="img"
                                                                     src={"/images/bgplaceholder.jpeg"}
-                                                                    alt={"Product Image"}
+                                                                    alt={t("productImageAlt")}
                                                                     sx={{
                                                                         width: 60,
                                                                         height: 60,

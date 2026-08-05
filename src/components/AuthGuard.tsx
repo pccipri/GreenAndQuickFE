@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { ADMIN_ROUTES, NO_ACCOUNT_ROUTES, PROTECTED_ROUTES, SHOP_OWNER_ROUTES, UNPROTECTED_ROUTES } from '@/utils/routes'
 import { useAuth } from '@/contexts/AuthProvider'
 
@@ -35,11 +36,11 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
         const redirectToLogin = () => {
             const returnTo = encodeURIComponent(pathname)
-            router.push(`/login?returnTo=${returnTo}`)
+            router.replace(`/login?returnTo=${returnTo}`)
         }
 
         if (isNoAccountRoute && isAuthenticated) {
-            router.push('/')
+            router.replace('/')
             return
         }
 
@@ -49,22 +50,27 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
         }
 
         if (user?.isActive === false && (isProtectedRoute || isShopOwnerRoute || isAdminRoute)) {
-            router.push('/verify-email')
+            router.replace('/verify-email')
             return
         }
 
         if (isShopOwnerRoute && user && user.role !== 'shopOwner' && user.role !== 'admin') {
-            router.push('/unauthorized')
+            router.replace('/unauthorized')
             return
         }
 
         if (isAdminRoute && user && user.role !== 'admin') {
-            router.push('/unauthorized')
+            router.replace('/unauthorized')
             return
         }
     }, [isAuthenticated, loading, pathname, router, user])
 
-    if (loading) return <div>Loading...</div>
+    if (loading) return (
+        <Box sx={{ minHeight: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+            <CircularProgress />
+            <Typography variant="body2" color="text.secondary">Checking your access...</Typography>
+        </Box>
+    )
 
     return <>{children}</>
 }
