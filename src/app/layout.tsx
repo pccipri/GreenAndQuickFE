@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { NextIntlClientProvider } from 'next-intl';
-import { getLocale } from 'next-intl/server';
-
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { AuthGuard } from "@/components/AuthGuard";
@@ -35,18 +35,19 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <NextIntlClientProvider>
-          <AuthProvider>
-          <AuthGuard>
-          <Header />
-          <main>
-            {children}
-          </main>
-          <Footer />
-          </AuthGuard>
-          </AuthProvider>
-          <ToastProvider />
-        </NextIntlClientProvider>
+        <AppRouterCacheProvider>
+          <NextIntlClientProvider>
+            <AuthProvider>
+              <ToastProvider />
+
+              <AuthGuard>
+                <Header />
+                {children}
+                <Footer />
+              </AuthGuard>
+            </AuthProvider>
+          </NextIntlClientProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
