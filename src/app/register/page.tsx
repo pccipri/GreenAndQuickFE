@@ -28,6 +28,8 @@ const Register: FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [userData, setUserData] = useState<AddUserDTO>({
+        firstName: '',
+        lastName: '',
         username: '',
         email: '',
         password: '',
@@ -44,7 +46,13 @@ const Register: FC = () => {
     const createUser = async () => {
         if (isSubmitting) return;
 
-        if (!userData.username.trim() || !userData.email.trim() || !userData.password.trim()) {
+        if (
+            !userData.firstName.trim() ||
+            !userData.lastName.trim() ||
+            !userData.username.trim() ||
+            !userData.email.trim() ||
+            !userData.password.trim()
+        ) {
             notify(t("validationError"), "error")
             return
         }
@@ -58,7 +66,7 @@ const Register: FC = () => {
 
         try {
             const response = await registerUser(userData)
-            
+
             if (response) {
                 notify(t("successMessage"), "success")
                 const encodedEmail = encodeURIComponent(userData.email)
@@ -81,7 +89,7 @@ const Register: FC = () => {
             <Container
                 maxWidth={false}
                 sx={{
-                    height: '100vh',
+                    minHeight: '100vh',
                     width: '100%',
                     display: 'flex',
                     justifyContent: 'center',
@@ -101,8 +109,8 @@ const Register: FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
-                    <div style={{ width: '70%', height: '90%', textAlign: 'center' }}>
-                        <h2 style={{ marginBottom: '1.5vw' }}>{t("title")}</h2>
+                    <div style={{ width: '70%', minHeight: '100vh', textAlign: 'center' }}>
+                        <h2 style={{ margin: '1.5vw 0' }}>{t("title")}</h2>
                         <h6>{t("subtitle")}</h6>
                         <Box
                             sx={{
@@ -113,10 +121,45 @@ const Register: FC = () => {
                         >
                             <TextField
                                 fullWidth
+                                label={t("firstName")}
+                                placeholder={t("firstNamePlaceholder")}
+                                id="firstName"
+                                type={'text'}
+                                required
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("firstName", e.target.value)
+                                }}
+                                sx={{ mb: 2.5, mt: 2.5 }}
+                            />
+                            <TextField
+                                fullWidth
+                                label={t("lastName")}
+                                placeholder={t("lastNamePlaceholder")}
+                                id="lastName"
+                                type={'text'}
+                                required
+                                slotProps={{
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                                onChange={(e) => {
+                                    handlePropertyUpdate("lastName", e.target.value)
+                                }}
+                                sx={{ mb: 2.5, mt: 2.5 }}
+                            />
+                            <TextField
+                                fullWidth
                                 label={t("username")}
                                 placeholder={t("usernamePlaceholder")}
                                 id="username"
                                 type={'text'}
+                                required
                                 slotProps={{
                                     inputLabel: {
                                         shrink: true,
@@ -133,6 +176,7 @@ const Register: FC = () => {
                                 placeholder={t("emailPlaceholder")}
                                 id="email"
                                 type={'email'}
+                                required
                                 onChange={(e) => {
                                     handlePropertyUpdate("email", e.target.value)
                                 }}
@@ -149,6 +193,7 @@ const Register: FC = () => {
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder={t("passwordPlaceholder")}
                                 id="password"
+                                required
                                 onChange={(e) => {
                                     handlePropertyUpdate("password", e.target.value)
                                 }}
@@ -171,6 +216,7 @@ const Register: FC = () => {
                                         shrink: true,
                                     },
                                 }}
+                                helperText="Password must be at least 8 characters long"
                                 sx={{ mb: 2.5, mt: 2.5 }}
                             />
                             <TextField
@@ -178,6 +224,7 @@ const Register: FC = () => {
                                 label={t("confirmPassword")}
                                 value={confirmPassword}
                                 type={showPassword ? 'text' : 'password'}
+                                required
                                 placeholder={t("confirmPasswordPlaceholder")}
                                 id="confirm-password"
                                 onChange={(e) => {
@@ -212,7 +259,7 @@ const Register: FC = () => {
                 </div>
 
                 <div style={{
-                    height: '100%',
+                    minHeight: '100vh',
                     width: '40%',
                     textAlign: 'left',
                     backgroundColor: 'green',
