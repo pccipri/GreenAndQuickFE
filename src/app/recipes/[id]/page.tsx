@@ -28,6 +28,7 @@ import InstructionsList from '@/app/components/instructionsList';
 import { useAuth } from '@/contexts/AuthProvider';
 import { RecipeAuthorSummary, RecipeDetail, RecipeIngredient, RecipeInstruction } from '@/interfaces/Recipe';
 import { deleteRecipe, getRecipeById, shopRecipeIngredients } from '@/services/recipeService';
+import { addCartItem } from '@/services/cartService';
 import { notify } from '@/utils/toast';
 
 const formatAuthorName = (author: RecipeAuthorSummary | string | undefined) => {
@@ -125,38 +126,19 @@ const RecipeDetails: FC = () => {
         try {
             const ingredientNames = ingredients.map((ingredient) => ingredient.label || t('ingredientFallback'));
             await shopRecipeIngredients(recipe.id ?? recipe._id ?? '', ingredientNames);
+
+            for (const ingredient of ingredients) {
+                const ingredientId = ingredient.linkedProductId ?? ingredient.label;
+                if (!ingredientId) {
+                    continue;
+                }
+                await addCartItem(String(ingredientId), 1);
+            }
+
+            notify(t('addToCartSuccess'), 'success');
         } catch {
             notify(t('addToCartFailed'), 'warning');
         }
-
-        const storedCart = window.localStorage.getItem('green_quick_cart');
-        const currentCart = storedCart ? JSON.parse(storedCart) as Array<{ id: string; name: string; category: string; price: number; quantity: number; image: string }> : [];
-
-        const nextCart = [...currentCart];
-        ingredients.forEach((ingredient, index) => {
-            const label = ingredient.label || t('ingredientFallback');
-            const existingItemIndex = nextCart.findIndex((item) => item.name === label && item.category === recipe.title);
-
-            if (existingItemIndex >= 0) {
-                nextCart[existingItemIndex] = {
-                    ...nextCart[existingItemIndex],
-                    quantity: nextCart[existingItemIndex].quantity + 1,
-                };
-                return;
-            }
-
-            nextCart.push({
-                id: `${recipe.id ?? recipe._id ?? recipe.title}-${index}-${Date.now()}`,
-                name: label,
-                category: recipe.title,
-                price: 0,
-                quantity: 1,
-                image: recipe.imageUrl ?? recipe.imagePath ?? '/images/bgplaceholder.jpeg',
-            });
-        });
-
-        window.localStorage.setItem('green_quick_cart', JSON.stringify(nextCart));
-        notify(t('addToCartSuccess'), 'success');
     };
 
     const handleSaveToggle = () => {

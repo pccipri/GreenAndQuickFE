@@ -1,11 +1,13 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 import {
     Box,
     Button,
+    CircularProgress,
     Table,
     TableBody,
     TableCell,
@@ -14,76 +16,115 @@ import {
     Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { addCartItem, clearCart, getCart, getCartSummary, removeCartItem, updateCartItemQuantity } from "@/services/cartService";
+import type { Cart, CartItemPayload } from "@/interfaces/Cart";
+import { notify } from "@/utils/toast";
 
-type CartItem = {
-    id: number | string;
+type CartItemViewModel = CartItemPayload & {
+    id: string;
     name: string;
     category: string;
     price: number;
-    quantity: number;
     image: string;
-};
-
-const getInitialCartItems = (): CartItem[] => {
-    if (typeof window === 'undefined') {
-        return [];
-    }
-
-    try {
-        const stored = window.localStorage.getItem('green_quick_cart');
-        return stored ? JSON.parse(stored) as CartItem[] : [];
-    } catch {
-        return [];
-    }
 };
 
 const Cart: FC = () => {
     const t = useTranslations('Cart');
+    const router = useRouter();
 
-    const [cartItems, setCartItems] = useState<CartItem[]>(getInitialCartItems);
+    const [cart, setCart] = useState<Cart>({ items: [] });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            window.localStorage.setItem('green_quick_cart', JSON.stringify(cartItems));
-        }
-    }, [cartItems]);
+        const loadCart = async () => {
+            try {
+                setLoading(true);
+                const data = await getCart();
+                setCart(data);
+                setError(null);
+            } catch (err: any) {
+                setError(err.message || t('loadFailed'));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadCart();
+    }, []);
+
+    const cartItems = useMemo<CartItemViewModel[]>(() => {
+        return (cart.items ?? []).map((item, index) => ({
+            ...item,
+            id: item.productId ?? `item-${index}`,
+            name: item.product?.name ?? 'Product',
+            category: item.product?.category ?? 'Shop item',
+            price: item.priceAtAdd ?? item.product?.price ?? 0,
+            image: item.product?.imageUrl ?? '/images/bgplaceholder.jpeg',
+        }));
+    }, [cart.items]);
 
     const shippingFee = 20;
+    const summary = getCartSummary(cart);
+    const itemsTotal = summary.totalAmount;
+    const totalItems = summary.totalItems;
 
-    const itemsTotal = cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-    );
+    const handleIncreaseQuantity = async (id: string) => {
+        const item = cart.items.find((entry) => entry.productId === id);
+        if (!item) return;
 
-    const totalItems = cartItems.reduce(
-        (sum, item) => sum + item.quantity,
-        0
-    );
-
-    const handleIncreaseQuantity = (id: number | string) => {
-        setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            )
-        );
+        const nextQuantity = (item.quantity ?? 0) + 1;
+        try {
+            const updated = await updateCartItemQuantity(id, nextQuantity);
+            setCart(updated);
+        } catch (err: any) {
+            setError(err.message || t('updateQuantityFailed'));
+            notify(err.message || t('updateQuantityFailed'), 'error');
+        }
     };
 
-    const handleDecreaseQuantity = (id: number | string) => {
-        setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id && item.quantity > 1
-                    ? { ...item, quantity: item.quantity - 1 }
-                    : item
-            )
-        );
+    const handleDecreaseQuantity = async (id: string) => {
+        const item = cart.items.find((entry) => entry.productId === id);
+        if (!item) return;
+
+        const nextQuantity = (item.quantity ?? 0) - 1;
+        if (nextQuantity <= 0) {
+            await handleRemoveItem(id);
+            return;
+        }
+
+        try {
+            const updated = await updateCartItemQuantity(id, nextQuantity);
+            setCart(updated);
+        } catch (err: any) {
+            setError(err.message || t('updateQuantityFailed'));
+            notify(err.message || t('updateQuantityFailed'), 'error');
+        }
     };
 
-    const handleRemoveItem = (id: number | string) => {
-        setCartItems((prevItems) =>
-            prevItems.filter((item) => item.id !== id)
-        );
+    const handleRemoveItem = async (id: string) => {
+        try {
+            const updated = await removeCartItem(id);
+            setCart(updated);
+        } catch (err: any) {
+            setError(err.message || t('removeItemFailed'));
+            notify(err.message || t('removeItemFailed'), 'error');
+        }
+    };
+
+    const handleClearCart = async () => {
+        try {
+            await clearCart();
+            setCart({ items: [] });
+            notify(t('clearSuccess'), 'success');
+        } catch (err: any) {
+            setError(err.message || t('clearFailed'));
+            notify(err.message || t('clearFailed'), 'error');
+        }
+    };
+
+    const handleCheckout = () => {
+        router.push('/checkout');
     };
 
     return (
@@ -113,7 +154,17 @@ const Cart: FC = () => {
                     {t('title')}
                 </Typography>
 
-                {cartItems.length === 0 ? (
+                {loading ? (
+                    <Box sx={{ py: 8, display: 'flex', justifyContent: 'center' }}>
+                        <CircularProgress />
+                    </Box>
+                ) : error ? (
+                    <Box sx={{ py: 8 }}>
+                        <Typography variant="h5" sx={{ color: "#24282C", mb: 2 }}>
+                            {error}
+                        </Typography>
+                    </Box>
+                ) : cartItems.length === 0 ? (
                     <Box sx={{ py: 8 }}>
                         <Typography variant="h5" sx={{ color: "#24282C", mb: 2 }}>
                             {t('emptyCart')}
@@ -121,7 +172,7 @@ const Cart: FC = () => {
 
                         <Button
                             variant="contained"
-                            onClick={() => (window.location.href = "/shopPage")}
+                            onClick={() => router.push('/products')}
                         >
                             {t('browseProducts')}
                         </Button>
@@ -240,19 +291,27 @@ const Cart: FC = () => {
                     </Table>
                 )}
 
-                <Button
-                    startIcon={<ArrowBackIcon />}
-                    sx={{
-                        mt: 3,
-                        mb: 4,
-                        color: "#838587",
-                        fontWeight: 600,
-                        textTransform: "none",
-                    }}
-                    onClick={() => (window.location.href = "/shopPage")}
-                >
-                    {t('shopBtn')}
-                </Button>
+                <Box sx={{ display: 'flex', gap: 2, mt: 3, mb: 4 }}>
+                    <Button
+                        startIcon={<ArrowBackIcon />}
+                        sx={{
+                            color: "#838587",
+                            fontWeight: 600,
+                            textTransform: "none",
+                        }}
+                        onClick={() => router.push('/products')}
+                    >
+                        {t('shopBtn')}
+                    </Button>
+
+                    <Button
+                        variant="outlined"
+                        onClick={handleClearCart}
+                        disabled={cartItems.length === 0}
+                    >
+                        {t('clearCart')}
+                    </Button>
+                </Box>
             </Box>
 
             <Box
@@ -294,7 +353,7 @@ const Cart: FC = () => {
                             bgcolor: "#3a3f44",
                         },
                     }}
-                    onClick={() => (window.location.href = "/checkout")}
+                    onClick={handleCheckout}
                 >
                     {t('checkoutBtn')}
                 </Button>

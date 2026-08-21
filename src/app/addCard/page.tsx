@@ -1,175 +1,151 @@
 "use client";
 
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useTranslations } from 'next-intl';
+import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 import {
     Box,
     Card,
     TextField,
-    Grid,
     Typography,
-    InputAdornment,
-    Button
+    Button,
+    Alert,
 } from "@mui/material";
 
-import MenuItem from "@mui/material/MenuItem";
-
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import EventIcon from "@mui/icons-material/Event";
-import LockIcon from "@mui/icons-material/Lock";
-import PersonIcon from '@mui/icons-material/Person';
-
 import CreditCard from "../components/card";
-import { CreditCardState } from "../../interfaces/CreditCardState";
+import { addPaymentMethod } from "@/services/paymentMethodService";
+import { notify } from "@/utils/toast";
 
-const AddCard: FC = () => {
+const AddCardForm: FC<{ returnTo: string }> = ({ returnTo }) => {
     const t = useTranslations('AddCard');
+    const router = useRouter();
+    const stripe = useStripe();
+    const elements = useElements();
 
-    const [state, setState] = useState<CreditCardState>({
-        type: "Visa",
-        number: "",
-        name: "",
-        expiry: "",
-        cvc: "",
-    });
+    const [cardholderName, setCardholderName] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+    const [message, setMessage] = useState<string | null>(null);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        if (!stripe || !elements) {
+            setMessage(t('stripeNotReady'));
+            return;
+        }
 
-        setState((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+        setSubmitting(true);
+        setMessage(null);
+
+        try {
+            const cardElement = elements.getElement(CardElement);
+            if (!cardElement) {
+                throw new Error(t('cardDetailsMissing'));
+            }
+
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: cardholderName || undefined,
+                },
+            });
+
+            if (error || !paymentMethod?.id) {
+                throw new Error(error?.message || t('invalidCardDetails'));
+            }
+
+            await addPaymentMethod(paymentMethod.id);
+            notify(t('saveSuccess'), 'success');
+            router.push(returnTo);
+        } catch (error: any) {
+            const nextMessage = error.message || t('saveFailed');
+            setMessage(nextMessage);
+            notify(nextMessage, 'error');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
         <Box sx={{ maxWidth: 500, mx: "auto", mt: 4, p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <CreditCard
-                type={state.type}
-                number={state.number}
-                name={state.name}
-                expiry={state.expiry}
-                cvc={state.cvc}
+                type="Card"
+                number="•••• •••• •••• ••••"
+                name={cardholderName}
+                expiry="MM/YY"
+                cvc="***"
             />
+
+            {message ? <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{message}</Alert> : null}
 
             <Card sx={{ p: 3, boxShadow: 2 }}>
                 <Typography variant="h6" gutterBottom>
                     {t('paymentDetails')}
                 </Typography>
 
-                <Grid container spacing={2}>
-                    <Grid size={12}>
-                        <TextField
-                            select
-                            fullWidth
-                            label={t('cardType')}
-                            name="type"
-                            value={state.type}
-                            onChange={handleInputChange}
-                        >
-                            <MenuItem value="Visa">Visa</MenuItem>
-                            <MenuItem value="MasterCard">MasterCard</MenuItem>
-                            <MenuItem value="PayPal">PayPal</MenuItem>
-                        </TextField>
-                    </Grid>
+                <TextField
+                    fullWidth
+                    label={t('cardHolder')}
+                    value={cardholderName}
+                    onChange={(event) => setCardholderName(event.target.value)}
+                    sx={{ mb: 2.5 }}
+                />
 
-
-                    <Grid size={12}>
-                        <TextField
-                            fullWidth
-                            label={t('cardNumber')}
-                            name="number"
-                            value={state.number}
-                            onChange={handleInputChange}
-                            slotProps={{
-                                htmlInput: {
-                                    maxLength: 19,
+                <Typography sx={{ mb: 1 }}>{t('cardDetails')}</Typography>
+                <Box
+                    sx={{
+                        border: '1px solid #d0d0d0',
+                        borderRadius: 1,
+                        p: 1.5,
+                        bgcolor: '#fff',
+                    }}
+                >
+                    <CardElement
+                        options={{
+                            style: {
+                                base: {
+                                    fontSize: '16px',
+                                    color: '#1f2937',
+                                    '::placeholder': { color: '#9ca3af' },
                                 },
-                                input: {
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <CreditCardIcon />
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                        />
-                    </Grid>
-
-                    <Grid size={12}>
-                        <TextField
-                            fullWidth
-                            label={t('cardHolder')}
-                            name="name"
-                            value={state.name}
-                            onChange={handleInputChange}
-                            slotProps={{
-                                htmlInput: {
-                                    maxLength: 50,
-                                },
-                                input: {
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <PersonIcon />
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                        />
-                    </Grid>
-
-                    <Grid size={6}>
-                        <TextField
-                            fullWidth
-                            label={t('expiration')}
-                            name="expiry"
-                            value={state.expiry}
-                            onChange={handleInputChange}
-                            slotProps={{
-                                htmlInput: {
-                                    maxLength: 5,
-                                },
-                                input: {
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <EventIcon />
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                        />
-                    </Grid>
-
-                    <Grid size={6}>
-                        <TextField
-                            fullWidth
-                            label="CVC"
-                            name="cvc"
-                            value={state.cvc}
-                            onChange={handleInputChange}
-                            slotProps={{
-                                htmlInput: {
-                                    maxLength: 3,
-                                },
-                                input: {
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <LockIcon />
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                        />
-                    </Grid>
-                </Grid>
+                            },
+                        }}
+                    />
+                </Box>
             </Card>
 
-            <Button variant="contained" type="submit" sx={{ mt: 5 }}>
-                {t('saveCard')}
+            <Button variant="contained" type="button" onClick={handleSubmit} disabled={submitting} sx={{ mt: 5 }}>
+                {submitting ? t('saving') : t('saveCard')}
             </Button>
         </Box>
+    );
+};
+
+const AddCard: FC = () => {
+    const t = useTranslations('AddCard');
+    const searchParams = useSearchParams();
+    const returnTo = searchParams.get('returnTo') || '/profile/payment-methods';
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? '';
+    const stripePromise = useMemo(() => {
+        return publishableKey ? loadStripe(publishableKey) : null;
+    }, [publishableKey]);
+
+    if (!stripePromise) {
+        return (
+            <Box sx={{ maxWidth: 500, mx: 'auto', mt: 6 }}>
+                <Alert severity="warning">{t('stripeNotConfigured')}</Alert>
+            </Box>
+        );
+    }
+
+    return (
+        <Elements stripe={stripePromise}>
+            <AddCardForm returnTo={returnTo} />
+        </Elements>
     );
 };
 

@@ -13,6 +13,8 @@ export interface User {
   isActive?: boolean;
   preferences?: Record<string, unknown> | null;
   userSettings?: UserSettingsDto;
+  addresses?: UserAddress[];
+  address?: UserAddress;
 }
 
 export interface UserSettingsDto {
