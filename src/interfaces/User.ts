@@ -24,6 +24,8 @@ export interface UserSettingsDto {
 }
 
 export interface AddUserDTO {
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   password: string;
