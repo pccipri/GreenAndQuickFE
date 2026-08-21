@@ -19,8 +19,9 @@ export default function VerifyEmailInfoPage() {
     setIsResending(true);
     try {
       const response = await resendVerificationEmail(email);
+
       if (response) {
-        notify(response.message || t("resendVerificationSent"), "success");
+        notify(t("verificationEmailResent"), "success");
       }
     } finally {
       setIsResending(false);

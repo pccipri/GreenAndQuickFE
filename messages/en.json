@@ -89,7 +89,8 @@
     "authFail": "Authentication failed",
     "authFailMessage": "The application failed to authenticate you for the following reason:",
     "authTryAgain": "Please try again or contact support if the issue persists.",
-    "goBackBtn": "Go Back to Login"
+    "goBackBtn": "Go Back to Login",
+    "verificationEmailResent": "Verification email resent. Please check your inbox."
   },
   "user": {
     "notFound": "User not found",

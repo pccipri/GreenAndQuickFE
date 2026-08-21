@@ -89,7 +89,8 @@
     "authFail": "Autentificare eșuată",
     "authFailMessage": "Aplicația a eșuat în autentificarea dumneavoastră din următoarea cauză:",
     "authTryAgain": "Vă rugăm să încercați din nou sau să contactați suportul dacă problema persistă.",
-    "goBackBtn": "Înapoi la Autentificare"
+    "goBackBtn": "Înapoi la Autentificare",
+    "verificationEmailResent": "Email-ul de verificare a fost retrimis. Vă rugăm să verificați inbox-ul."
   },
   "user": {
     "notFound": "Utilizator negăsit",
