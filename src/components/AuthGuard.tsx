@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Box, CircularProgress, Typography } from '@mui/material'
+import { useTranslations } from 'next-intl'
 import { ADMIN_ROUTES, NO_ACCOUNT_ROUTES, PROTECTED_ROUTES, SHOP_OWNER_ROUTES, UNPROTECTED_ROUTES } from '@/utils/routes'
 import { useAuth } from '@/contexts/AuthProvider'
 
@@ -23,6 +24,7 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     const { user, loading, isAuthenticated } = useAuth()
     const router = useRouter()
     const pathname = usePathname()
+    const t = useTranslations('AuthGuard')
 
     useEffect(() => {
         if (loading) return
@@ -68,7 +70,7 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     if (loading) return (
         <Box sx={{ minHeight: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
             <CircularProgress />
-            <Typography variant="body2" color="text.secondary">Checking your access...</Typography>
+            <Typography variant="body2" color="text.secondary">{t('checkingAccess')}</Typography>
         </Box>
     )
 

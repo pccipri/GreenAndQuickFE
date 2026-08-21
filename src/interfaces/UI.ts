@@ -12,7 +12,7 @@ export interface Column {
 }
 
 export interface Data {
-    id: number;
+    id: number | string;
     date: string;
     shop: string;
     total: number;

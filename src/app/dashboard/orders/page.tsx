@@ -1,6 +1,7 @@
 "use client"
 
-import { FC, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -16,8 +17,12 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 
 import { Column, Data } from "@/interfaces/UI";
+import { getShopOrders } from "@/services/orderService";
+import type { Order } from "@/interfaces/Order";
 
 import styles from './page.module.css';
 import { useTranslations } from 'next-intl';
@@ -32,33 +37,32 @@ const columns: readonly Column[] = [
 ];
 
 
-// Populate the table rows displaying each value in a TableCell
-function createData(
-    id: number,
-    date: string,
-    shop: string,
-    total: number,
-    status: string,
-): Data {
-    return { id, date, shop, total, status };
-}
-
-
-// Sample data for the table rows
-const rows = [
-    createData(1, "30.05.2026", "Marcel's Shop", 250, "Active"),
-    createData(2, "30.05.2026", "Marcel's Shop", 250, "Delivered"),
-    createData(3, "30.05.2026", "Marcel's Shop", 250, "Cancelled"),
-    createData(4, "30.05.2026", "Marcel's Shop", 250, "Active"),
-    createData(5, "30.05.2026", "Marcel's Shop", 250, "Delivered"),
-
-];
-
 const OrderHistory: FC = () => {
     const t = useTranslations('OrderHistory');
+    const router = useRouter();
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    useEffect(() => {
+        const loadOrders = async () => {
+            try {
+                setLoading(true);
+                const data = await getShopOrders();
+                setOrders(data);
+                setError(null);
+            } catch (err: any) {
+                setError(err.message || t('loadFailed'));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        void loadOrders();
+    }, [t]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -69,36 +73,56 @@ const OrderHistory: FC = () => {
         setPage(0);
     };
 
-    const [statusFilter, setStatusFilter] = useState('All');
+    const [statusFilter, setStatusFilter] = useState('all');
 
     const handleStatusFilterChange = (event: SelectChangeEvent) => {
         setStatusFilter(event.target.value);
         setPage(0);
     };
 
-    const filteredRows = statusFilter === 'All'
-        ? rows
-        : rows.filter((row) => row.status === statusFilter);
+    const filteredRows = useMemo(() => {
+        if (statusFilter === 'all') {
+            return orders;
+        }
+
+        return orders.filter((order) => (order.status ?? 'placed').toLowerCase() === statusFilter.toLowerCase());
+    }, [orders, statusFilter]);
+
+    const rows = filteredRows.map((order, index) => {
+        const data: Data = {
+            id: order._id ?? index,
+            date: order.createdAt ? new Date(order.createdAt).toLocaleDateString() : t('dateFallback'),
+            shop: order.items?.[0]?.shopId ?? t('shopFallback'),
+            total: order.totalAmount ?? 0,
+            status: order.status ?? 'placed',
+        };
+
+        return {
+            orderId: order._id,
+            data,
+        };
+    });
 
     const getStatusChip = (status: string) => {
-        const statusLabel =
-            status === 'Active'
-                ? t('status.active')
-                : status === 'Delivered'
-                    ? t('status.delivered')
-                    : status === 'Cancelled'
-                        ? t('status.cancelled')
-                        : status;
+        const normalizedStatus = (status || 'placed').toLowerCase();
+        const statusLabelKey = `status.${normalizedStatus}` as const;
+        const fallbackLabel = normalizedStatus;
+        const translatedLabel = t(statusLabelKey);
+        const chipLabel = translatedLabel === statusLabelKey ? fallbackLabel : translatedLabel;
 
-        switch (status) {
-            case 'Active':
-                return <Chip label={statusLabel} color="primary" size="small" />;
-            case 'Delivered':
-                return <Chip label={statusLabel} color="success" size="small" />;
-            case 'Cancelled':
-                return <Chip label={statusLabel} color="error" size="small" />;
+        switch (normalizedStatus) {
+            case 'placed':
+            case 'active':
+                return <Chip label={chipLabel} color="primary" size="small" />;
+            case 'confirmed':
+            case 'shipped':
+                return <Chip label={chipLabel} color="warning" size="small" />;
+            case 'delivered':
+                return <Chip label={chipLabel} color="success" size="small" />;
+            case 'cancelled':
+                return <Chip label={chipLabel} color="error" size="small" />;
             default:
-                return <Chip label={statusLabel} size="small" />;
+                return <Chip label={chipLabel} size="small" />;
         }
     };
 
@@ -116,13 +140,28 @@ const OrderHistory: FC = () => {
                                 label={t('sort')}
                                 onChange={handleStatusFilterChange}
                             >
-                                <MenuItem value="All">{t('status.all')}</MenuItem>
-                                <MenuItem value="Active">{t('status.active')}</MenuItem>
-                                <MenuItem value="Delivered">{t('status.delivered')}</MenuItem>
-                                <MenuItem value="Cancelled">{t('status.cancelled')}</MenuItem>
+                                <MenuItem value="all">{t('status.all')}</MenuItem>
+                                <MenuItem value="placed">{t('status.active')}</MenuItem>
+                                <MenuItem value="confirmed">{t('status.confirmed')}</MenuItem>
+                                <MenuItem value="shipped">{t('status.shipped')}</MenuItem>
+                                <MenuItem value="delivered">{t('status.delivered')}</MenuItem>
+                                <MenuItem value="cancelled">{t('status.cancelled')}</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
+                    {loading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : error ? (
+                        <Box sx={{ py: 6, px: 3 }}>
+                            <Typography color="error">{error}</Typography>
+                        </Box>
+                    ) : rows.length === 0 ? (
+                        <Box sx={{ py: 6, px: 3 }}>
+                            <Typography>{t('empty')}</Typography>
+                        </Box>
+                    ) : (
                     <TableContainer sx={{ maxHeight: 440 }}>
                         <Table stickyHeader aria-label={t('tableAriaLabel')}>
                             <TableHead>
@@ -139,13 +178,21 @@ const OrderHistory: FC = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {filteredRows
+                                {rows
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row) => {
+                                        const clickable = Boolean(row.orderId);
                                         return (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                            <TableRow
+                                                hover
+                                                role="checkbox"
+                                                tabIndex={-1}
+                                                key={row.data.id}
+                                                onClick={clickable ? () => router.push(`/dashboard/orders/${row.orderId}`) : undefined}
+                                                sx={clickable ? { cursor: 'pointer' } : undefined}
+                                            >
                                                 {columns.map((column) => {
-                                                    const value = row[column.id];
+                                                    const value = row.data[column.id];
                                                     return (
                                                         <TableCell key={column.id} align={column.align}>
                                                             {column.id === 'status'
@@ -162,10 +209,11 @@ const OrderHistory: FC = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    )}
                     <TablePagination
                         rowsPerPageOptions={[10, 25, 100]}
                         component="div"
-                        count={filteredRows.length}
+                        count={rows.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

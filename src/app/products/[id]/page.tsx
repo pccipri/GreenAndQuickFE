@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { getProductById, getProductsByShop } from "@/services/productService";
+import { addCartItem } from "@/services/cartService";
 import { Product } from "@/interfaces/Product";
 import { notify } from "@/utils/toast";
 
@@ -103,38 +104,17 @@ const ProductPage: FC = () => {
                 : ["/images/bgplaceholder.jpeg"])
         : ["/images/bgplaceholder.jpeg"];
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         if (!product) {
             return;
         }
 
-        if (typeof window === 'undefined') {
-            return;
+        try {
+            await addCartItem(product._id ?? product.id ?? '', 1);
+            notify(t('addToCartSuccess'), 'success');
+        } catch (err: any) {
+            notify(err.message || t('addToCartFailed'), 'error');
         }
-
-        const storedCart = window.localStorage.getItem('green_quick_cart');
-        const currentCart = storedCart ? JSON.parse(storedCart) as Array<{ id: string; name: string; category: string; price: number; quantity: number; image: string }> : [];
-        const nextCart = [...currentCart];
-        const existingItemIndex = nextCart.findIndex((item) => item.id === (product.id || product._id));
-
-        if (existingItemIndex >= 0) {
-            nextCart[existingItemIndex] = {
-                ...nextCart[existingItemIndex],
-                quantity: nextCart[existingItemIndex].quantity + 1,
-            };
-        } else {
-            nextCart.push({
-                id: product.id || product._id || product.name,
-                name: product.name,
-                category: product.category || 'Products',
-                price: Number(product.reducedPrice ?? product.price),
-                quantity: 1,
-                image: product.imageUrls?.[0] || product.imageUrl || '/images/bgplaceholder.jpeg',
-            });
-        }
-
-        window.localStorage.setItem('green_quick_cart', JSON.stringify(nextCart));
-        notify(t('addToCartSuccess'), 'success');
     };
 
     return (

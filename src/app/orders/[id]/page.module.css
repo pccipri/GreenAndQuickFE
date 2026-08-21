@@ -6,7 +6,9 @@
     justify-content: center;
 }
 
-.productsContainer {
+.orderItemRow {
     display: flex;
-    gap: 220px;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 0;
 }
