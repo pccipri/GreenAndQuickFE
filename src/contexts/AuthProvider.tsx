@@ -22,13 +22,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const t = useTranslations();
+  const t = useTranslations("auth");
 
   const clearAuthState = useCallback(() => {
     setAccessToken(null);
     setUser(null);
   }, []);
-  
+
   // Resolve current user using the RESTful profile endpoint.
   const fetchUser = useCallback(async () => {
     const { data } = await authAPI.get("/users/me");
@@ -85,13 +85,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Explicit login using the auth API
   const signIn = async (params: LoginRequest) => {
     try {
-      const { data } = await authAPI.post("/login", params); // cookie set by server
-      setAccessToken(data.accessToken);                        // store the access token
+      const { data } = await authAPI.post("/login", params);
+      setAccessToken(data.accessToken);
       await fetchUser();
+
       return data.message as string | undefined;
     } catch (error: any) {
       clearAuthState();
-      throw new Error(t(error.response?.data?.error) || t("loginFailed"));
+
+      const errorKey = error.response?.data?.error;
+
+      if (errorKey) {
+        const translationKey = errorKey.replace(/^auth\./, '');
+        throw new Error(t(translationKey));
+      }
+
+      throw new Error(t("loginFailed"));
     }
   };
 
@@ -106,9 +115,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       router.push('/login')
     }
   };
-  
+
   const isAuthenticated = !!user;
-  
+
   return (
     <AuthContext.Provider value={{ user, loading, isAuthenticated, signIn, logout, refresh }}>
       {children}
