@@ -16,6 +16,14 @@ export const setAccessToken = (token: string | null) => {
 
 export const getAccessToken = () => accessToken;
 
+authAPI.interceptors.request.use((config) => {
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  return config;
+});
+
 /** Single-flight refresh using the refresh cookie */
 export async function refreshAccessToken(): Promise<string> {
   if (refreshInFlight) return refreshInFlight;
