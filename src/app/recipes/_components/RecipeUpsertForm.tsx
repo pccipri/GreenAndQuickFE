@@ -63,12 +63,14 @@ type InstructionDraft = {
 };
 
 type NutritionDraft = {
-    calories: string;
-    protein: string;
-    carbs: string;
+    energyKcal: string;
+    energyKj: string;
     fat: string;
-    fiber: string;
-    sugar: string;
+    saturates: string;
+    carbohydrates: string;
+    sugars: string;
+    protein: string;
+    salt: string;
 };
 
 type RecipeUpsertFormProps = {
@@ -97,17 +99,19 @@ const emptyInstruction = (stepNumber: number): InstructionDraft => ({
 });
 
 const emptyNutrition = (): NutritionDraft => ({
-    calories: '',
-    protein: '',
-    carbs: '',
+    energyKcal: '',
+    energyKj: '',
     fat: '',
-    fiber: '',
-    sugar: '',
+    saturates: '',
+    carbohydrates: '',
+    sugars: '',
+    protein: '',
+    salt: '',
 });
 
 const formatIngredient = (ingredient: RecipeIngredient): IngredientDraft => ({
-    label: ingredient.label ?? '',
-    value: ingredient.value?.toString() ?? '',
+    label: ingredient.name ?? '',
+    value: ingredient.quantity?.toString() ?? '',
     unit: ingredient.unit ?? '',
     linkedProductId: ingredient.linkedProductId ?? '',
     linkedProductName: ingredient.linkedProductName ?? '',
@@ -204,12 +208,14 @@ const RecipeUpsertForm: FC<RecipeUpsertFormProps> = ({ mode, initialRecipe }) =>
                 : [emptyInstruction(1)],
         );
         setNutrition({
-            calories: initialRecipe.nutritionPerPortion?.calories?.toString() ?? '',
-            protein: initialRecipe.nutritionPerPortion?.protein?.toString() ?? '',
-            carbs: initialRecipe.nutritionPerPortion?.carbs?.toString() ?? '',
+            energyKcal: initialRecipe.nutritionPerPortion?.energyKcal?.toString() ?? '',
+            energyKj: initialRecipe.nutritionPerPortion?.energyKj?.toString() ?? '',
             fat: initialRecipe.nutritionPerPortion?.fat?.toString() ?? '',
-            fiber: initialRecipe.nutritionPerPortion?.fiber?.toString() ?? '',
-            sugar: initialRecipe.nutritionPerPortion?.sugar?.toString() ?? '',
+            saturates: initialRecipe.nutritionPerPortion?.saturates?.toString() ?? '',
+            carbohydrates: initialRecipe.nutritionPerPortion?.carbohydrates?.toString() ?? '',
+            sugars: initialRecipe.nutritionPerPortion?.sugars?.toString() ?? '',
+            protein: initialRecipe.nutritionPerPortion?.protein?.toString() ?? '',
+            salt: initialRecipe.nutritionPerPortion?.salt?.toString() ?? '',
         });
     }, [initialRecipe]);
 
@@ -392,11 +398,11 @@ const RecipeUpsertForm: FC<RecipeUpsertFormProps> = ({ mode, initialRecipe }) =>
             formData.append('duration', duration.trim());
             formData.append('durationType', durationType);
             formData.append('ingredients', JSON.stringify(trimmedIngredients.map((ingredient) => ({
-                label: ingredient.label,
-                value: Number(ingredient.value),
+                name: ingredient.label,
+                quantity: Number(ingredient.value),
                 unit: ingredient.unit,
-                linkedProductId: ingredient.linkedProductId || null,
-                linkedProductName: ingredient.linkedProductName || null,
+                linkedProductId: ingredient.linkedProductId || undefined,
+                linkedProductName: ingredient.linkedProductName || undefined,
             }))));
             formData.append('instructions', JSON.stringify(trimmedInstructions));
 
@@ -732,20 +738,88 @@ const RecipeUpsertForm: FC<RecipeUpsertFormProps> = ({ mode, initialRecipe }) =>
             </Paper>
 
             <Paper variant="outlined" sx={{ p: 3, borderRadius: 4 }}>
-                <Stack spacing={2.5}>
-                    <Typography variant="h6">{t('nutrition')}</Typography>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                    <TextField
+                        label={t('energyKcal')}
+                        type="number"
+                        value={nutrition.energyKcal}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, energyKcal: event.target.value }))
+                        }
+                        fullWidth
+                    />
 
-                    <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                        <TextField label={t('calories')} type="number" value={nutrition.calories} onChange={(event) => setNutrition((current) => ({ ...current, calories: event.target.value }))} fullWidth />
-                        <TextField label={t('protein')} type="number" value={nutrition.protein} onChange={(event) => setNutrition((current) => ({ ...current, protein: event.target.value }))} fullWidth />
-                        <TextField label={t('carbs')} type="number" value={nutrition.carbs} onChange={(event) => setNutrition((current) => ({ ...current, carbs: event.target.value }))} fullWidth />
-                    </Stack>
+                    <TextField
+                        label={t('energyKj')}
+                        type="number"
+                        value={nutrition.energyKj}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, energyKj: event.target.value }))
+                        }
+                        fullWidth
+                    />
 
-                    <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                        <TextField label={t('fat')} type="number" value={nutrition.fat} onChange={(event) => setNutrition((current) => ({ ...current, fat: event.target.value }))} fullWidth />
-                        <TextField label={t('fiber')} type="number" value={nutrition.fiber} onChange={(event) => setNutrition((current) => ({ ...current, fiber: event.target.value }))} fullWidth />
-                        <TextField label={t('sugar')} type="number" value={nutrition.sugar} onChange={(event) => setNutrition((current) => ({ ...current, sugar: event.target.value }))} fullWidth />
-                    </Stack>
+                    <TextField
+                        label={t('protein')}
+                        type="number"
+                        value={nutrition.protein}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, protein: event.target.value }))
+                        }
+                        fullWidth
+                    />
+
+                    <TextField
+                        label={t('fat')}
+                        type="number"
+                        value={nutrition.fat}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, fat: event.target.value }))
+                        }
+                        fullWidth
+                    />
+                </Stack>
+
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                    <TextField
+                        label={t('saturates')}
+                        type="number"
+                        value={nutrition.saturates}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, saturates: event.target.value }))
+                        }
+                        fullWidth
+                    />
+
+                    <TextField
+                        label={t('carbohydrates')}
+                        type="number"
+                        value={nutrition.carbohydrates}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, carbohydrates: event.target.value }))
+                        }
+                        fullWidth
+                    />
+
+                    <TextField
+                        label={t('sugars')}
+                        type="number"
+                        value={nutrition.sugars}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, sugars: event.target.value }))
+                        }
+                        fullWidth
+                    />
+
+                    <TextField
+                        label={t('salt')}
+                        type="number"
+                        value={nutrition.salt}
+                        onChange={(event) =>
+                            setNutrition((current) => ({ ...current, salt: event.target.value }))
+                        }
+                        fullWidth
+                    />
                 </Stack>
             </Paper>
 

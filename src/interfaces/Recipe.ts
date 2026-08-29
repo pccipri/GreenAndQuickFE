@@ -11,8 +11,8 @@ export interface DietaryTag {
 }
 
 export interface RecipeIngredient {
-    label: string;
-    value: number;
+    name: string;
+    quantity: number;
     unit: string;
     linkedProductId?: string | null;
     linkedProductName?: string | null;

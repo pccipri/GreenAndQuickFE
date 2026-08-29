@@ -484,7 +484,13 @@
       "dairyFree": "Dairy-free",
       "keto": "Keto",
       "paleo": "Paleo"
-    }
+    },
+    "energyKcal": "Energy (kcal)",
+    "energyKj": "Energy (kJ)",
+    "saturates": "Saturates",
+    "carbohydrates": "Carbohydrates",
+    "sugars": "Sugars",
+    "salt": "Salt"
   },
   "RecipesBrowse": {
     "kicker": "Recipes",
@@ -505,6 +511,7 @@
     "emptyTitle": "No recipes found",
     "emptyMessage": "Try a different search or remove some filters.",
     "resultsCount": "{count, plural, one {# recipe} other {# recipes}}",
+    "maxDuration": "Max duration (minutes)",
     "dietaryTagLabels": {
       "vegetarian": "Vegetarian",
       "vegan": "Vegan",
