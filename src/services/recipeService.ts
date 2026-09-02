@@ -117,7 +117,7 @@ export const getRecipes = async (
 ): Promise<RecipeListResponse> => {
     try {
         const response: AxiosResponse<unknown> = await marketAPI({
-            url: '/api/recipes',
+            url: '/recipes',
             method: 'get',
             params: {
                 q: filters.q ?? filters.search ?? undefined,
@@ -151,7 +151,7 @@ export const getRecipes = async (
 export const getRecipeById = async (id: string): Promise<RecipeDetail | null> => {
     try {
         const response: AxiosResponse<unknown> = await marketAPI({
-            url: `/api/recipes/${id}`,
+            url: `/recipes/${id}`,
             method: 'get',
         });
 
@@ -165,7 +165,7 @@ export const getRecipeById = async (id: string): Promise<RecipeDetail | null> =>
 export const getDietaryTags = async (): Promise<DietaryTag[]> => {
     try {
         const response: AxiosResponse<DietaryTag[]> = await marketAPI({
-            url: '/api/dietary-tags',
+            url: '/dietary-tags',
             method: 'get',
         });
 
@@ -179,7 +179,7 @@ export const getDietaryTags = async (): Promise<DietaryTag[]> => {
 export const createRecipe = async (formData: FormData): Promise<RecipeDetail> => {
     try {
         const response: AxiosResponse<unknown> = await marketAPI({
-            url: '/api/recipes',
+            url: '/recipes',
             method: 'post',
             data: formData,
         });
@@ -194,7 +194,7 @@ export const createRecipe = async (formData: FormData): Promise<RecipeDetail> =>
 export const updateRecipe = async (id: string, formData: FormData): Promise<RecipeDetail> => {
     try {
         const response: AxiosResponse<unknown> = await marketAPI({
-            url: `/api/recipes/${id}`,
+            url: `/recipes/${id}`,
             method: 'patch',
             data: formData,
         });
@@ -209,7 +209,7 @@ export const updateRecipe = async (id: string, formData: FormData): Promise<Reci
 export const shopRecipeIngredients = async (id: string, ingredients: string[]): Promise<void> => {
     try {
         await marketAPI({
-            url: `/api/recipes/${id}/shop`,
+            url: `/recipes/${id}/shop`,
             method: 'post',
             data: { ingredients },
         });
@@ -222,7 +222,7 @@ export const shopRecipeIngredients = async (id: string, ingredients: string[]): 
 export const deleteRecipe = async (id: string): Promise<void> => {
     try {
         await marketAPI({
-            url: `/api/recipes/${id}`,
+            url: `/recipes/${id}`,
             method: 'delete',
         });
     } catch (error: any) {

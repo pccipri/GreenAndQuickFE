@@ -40,8 +40,11 @@ const formatAuthorName = (author: RecipeAuthorSummary | string | undefined) => {
 };
 
 const getIngredientText = (ingredient: RecipeIngredient) => {
-    const quantity = Number.isInteger(ingredient.value) ? ingredient.value : ingredient.value.toFixed(2);
-    return `${quantity} ${ingredient.unit} ${ingredient.label}`.trim();
+    const quantity = Number.isInteger(ingredient.quantity)
+        ? ingredient.quantity
+        : ingredient.quantity.toFixed(2);
+
+    return `${quantity} ${ingredient.unit} ${ingredient.name}`.trim();
 };
 
 const getInstructionImage = (instruction: RecipeInstruction) => (instruction.imageUrl ?? instruction.imagePath) || undefined;
@@ -124,11 +127,11 @@ const RecipeDetails: FC = () => {
         }
 
         try {
-            const ingredientNames = ingredients.map((ingredient) => ingredient.label || t('ingredientFallback'));
+            const ingredientNames = ingredients.map((ingredient) => ingredient.name || t('ingredientFallback'));
             await shopRecipeIngredients(recipe.id ?? recipe._id ?? '', ingredientNames);
 
             for (const ingredient of ingredients) {
-                const ingredientId = ingredient.linkedProductId ?? ingredient.label;
+                const ingredientId = ingredient.linkedProductId ?? ingredient.name;
                 if (!ingredientId) {
                     continue;
                 }
@@ -291,7 +294,10 @@ const RecipeDetails: FC = () => {
                     </Typography>
                     <ul className={styles.list}>
                         {recipe.ingredients.map((ingredient) => (
-                            <IngredientsList key={`${ingredient.label}-${ingredient.value}-${ingredient.unit}`} ingredient={getIngredientText(ingredient)} />
+                            <IngredientsList
+                                key={`${ingredient.name}-${ingredient.quantity}-${ingredient.unit}`}
+                                ingredient={getIngredientText(ingredient)}
+                            />
                         ))}
                     </ul>
                 </Box>

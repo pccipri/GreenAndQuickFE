@@ -48,6 +48,7 @@ const RecipesPage: FC = () => {
     const [mealType, setMealType] = useState<MealType | ''>('');
     const [difficulty, setDifficulty] = useState<Difficulty | ''>('');
     const [selectedDietaryTags, setSelectedDietaryTags] = useState<string[]>([]);
+    const [maxDuration, setMaxDuration] = useState<number | ''>('');
     const [sort, setSort] = useState<RecipeSortOption>('newest');
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
@@ -71,6 +72,7 @@ const RecipesPage: FC = () => {
                 mealType,
                 difficulty,
                 dietaryTags: selectedDietaryTags,
+                maxDuration: maxDuration || undefined,
                 sort,
                 page,
                 limit: pageSize,
@@ -82,7 +84,7 @@ const RecipesPage: FC = () => {
         };
 
         void loadRecipes();
-    }, [difficulty, mealType, page, searchTerm, selectedDietaryTags, sort]);
+    }, [difficulty, mealType, maxDuration, page, searchTerm, selectedDietaryTags, sort]);
 
     const totalPages = useMemo(() => Math.max(1, Math.ceil(total / pageSize)), [total]);
 
@@ -104,6 +106,7 @@ const RecipesPage: FC = () => {
         setMealType('');
         setDifficulty('');
         setSelectedDietaryTags([]);
+        setMaxDuration('');
         setSort('newest');
         setPage(1);
     };
@@ -202,6 +205,24 @@ const RecipesPage: FC = () => {
                         ))}
                     </Select>
                 </FormControl>
+
+                <TextField
+                    fullWidth
+                    type="number"
+                    label={t('maxDuration')}
+                    value={maxDuration}
+                    onChange={(event) => {
+                        const value = event.target.value;
+
+                        setMaxDuration(value === '' ? '' : Number(value));
+                        setPage(1);
+                    }}
+                    slotProps={{
+                        htmlInput: {
+                            min: 1,
+                        },
+                    }}
+                />
 
                 <FormControl fullWidth>
                     <InputLabel id="sort-label">{t('sort')}</InputLabel>

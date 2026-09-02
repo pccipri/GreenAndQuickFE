@@ -483,7 +483,13 @@
       "dairyFree": "Fără lactate",
       "keto": "Keto",
       "paleo": "Paleo"
-    }
+    },
+    "energyKcal": "Energie (kcal)",
+    "energyKj": "Energie (kJ)",
+    "saturates": "Saturate",
+    "carbohydrates": "Carbohidrați",
+    "sugars": "Zaharuri",
+    "salt": "Sare"
   },
   "RecipesBrowse": {
     "kicker": "Rețete",
@@ -504,6 +510,7 @@
     "emptyTitle": "Nu au fost găsite rețete",
     "emptyMessage": "Încearcă o căutare diferită sau elimină unele filtre.",
     "resultsCount": "{count, plural, one {# rețetă} other {# rețete}}",
+    "maxDuration": "Durată maximă (minute)",
     "dietaryTagLabels": {
       "vegetarian": "Vegetarian",
       "vegan": "Vegan",
